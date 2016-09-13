@@ -1,0 +1,45 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/tools">
+<data>
+    <import type="me.exerosis.nanodegree.movies.Movie"></import>
+    <variable
+        name="movie"
+        type="Movie">
+    </variable>
+</data>
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        card_view:cardCornerRadius="4dp"
+        android:layout_margin="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@color/cardview_light_background"
+                android:text="@{movie.title}"
+                android:gravity="center_vertical"
+                android:textColor="@android:color/white"
+                android:textSize="14dp"/>
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{movie.description}"
+                android:gravity="center_vertical"
+                android:textSize="10dp"
+                android:layout_below="@+id/title"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"/>
+
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</layout>
