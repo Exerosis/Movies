@@ -1,7 +1,15 @@
 package me.exerosis.nanodegree.movies;
 
-/**
- * Created by Home on 9/15/2016.
- */
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 public class Movie {
+    public String title;
+    public String posterPath;
+
+    public Movie(JsonObject movie){
+
+    }
+
 }

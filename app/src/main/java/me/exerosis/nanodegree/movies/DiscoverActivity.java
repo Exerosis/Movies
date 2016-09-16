@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.stream.JsonReader;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -23,47 +25,26 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import me.exerosis.nanodegree.movies.databinding.DiscoverBinding;
 import me.exerosis.nanodegree.movies.databinding.MovieCardBinding;
-import me.exerosis.nanodegree.movies.databinding.MoviesBinding;
 
-public class Movies extends AppCompatActivity {
-    private MoviesBinding binding;
+public class DiscoverActivity extends AppCompatActivity {
+    private DiscoverBinding binding;
     private final List<Movie> movies = new ArrayList<>();
+private String lol = "http://api.themoviedb.org/3/movie/popular?api_key=80de3dcb516f2d18d76b0d4f3d7b2f05";
+    public DiscoverActivity() {
 
-    public Movies() {
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    test();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
     }
 
     public void test() throws IOException {
-        Gson gson = new GsonBuilder().create();
-        URL url = new URL("http://api.themoviedb.org/3/movie/popular?api_key=80de3dcb516f2d18d76b0d4f3d7b2f05");
 
-        Closeable reader = null;
-        try {
-            reader = url.openStream();
-            reader = new InputStreamReader((InputStream) reader);
-            reader = new BufferedReader((Reader) reader);
-            reader = new JsonReader((Reader) reader);
-            Collections.addAll(movies, (Movie[]) gson.fromJson((JsonReader) reader, Movie[].class));
-        } finally {
-            reader.close();
-        }
 
 
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        binding = DataBindingUtil.setContentView(this, R.layout.movies);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_discover);
 
         try {
             Thread.sleep(1000);
@@ -82,7 +63,7 @@ public class Movies extends AppCompatActivity {
 
             @Override
             public void onBindViewHolder(MovieCard holder, int position) {
-              //  holder.displayMovie(movies.get(position));
+              //  holder.displayMovie(activity_discover.get(position));
             }
 
             @Override
