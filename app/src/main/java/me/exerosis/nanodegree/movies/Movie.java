@@ -1,15 +1,25 @@
 package me.exerosis.nanodegree.movies;
 
-
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
 public class Movie {
-    public String title;
-    public String posterPath;
+    private String title;
+    private String posterURL;
 
-    public Movie(JsonObject movie){
-
+    public Movie(String title, String posterURL) {
+        this.title = title;
+        this.posterURL = posterURL;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public String getPosterURL() {
+        return posterURL;
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Movie && title.equals(((Movie) obj).title);
+    }
 }

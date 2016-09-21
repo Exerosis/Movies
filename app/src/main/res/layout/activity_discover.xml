@@ -1,19 +1,8 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/movie_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layoutManager="android.support.v7.widget.GridLayoutManager"
-            tools:listitem="@layout/movie_card" />
-
-
     </RelativeLayout>
 </layout>

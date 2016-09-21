@@ -1,6 +1,7 @@
 package me.exerosis.nanodegree.movies;
 
 
+import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -10,25 +11,21 @@ import me.exerosis.nanodegree.movies.databinding.MovieCardBinding;
 
 
 public class MovieCard extends RecyclerView.ViewHolder implements View.OnClickListener {
-    private final MovieCardBinding binding;
+    private final ViewDataBinding binding;
 
-    public MovieCard(MovieCardBinding binding) {
+    public MovieCard(ViewDataBinding binding) {
         super(binding.getRoot());
         this.binding = binding;
     }
 
     public void displayMovie(Movie movie){
         //Set the content description.
-        binding.poster.setContentDescription(movie.title);
+        ((MovieCardBinding) binding).poster.setContentDescription(movie.getTitle());
 
-        String url = "http://image.tmdb.org/t/p/w342" + movie.posterPath + "&api_key=80de3dcb516f2d18d76b0d4f3d7b2f05";
         //Load in the poster image.
-        Picasso.with(binding.getRoot().getContext()).load(url).into(binding.poster);
+        Picasso.with(binding.getRoot().getContext()).load(movie.getPosterURL()).into(((MovieCardBinding) binding).poster);
     }
 
-    public MovieCardBinding getBinding() {
-        return binding;
-    }
 
     @Override
     public void onClick(View view) {
