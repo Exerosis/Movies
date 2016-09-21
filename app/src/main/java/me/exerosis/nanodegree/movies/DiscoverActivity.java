@@ -16,8 +16,9 @@ public class DiscoverActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         DataBindingUtil.setContentView(this, R.layout.activity_discover);
 
+
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.content, FragmentMovieList.newInstance(URL))
+                .replace(R.id.content, FragmentMovieList.newInstance(URL))
         .commit();
     }
 }

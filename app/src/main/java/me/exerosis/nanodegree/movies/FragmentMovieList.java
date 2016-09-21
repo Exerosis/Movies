@@ -46,6 +46,9 @@ public class FragmentMovieList extends Fragment implements LoaderManager.LoaderC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_list, container, false);
+        System.out.println("Inflated Fragment");
+
+        binding.swipeRefreshLayout.setOnRefreshListener(this);
 
         binding.movieList.setLayoutManager(new GridLayoutManager(getContext(), 4));
 
@@ -71,12 +74,13 @@ public class FragmentMovieList extends Fragment implements LoaderManager.LoaderC
 
         getLoaderManager().initLoader(0, null, this).forceLoad();
 
-        return binding.getRoot().getRootView();
+        return binding.getRoot();
     }
 
 
     @Override
     public Loader<Collection<Movie>> onCreateLoader(int id, Bundle args) {
+        System.out.println("Loader Created");
         try {
             return new MovieLoader(this.getContext(), new URL(getArguments().getString(ARG_URL)));
         } catch (IOException e) {
@@ -87,6 +91,7 @@ public class FragmentMovieList extends Fragment implements LoaderManager.LoaderC
 
     @Override
     public void onLoadFinished(Loader<Collection<Movie>> loader, Collection<Movie> data) {
+        System.out.println("Load Finished");
         movies.addAll(data);
         movies.retainAll(data);
         binding.movieList.getAdapter().notifyDataSetChanged();
@@ -95,11 +100,12 @@ public class FragmentMovieList extends Fragment implements LoaderManager.LoaderC
 
     @Override
     public void onLoaderReset(Loader<Collection<Movie>> loader) {
-
+        System.out.println("Loader Reset");
     }
 
     @Override
     public void onRefresh() {
+        System.out.println("Refreshing");
         getLoaderManager().restartLoader(0, null, this).forceLoad();
     }
 }

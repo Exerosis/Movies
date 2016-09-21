@@ -31,6 +31,11 @@ public class MovieLoader extends AsyncTaskLoader<Collection<Movie>> {
 
     @Override
     public Collection<Movie> loadInBackground() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         List<Movie> movies = new ArrayList<>();
         Closeable reader = null;
         try {
