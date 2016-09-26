@@ -24,8 +24,6 @@ public class MovieLoader extends AsyncTaskLoader<Collection<Movie>> {
 
     public MovieLoader(Context context, URL url) throws IOException {
         super(context);
-        if (url == null)
-            throw new IOException("Invalid URL, the url must be a valid url.");
         this.url = url;
     }
 
