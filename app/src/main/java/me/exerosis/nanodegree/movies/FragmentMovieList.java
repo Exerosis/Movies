@@ -83,7 +83,8 @@ public class FragmentMovieList extends Fragment implements LoaderManager.LoaderC
         binding.movieList.setHasFixedSize(true);
 
         binding.movieList.setLayoutManager(new GridLayoutManager(getContext(), 4));
-
+        binding.movieList.setClipToPadding(false);
+        binding.movieList.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.movie_list_item_offset));
         RecyclerView.Adapter<MovieCard> adapter = new RecyclerView.Adapter<MovieCard>() {
             @Override
             public MovieCard onCreateViewHolder(ViewGroup parent, int viewType) {
