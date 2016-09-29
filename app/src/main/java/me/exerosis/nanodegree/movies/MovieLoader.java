@@ -1,6 +1,7 @@
 package me.exerosis.nanodegree.movies;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 import android.widget.Toast;
 
@@ -14,15 +15,24 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 public class MovieLoader extends AsyncTaskLoader<Collection<Movie>> {
+    public static final String ARG_URL = "URL";
     private final URL url;
+    private Collection<Movie> movies = new ArrayList<>();
 
-    public MovieLoader(Context context, URL url) throws IOException {
+    public MovieLoader(Context context, Bundle args) {
+        this(context, (URL) args.getSerializable(ARG_URL));
+    }
+    public MovieLoader(Context context, String url) throws MalformedURLException {
+        this(context, new URL(url));
+    }
+    public MovieLoader(Context context, URL url) {
         super(context);
         this.url = url;
     }
@@ -43,9 +53,10 @@ public class MovieLoader extends AsyncTaskLoader<Collection<Movie>> {
 
             JsonObject result = (JsonObject) new JsonParser().parse((Reader) reader);
 
+
             for (JsonElement movie : result.getAsJsonArray("results")) {
 
-                StringBuilder posterURL = new StringBuilder("http://image.tmdb.org/t/p/w342");
+                StringBuilder posterURL = new StringBuilder("http://image.tmdb.org/t/p/w500");
                 posterURL.append(((JsonObject) movie).get("poster_path").getAsString());
                 posterURL.append("&api_key=80de3dcb516f2d18d76b0d4f3d7b2f05");
 
@@ -64,6 +75,27 @@ public class MovieLoader extends AsyncTaskLoader<Collection<Movie>> {
         }
 
         return movies;
+    }
+
+    @Override
+    public void deliverResult(Collection<Movie> data) {
+        if(data == null || movies.equals(data))
+            return;
+        movies = data;
+        if (isStarted())
+            super.deliverResult(movies);
+    }
+
+    @Override
+    protected void onStartLoading() {
+        if (movies != null)
+            deliverResult(movies);
+    }
+
+    @Override
+    protected void onStopLoading() {
+        super.onStopLoading();
+        cancelLoad();
     }
 
 }
