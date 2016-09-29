@@ -56,13 +56,12 @@ public class MovieLoader extends AsyncTaskLoader<Collection<Movie>> {
 
             for (JsonElement movie : result.getAsJsonArray("results")) {
 
-                StringBuilder posterURL = new StringBuilder("http://image.tmdb.org/t/p/w500");
-                posterURL.append(((JsonObject) movie).get("poster_path").getAsString());
-                posterURL.append("&api_key=80de3dcb516f2d18d76b0d4f3d7b2f05");
+                String posterURL = "http://image.tmdb.org/t/p/w500" + ((JsonObject) movie).get("poster_path").getAsString() +
+                        "&api_key=80de3dcb516f2d18d76b0d4f3d7b2f05";
 
                 String title = ((JsonObject) movie).get("title").getAsString();
 
-                movies.add(new Movie(title, posterURL.toString()));
+                movies.add(new Movie(title, posterURL));
             }
 
         } catch (IOException e) {

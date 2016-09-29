@@ -33,6 +33,7 @@ public class FragmentMovieList extends Fragment implements LoaderManager.LoaderC
 
     public static FragmentMovieList newInstance(URL url){
         FragmentMovieList result = new FragmentMovieList();
+        result.setArguments(new Bundle());
         result.getArguments().putSerializable(MovieLoader.ARG_URL, url);
         return result;
     }
@@ -42,6 +43,7 @@ public class FragmentMovieList extends Fragment implements LoaderManager.LoaderC
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getLoaderManager().initLoader(0, getArguments(), this).forceLoad();
+        setRetainInstance(true);
     }
 
     @Override
