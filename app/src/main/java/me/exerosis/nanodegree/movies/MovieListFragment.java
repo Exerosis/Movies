@@ -23,21 +23,26 @@ import java.util.List;
 import me.exerosis.nanodegree.movies.databinding.FragmentMovieListBinding;
 
 
-public class FragmentMovieList extends Fragment implements LoaderManager.LoaderCallbacks<Collection<Movie>>, SwipeRefreshLayout.OnRefreshListener {
+public class MovieListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Collection<Movie>>, SwipeRefreshLayout.OnRefreshListener {
     private FragmentMovieListBinding binding;
     private List<Movie> movies = new ArrayList<>();
 
-    public static FragmentMovieList newInstance(String url) throws MalformedURLException {
+
+    public static MovieListFragment newInstance(String url) throws MalformedURLException {
         return newInstance(new URL(url));
     }
 
-    public static FragmentMovieList newInstance(URL url){
-        FragmentMovieList result = new FragmentMovieList();
-        result.setArguments(new Bundle());
-        result.getArguments().putSerializable(MovieLoader.ARG_URL, url);
-        return result;
+    public static MovieListFragment newInstance(URL url){
+        Bundle args = new Bundle();
+        args.putSerializable(MovieListLoader.ARG_URL, url);
+        return newInstance(args);
     }
 
+    public static MovieListFragment newInstance(Bundle args){
+        MovieListFragment result = new MovieListFragment();
+        result.setArguments(args);
+        return result;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,15 +61,15 @@ public class FragmentMovieList extends Fragment implements LoaderManager.LoaderC
         //RecyclerView
         binding.movieList.setLayoutManager(new GridLayoutManager(getContext(), getResources().getInteger(R.integer.movie_list_columns)));
         binding.movieList.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.movie_list_item_offset));
-        binding.movieList.setAdapter(new RecyclerView.Adapter<MovieCard>() {
+        binding.movieList.setAdapter(new RecyclerView.Adapter<MovieListCard>() {
             @Override
-            public MovieCard onCreateViewHolder(ViewGroup parent, int viewType) {
+            public MovieListCard onCreateViewHolder(ViewGroup parent, int viewType) {
                 LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-                return new MovieCard(DataBindingUtil.inflate(inflater, R.layout.movie_card, parent, false));
+                return new MovieListCard(DataBindingUtil.inflate(inflater, R.layout.movie_card, parent, false));
             }
 
             @Override
-            public void onBindViewHolder(MovieCard holder, int position) {
+            public void onBindViewHolder(MovieListCard holder, int position) {
                 holder.displayMovie(movies.get(position));
             }
 
@@ -81,7 +86,7 @@ public class FragmentMovieList extends Fragment implements LoaderManager.LoaderC
 
     @Override
     public Loader<Collection<Movie>> onCreateLoader(int id, Bundle args) {
-        return new MovieLoader(this.getContext(), args);
+        return new MovieListLoader(this.getContext(), args);
     }
 
     @Override

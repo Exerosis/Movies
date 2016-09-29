@@ -1,7 +1,12 @@
 package me.exerosis.nanodegree.movies;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 public class Movie implements Parcelable {
     private String title;
@@ -12,6 +17,11 @@ public class Movie implements Parcelable {
         this.posterURL = posterURL;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Movie && title.equals(((Movie) obj).title);
+    }
+
     public String getTitle() {
         return title;
     }
@@ -20,11 +30,6 @@ public class Movie implements Parcelable {
         return posterURL;
     }
 
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj instanceof Movie && title.equals(((Movie) obj).title);
-    }
 
     @Override
     public int describeContents() {

@@ -1,6 +1,8 @@
 package me.exerosis.nanodegree.movies;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 import android.widget.Toast;
@@ -21,29 +23,29 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class MovieLoader extends AsyncTaskLoader<Collection<Movie>> {
+public class MovieListLoader extends AsyncTaskLoader<Collection<Movie>> {
     public static final String ARG_URL = "URL";
     private final URL url;
     private Collection<Movie> movies = new ArrayList<>();
 
-    public MovieLoader(Context context, Bundle args) {
+    public MovieListLoader(Context context, Bundle args) {
         this(context, (URL) args.getSerializable(ARG_URL));
     }
-    public MovieLoader(Context context, String url) throws MalformedURLException {
+
+    public MovieListLoader(Context context, String url) throws MalformedURLException {
         this(context, new URL(url));
     }
-    public MovieLoader(Context context, URL url) {
+
+    public MovieListLoader(Context context, URL url) {
         super(context);
         this.url = url;
     }
 
     @Override
     public Collection<Movie> loadInBackground() {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        if (!isOnline())
+            return movies;
+
         List<Movie> movies = new ArrayList<>();
         Closeable reader = null;
         try {
@@ -78,7 +80,7 @@ public class MovieLoader extends AsyncTaskLoader<Collection<Movie>> {
 
     @Override
     public void deliverResult(Collection<Movie> data) {
-        if(data == null || movies.equals(data))
+        if (data == null || movies.equals(data))
             return;
         movies = data;
         if (isStarted())
@@ -97,4 +99,10 @@ public class MovieLoader extends AsyncTaskLoader<Collection<Movie>> {
         cancelLoad();
     }
 
+
+    private boolean isOnline() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = connectivityManager.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
 }
