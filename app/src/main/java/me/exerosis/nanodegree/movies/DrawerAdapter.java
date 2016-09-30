@@ -10,6 +10,9 @@ import java.util.List;
 
 
 public class DrawerAdapter extends ArrayAdapter<Drawer> implements ListView.OnItemClickListener {
+    public DrawerAdapter(Context context, int resource, Drawer... drawers) {
+        super(context, resource, drawers);
+    }
     public DrawerAdapter(Context context, int resource, List<Drawer> drawers) {
         super(context, resource, drawers);
     }
