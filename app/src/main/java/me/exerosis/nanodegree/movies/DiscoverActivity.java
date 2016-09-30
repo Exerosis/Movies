@@ -30,8 +30,7 @@ public class DiscoverActivity extends FragmentActivity implements ListView.OnIte
     private DrawerAdapter adapter;
 
     public DiscoverActivity() {
-        Drawer[] drawers = new Drawer[]{new Drawer("Popular", POPULAR), new Drawer("Top Rated", TOP_RATED)};
-        adapter = new DrawerAdapter(this, R.layout.drawer_item, drawers);
+
     }
 
     @Override
@@ -40,8 +39,12 @@ public class DiscoverActivity extends FragmentActivity implements ListView.OnIte
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_discover);
 
-        binding.leftDrawer.setAdapter(adapter);
-        binding.leftDrawer.setOnItemClickListener(this);
+        if (getSupportFragmentManager().findFragmentByTag("movie_list") == null){
+            System.out.println("added first time fragment");
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content, MovieListFragment.newInstance(POPULAR), "movie_list")
+                    .commit();
+        }
     }
 
     @Override
@@ -49,9 +52,7 @@ public class DiscoverActivity extends FragmentActivity implements ListView.OnIte
         Drawer drawer = adapter.getItem(position);
 
         // Insert the fragment by replacing any existing fragment
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content, MovieListFragment.newInstance(drawer.getURL()))
-                .commit();
+
 
         // Highlight the selected item, update the title, and close the drawer
         binding.leftDrawer.setItemChecked(position, true);

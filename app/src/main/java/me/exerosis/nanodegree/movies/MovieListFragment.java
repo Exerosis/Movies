@@ -48,7 +48,6 @@ public class MovieListFragment extends Fragment implements LoaderManager.LoaderC
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getLoaderManager().initLoader(0, getArguments(), this).forceLoad();
-        setRetainInstance(true);
     }
 
     @Override
