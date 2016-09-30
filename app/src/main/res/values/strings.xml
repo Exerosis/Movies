@@ -2,4 +2,10 @@
     <string name="app_name">Movies</string>
     <string name="cover_error">Movie Failed To Load</string>
     <string name="load_failed">Failed to Load</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>
