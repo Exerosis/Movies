@@ -97,6 +97,7 @@ public class MovieListFragment extends Fragment implements LoaderManager.LoaderC
 
     @Override
     public void onLoaderReset(Loader<Collection<Movie>> loader) {
+
     }
 
     @Override

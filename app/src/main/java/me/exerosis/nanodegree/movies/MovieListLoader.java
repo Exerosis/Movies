@@ -25,7 +25,7 @@ import java.util.List;
 
 public class MovieListLoader extends AsyncTaskLoader<Collection<Movie>> {
     public static final String ARG_URL = "URL";
-    private final URL url;
+    private URL url;
     private Collection<Movie> movies = new ArrayList<>();
 
     public MovieListLoader(Context context, Bundle args) {
@@ -38,6 +38,10 @@ public class MovieListLoader extends AsyncTaskLoader<Collection<Movie>> {
 
     public MovieListLoader(Context context, URL url) {
         super(context);
+        this.url = url;
+    }
+
+    public void setUrl(URL url) {
         this.url = url;
     }
 
