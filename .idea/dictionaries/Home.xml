@@ -2,6 +2,7 @@
   <dictionary name="Home">
     <words>
       <w>autofit</w>
+      <w>interactable</w>
     </words>
   </dictionary>
 </component>

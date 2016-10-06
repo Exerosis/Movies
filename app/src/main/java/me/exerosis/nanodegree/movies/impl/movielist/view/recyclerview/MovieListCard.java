@@ -1,16 +1,13 @@
-package me.exerosis.nanodegree.movies;
+package me.exerosis.nanodegree.movies.impl.movielist.view.recyclerview;
 
 
 import android.databinding.ViewDataBinding;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import me.exerosis.nanodegree.movies.databinding.MovieCardBinding;
+import me.exerosis.nanodegree.movies.impl.model.Movie;
 
 
 public class MovieListCard extends RecyclerView.ViewHolder {
@@ -26,7 +23,7 @@ public class MovieListCard extends RecyclerView.ViewHolder {
         ((MovieCardBinding) binding).poster.setContentDescription(movie.getTitle());
 
         //Load in the poster image.
-        Picasso.with(binding.getRoot().getContext()).load(movie.getPosterURL()).into(((MovieCardBinding) binding).poster);
+        ((MovieCardBinding) binding).poster.setImageBitmap(movie.getPoster());
     }
 
 }

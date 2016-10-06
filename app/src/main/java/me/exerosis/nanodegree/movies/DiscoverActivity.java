@@ -11,8 +11,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import me.exerosis.nanodegree.movies.databinding.ActivityDiscoverBinding;
+import me.exerosis.nanodegree.movies.impl.movielist.MovieListController;
 
-public class DiscoverActivity extends FragmentActivity implements ListView.OnItemClickListener {
+public class DiscoverActivity extends FragmentActivity  {
     private static URL POPULAR;
     private static URL TOP_RATED;
 
@@ -27,7 +28,6 @@ public class DiscoverActivity extends FragmentActivity implements ListView.OnIte
     }
 
     private ActivityDiscoverBinding binding;
-    private DrawerAdapter adapter;
 
     public DiscoverActivity() {
 
@@ -36,21 +36,11 @@ public class DiscoverActivity extends FragmentActivity implements ListView.OnIte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_discover);
 
+        getSupportFragmentManager().beginTransaction()
+                .replace(binding.content.getId(), new MovieListController(), "movie_list")
+                .commit();
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Drawer drawer = adapter.getItem(position);
-
-        // Insert the fragment by replacing any existing fragment
-
-
-        // Highlight the selected item, update the title, and close the drawer
-        binding.leftDrawer.setItemChecked(position, true);
-        setTitle(drawer.getTitle());
-        binding.drawerLayout.closeDrawer(position);
-    }
 }

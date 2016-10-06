@@ -3,26 +3,21 @@ package me.exerosis.nanodegree.movies;
 import android.app.LoaderManager;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collection;
 
-import me.exerosis.nanodegree.movies.databinding.ActivityDiscoverBinding;
 import me.exerosis.nanodegree.movies.databinding.ActivityMainBinding;
+import me.exerosis.nanodegree.movies.impl.model.Movie;
+import me.exerosis.nanodegree.movies.impl.movielist.MovieListController;
+import me.exerosis.nanodegree.movies.impl.movielist.MovieListLoader;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Bundle urlArguments = new Bundle();
@@ -44,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         getSupportFragmentManager().beginTransaction()
-                .replace(binding.content.getId(), new MovieListFragment(), "movie_list")
+                .replace(binding.content.getId(), new MovieListController(), "movie_list")
                 .commit();
     }
 
@@ -83,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @SuppressWarnings("unchecked")
-    @Override
     public void onRefresh() {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag("movie_list");
         if (fragment != null)

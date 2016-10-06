@@ -1,4 +1,4 @@
-package me.exerosis.nanodegree.movies;
+package me.exerosis.nanodegree.movies.impl.movielist;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -22,6 +22,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import me.exerosis.nanodegree.movies.R;
+import me.exerosis.nanodegree.movies.impl.model.Movie;
 
 public class MovieListLoader extends AsyncTaskLoader<Collection<Movie>> {
     public static final String ARG_URL = "URL";
