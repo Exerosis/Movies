@@ -1,12 +1,17 @@
 package me.exerosis.nanodegree.movies;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,35 +32,13 @@ public class MovieListFragment extends Fragment implements LoaderManager.LoaderC
     private FragmentMovieListBinding binding;
     private List<Movie> movies = new ArrayList<>();
 
-
-    public static MovieListFragment newInstance(String url) throws MalformedURLException {
-        return newInstance(new URL(url));
-    }
-
-    public static MovieListFragment newInstance(URL url){
-        Bundle args = new Bundle();
-        args.putSerializable(MovieListLoader.ARG_URL, url);
-        return newInstance(args);
-    }
-
-    public static MovieListFragment newInstance(Bundle args){
-        MovieListFragment result = new MovieListFragment();
-        result.setArguments(args);
-        return result;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getLoaderManager().initLoader(0, getArguments(), this).forceLoad();
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_list, container, false);
 
         //Listeners
-        binding.swipeRefreshLayout.setOnRefreshListener(this);
+      //  binding.swipeRefreshLayout.setOnRefreshListener(this);
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(this, new IntentFilter("url-change"));
 
         //RecyclerView
         binding.movieList.setLayoutManager(new GridLayoutManager(getContext(), getResources().getInteger(R.integer.movie_list_columns)));
@@ -92,7 +75,7 @@ public class MovieListFragment extends Fragment implements LoaderManager.LoaderC
     public void onLoadFinished(Loader<Collection<Movie>> loader, Collection<Movie> data) {
         movies = (List<Movie>) data;
         binding.movieList.getAdapter().notifyDataSetChanged();
-        binding.swipeRefreshLayout.setRefreshing(false);
+        //binding.swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -102,6 +85,6 @@ public class MovieListFragment extends Fragment implements LoaderManager.LoaderC
 
     @Override
     public void onRefresh() {
-        getLoaderManager().initLoader(0, getArguments(), this).forceLoad();
+
     }
 }

@@ -39,12 +39,6 @@ public class DiscoverActivity extends FragmentActivity implements ListView.OnIte
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_discover);
 
-        if (getSupportFragmentManager().findFragmentByTag("movie_list") == null){
-            System.out.println("added first time fragment");
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content, MovieListFragment.newInstance(POPULAR), "movie_list")
-                    .commit();
-        }
     }
 
     @Override
