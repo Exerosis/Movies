@@ -34,9 +34,6 @@ public class MovieListView implements ViewBase, MovieList {
     }
 
     private void initialize(Context context) {
-        //Listener
-        binding.swipeRefreshLayout.setOnRefreshListener(listener);
-
         //RecyclerView
         binding.movieList.setLayoutManager(new GridLayoutManager(context, context.getResources().getInteger(R.integer.movie_list_columns)));
         binding.movieList.addItemDecoration(new ItemOffsetDecoration(context, R.dimen.movie_list_item_offset));
@@ -56,7 +53,6 @@ public class MovieListView implements ViewBase, MovieList {
 
             @Override
             public int getItemCount() {
-                System.out.println( movies.size());
                 return movies.size();
             }
         });
@@ -87,6 +83,7 @@ public class MovieListView implements ViewBase, MovieList {
     @Override
     public void setListener(MovieListListener listener) {
         this.listener = listener;
+        binding.swipeRefreshLayout.setOnRefreshListener(listener);
     }
 
     @Override

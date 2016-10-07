@@ -35,8 +35,9 @@ public class MovieListController extends Fragment implements MovieListListener, 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         movieList = new MovieListView(inflater, container);
+        movieList.setListener(this);
 
-        getLoaderManager().initLoader(LOADER_ID, LOADER_BUNDLE, this);
+        getLoaderManager().initLoader(LOADER_ID, LOADER_BUNDLE, this).forceLoad();
         return movieList.getRootView();
     }
 
@@ -47,25 +48,25 @@ public class MovieListController extends Fragment implements MovieListListener, 
 
     @Override
     public void onRefresh() {
-        getLoaderManager().initLoader(LOADER_ID, LOADER_BUNDLE, this);
+        System.out.println("refresh");
+        getLoaderManager().initLoader(LOADER_ID, LOADER_BUNDLE, this).forceLoad();
     }
 
 
     @Override
     public Loader<Collection<Movie>> onCreateLoader(int id, Bundle args) {
-
         return new MovieListLoader(getContext(), args);
     }
 
     @Override
     public void onLoadFinished(Loader<Collection<Movie>> loader, Collection<Movie> data) {
-        System.out.println(data.size());
+        System.out.println("finished");
         movieList.setMovies(data);
         movieList.setRefreshing(false);
     }
 
     @Override
     public void onLoaderReset(Loader<Collection<Movie>> loader) {
-        movieList.setRefreshing(true);
+       // movieList.setRefreshing(true);
     }
 }

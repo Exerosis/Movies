@@ -9,14 +9,13 @@ import android.os.Parcelable;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
-public class Movie implements Target, Parcelable {
+public class Movie implements Parcelable {
     private String title;
     private Bitmap poster;
 
-    public Movie(Context context, String title, String posterURL) {
+    public Movie(String title, Bitmap poster) {
         this.title = title;
-        //Try to move this elsewhere!
-        Picasso.with(context).load(posterURL).into(this);
+        this.poster = poster;
     }
 
     @Override
@@ -30,19 +29,6 @@ public class Movie implements Target, Parcelable {
 
     public Bitmap getPoster() {
         return poster;
-    }
-
-    @Override
-    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-        poster = bitmap;
-    }
-
-    @Override
-    public void onBitmapFailed(Drawable errorDrawable) {
-    }
-
-    @Override
-    public void onPrepareLoad(Drawable placeHolderDrawable) {
     }
 
     @Override

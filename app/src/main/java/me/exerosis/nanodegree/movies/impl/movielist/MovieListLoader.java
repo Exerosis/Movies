@@ -1,6 +1,8 @@
 package me.exerosis.nanodegree.movies.impl.movielist;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -50,7 +52,6 @@ public class MovieListLoader extends AsyncTaskLoader<Collection<Movie>> {
 
     @Override
     public Collection<Movie> loadInBackground() {
-        System.out.println("Loader");
         if (!isOnline())
             return movies;
 
@@ -66,12 +67,13 @@ public class MovieListLoader extends AsyncTaskLoader<Collection<Movie>> {
 
             for (JsonElement movie : result.getAsJsonArray("results")) {
 
-                String posterURL = "http://image.tmdb.org/t/p/w500" + ((JsonObject) movie).get("poster_path").getAsString() +
-                        "&api_key=80de3dcb516f2d18d76b0d4f3d7b2f05";
+                URL posterURL = new URL("http://image.tmdb.org/t/p/w500" + ((JsonObject) movie).get("poster_path").getAsString() +
+                        "&api_key=80de3dcb516f2d18d76b0d4f3d7b2f05");
+                Bitmap poster = BitmapFactory.decodeStream(posterURL.openConnection().getInputStream());
 
                 String title = ((JsonObject) movie).get("title").getAsString();
 
-                movies.add(new Movie(getContext(), title, posterURL));
+                movies.add(new Movie(title, poster));
             }
 
         } catch (IOException e) {
