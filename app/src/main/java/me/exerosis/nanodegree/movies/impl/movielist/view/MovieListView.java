@@ -45,7 +45,8 @@ public class MovieListView implements ViewBase, MovieList {
         binding.movieList.setAdapter(new RecyclerView.Adapter<MovieListCard>() {
             @Override
             public MovieListCard onCreateViewHolder(ViewGroup parent, int viewType) {
-                return new MovieListCard(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.movie_card, parent, false));
+                LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+                return new MovieListCard(DataBindingUtil.inflate(inflater, R.layout.movie_card, parent, false));
             }
 
             @Override
@@ -55,6 +56,7 @@ public class MovieListView implements ViewBase, MovieList {
 
             @Override
             public int getItemCount() {
+                System.out.println( movies.size());
                 return movies.size();
             }
         });

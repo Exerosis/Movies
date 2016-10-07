@@ -50,6 +50,7 @@ public class MovieListLoader extends AsyncTaskLoader<Collection<Movie>> {
 
     @Override
     public Collection<Movie> loadInBackground() {
+        System.out.println("Loader");
         if (!isOnline())
             return movies;
 
@@ -96,7 +97,7 @@ public class MovieListLoader extends AsyncTaskLoader<Collection<Movie>> {
 
     @Override
     protected void onStartLoading() {
-        if (movies != null)
+        if (!movies.isEmpty())
             deliverResult(movies);
     }
 
