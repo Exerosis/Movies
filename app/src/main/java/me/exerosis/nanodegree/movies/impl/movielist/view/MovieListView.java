@@ -30,10 +30,10 @@ public class MovieListView implements ViewBase, MovieList {
 
     public MovieListView(LayoutInflater inflater, ViewGroup container) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_list, container, false);
-        initialize(container.getContext(), inflater);
+        initialize(container.getContext());
     }
 
-    private void initialize(Context context, final LayoutInflater inflater) {
+    private void initialize(Context context) {
         //Listener
         binding.swipeRefreshLayout.setOnRefreshListener(listener);
 
@@ -45,8 +45,7 @@ public class MovieListView implements ViewBase, MovieList {
         binding.movieList.setAdapter(new RecyclerView.Adapter<MovieListCard>() {
             @Override
             public MovieListCard onCreateViewHolder(ViewGroup parent, int viewType) {
-                return new MovieListCard(DataBindingUtil.inflate(inflater, R.layout.movie_card, parent, false)
-                );
+                return new MovieListCard(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.movie_card, parent, false));
             }
 
             @Override

@@ -70,7 +70,7 @@ public class MovieListLoader extends AsyncTaskLoader<Collection<Movie>> {
 
                 String title = ((JsonObject) movie).get("title").getAsString();
 
-                movies.add(new Movie(title, posterURL));
+                movies.add(new Movie(getContext(), title, posterURL));
             }
 
         } catch (IOException e) {

@@ -29,9 +29,6 @@ public class DiscoverActivity extends FragmentActivity  {
 
     private ActivityDiscoverBinding binding;
 
-    public DiscoverActivity() {
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

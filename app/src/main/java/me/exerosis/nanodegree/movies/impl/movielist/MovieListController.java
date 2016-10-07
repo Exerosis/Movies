@@ -36,6 +36,7 @@ public class MovieListController extends Fragment implements MovieListListener, 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         movieList = new MovieListView(inflater, container);
 
+
         getLoaderManager().initLoader(LOADER_ID, LOADER_BUNDLE, this);
         return movieList.getRootView();
     }
@@ -53,11 +54,13 @@ public class MovieListController extends Fragment implements MovieListListener, 
 
     @Override
     public Loader<Collection<Movie>> onCreateLoader(int id, Bundle args) {
+        System.out.println("Created");
         return new MovieListLoader(getContext(), args);
     }
 
     @Override
     public void onLoadFinished(Loader<Collection<Movie>> loader, Collection<Movie> data) {
+        System.out.println(data.size());
         movieList.setMovies(data);
         movieList.setRefreshing(false);
     }
