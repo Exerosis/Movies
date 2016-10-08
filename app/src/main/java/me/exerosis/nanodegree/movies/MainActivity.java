@@ -16,8 +16,8 @@ import java.util.Collection;
 
 import me.exerosis.nanodegree.movies.databinding.ActivityMainBinding;
 import me.exerosis.nanodegree.movies.impl.model.Movie;
-import me.exerosis.nanodegree.movies.impl.movielist.MovieListController;
-import me.exerosis.nanodegree.movies.impl.movielist.MovieListLoader;
+import me.exerosis.nanodegree.movies.impl.movielist.controller.MovieListFragment;
+import me.exerosis.nanodegree.movies.impl.main.MovieListLoader;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Bundle urlArguments = new Bundle();
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.fragment_main);
 
         setSupportActionBar(binding.toolbar);
 
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         getSupportFragmentManager().beginTransaction()
-                .replace(binding.content.getId(), new MovieListController(), "movie_list")
+                .replace(binding.content.getId(), new MovieListFragment(), "movie_list")
                 .commit();
     }
 

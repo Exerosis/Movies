@@ -1,4 +1,4 @@
-package me.exerosis.nanodegree.movies.impl.movielist;
+package me.exerosis.nanodegree.movies.impl.main;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -32,14 +32,6 @@ public class MovieListLoader extends AsyncTaskLoader<Collection<Movie>> {
     public static final String ARG_URL = "URL";
     private URL url;
     private Collection<Movie> movies = new ArrayList<>();
-
-    public MovieListLoader(Context context, Bundle args) {
-        this(context, (URL) args.getSerializable(ARG_URL));
-    }
-
-    public MovieListLoader(Context context, String url) throws MalformedURLException {
-        this(context, new URL(url));
-    }
 
     public MovieListLoader(Context context, URL url) {
         super(context);
