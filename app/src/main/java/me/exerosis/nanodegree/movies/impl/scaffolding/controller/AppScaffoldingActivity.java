@@ -2,21 +2,28 @@ package me.exerosis.nanodegree.movies.impl.scaffolding.controller;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collection;
 
+import me.exerosis.nanodegree.movies.R;
+import me.exerosis.nanodegree.movies.impl.movielist.model.MovieListLoader;
 import me.exerosis.nanodegree.movies.impl.movielist.controller.MovieListController;
 import me.exerosis.nanodegree.movies.impl.movielist.controller.MovieListFragment;
+import me.exerosis.nanodegree.movies.impl.movielist.model.Movie;
 import me.exerosis.nanodegree.movies.impl.scaffolding.view.AppScaffolding;
 import me.exerosis.nanodegree.movies.impl.scaffolding.view.AppScaffoldingListener;
 import me.exerosis.nanodegree.movies.impl.scaffolding.view.AppScaffoldingView;
 
-public class AppScaffoldingActivity extends AppCompatActivity implements AppScaffoldingListener {
+public class AppScaffoldingActivity extends AppCompatActivity implements AppScaffoldingController, AppScaffoldingListener {
     private MovieListController movieListController;
     private AppScaffolding appScaffolding;
+    private URL currentURL = POPULAR;
+
     private static URL POPULAR;
     private static URL TOP_RATED;
 
@@ -29,25 +36,41 @@ public class AppScaffoldingActivity extends AppCompatActivity implements AppScaf
         }
     }
 
-    public AppScaffoldingActivity() {
-
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         movieListController = new MovieListFragment();
+        movieListController.setLoaderProvider(this);
+
         appScaffolding = new AppScaffoldingView(this, movieListController);
 
         setContentView(appScaffolding.getRootView());
     }
 
     @Override
-    public void onDrawerMenuItemClicked() {
+    public void onBackPressed() {
+        if (!appScaffolding.setDrawerOpen(false))
+            super.onBackPressed();
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+        switch (item.getItemId()) {
+            case R.id.nav_import:
+                currentURL = POPULAR;
+                break;
+            case R.id.nav_gallery:
+                currentURL = TOP_RATED;
+                break;
+            default:
+                return false;
+        }
+
+        return appScaffolding.setDrawerOpen(false);
+    }
+
+    @Override
+    public Loader<Collection<Movie>> apply(Integer integer, Bundle bundle) {
+        return new MovieListLoader(this, currentURL);
     }
 }

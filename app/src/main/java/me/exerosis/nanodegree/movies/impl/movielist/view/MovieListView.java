@@ -14,22 +14,23 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import me.exerosis.nanodegree.movies.databinding.MovieListCardBinding;
+import me.exerosis.nanodegree.movies.databinding.MovieListViewBinding;
 import me.exerosis.nanodegree.movies.impl.movielist.view.recyclerview.ItemOffsetDecoration;
 import me.exerosis.nanodegree.movies.impl.movielist.view.recyclerview.MovieListCard;
 import me.exerosis.nanodegree.movies.R;
-import me.exerosis.nanodegree.movies.databinding.FragmentMovieListBinding;
 import me.exerosis.nanodegree.movies.impl.movielist.model.Movie;
 import me.exerosis.nanodegree.movies.mvc.ViewBase;
 
 
 public class MovieListView implements ViewBase, MovieList {
     public static final String ARG_MOVIES = "MOVIES";
-    private final FragmentMovieListBinding binding;
+    private final MovieListViewBinding binding;
     private final ArrayList<Movie> movies = new ArrayList<>();
     private MovieListListener listener;
 
     public MovieListView(LayoutInflater inflater, ViewGroup container) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_list, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.movie_list_view, container, false);
         initialize(container.getContext());
     }
 
@@ -43,7 +44,7 @@ public class MovieListView implements ViewBase, MovieList {
             @Override
             public MovieListCard onCreateViewHolder(ViewGroup parent, int viewType) {
                 LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-                return new MovieListCard(DataBindingUtil.inflate(inflater, R.layout.movie_card, parent, false));
+                return new MovieListCard(DataBindingUtil.<MovieListCardBinding>inflate(inflater, R.layout.movie_list_card, parent, false));
             }
 
             @Override
