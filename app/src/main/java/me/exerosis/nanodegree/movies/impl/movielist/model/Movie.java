@@ -1,13 +1,8 @@
-package me.exerosis.nanodegree.movies.impl.model;
+package me.exerosis.nanodegree.movies.impl.movielist.model;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 public class Movie implements Parcelable {
     private String title;

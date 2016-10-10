@@ -8,14 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.common.base.Supplier;
-
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Collection;
 
-import me.exerosis.nanodegree.movies.impl.model.Movie;
-import me.exerosis.nanodegree.movies.impl.movielist.controller.MovieListController;
+import me.exerosis.nanodegree.movies.impl.movielist.model.Movie;
 import me.exerosis.nanodegree.movies.impl.movielist.view.MovieListListener;
 import me.exerosis.nanodegree.movies.impl.movielist.view.MovieListView;
 import me.exerosis.nanodegree.movies.mvc.BiFunction;

@@ -4,10 +4,8 @@ package me.exerosis.nanodegree.movies.impl.movielist.view.recyclerview;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
-
 import me.exerosis.nanodegree.movies.databinding.MovieCardBinding;
-import me.exerosis.nanodegree.movies.impl.model.Movie;
+import me.exerosis.nanodegree.movies.impl.movielist.model.Movie;
 
 
 public class MovieListCard extends RecyclerView.ViewHolder {

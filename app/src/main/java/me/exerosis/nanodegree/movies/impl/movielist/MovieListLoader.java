@@ -1,11 +1,10 @@
-package me.exerosis.nanodegree.movies.impl.main;
+package me.exerosis.nanodegree.movies.impl.movielist;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 import android.widget.Toast;
 
@@ -19,14 +18,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import me.exerosis.nanodegree.movies.R;
-import me.exerosis.nanodegree.movies.impl.model.Movie;
+import me.exerosis.nanodegree.movies.impl.movielist.model.Movie;
 
 public class MovieListLoader extends AsyncTaskLoader<Collection<Movie>> {
     public static final String ARG_URL = "URL";

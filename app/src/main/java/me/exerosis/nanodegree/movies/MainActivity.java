@@ -15,9 +15,9 @@ import java.net.URL;
 import java.util.Collection;
 
 import me.exerosis.nanodegree.movies.databinding.ActivityMainBinding;
-import me.exerosis.nanodegree.movies.impl.model.Movie;
+import me.exerosis.nanodegree.movies.impl.movielist.model.Movie;
 import me.exerosis.nanodegree.movies.impl.movielist.controller.MovieListFragment;
-import me.exerosis.nanodegree.movies.impl.main.MovieListLoader;
+import me.exerosis.nanodegree.movies.impl.movielist.MovieListLoader;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Bundle urlArguments = new Bundle();

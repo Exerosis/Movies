@@ -18,7 +18,7 @@ import me.exerosis.nanodegree.movies.impl.movielist.view.recyclerview.ItemOffset
 import me.exerosis.nanodegree.movies.impl.movielist.view.recyclerview.MovieListCard;
 import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.databinding.FragmentMovieListBinding;
-import me.exerosis.nanodegree.movies.impl.model.Movie;
+import me.exerosis.nanodegree.movies.impl.movielist.model.Movie;
 import me.exerosis.nanodegree.movies.mvc.ViewBase;
 
 
