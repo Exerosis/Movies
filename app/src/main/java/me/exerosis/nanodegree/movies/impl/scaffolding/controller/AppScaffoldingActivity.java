@@ -40,7 +40,6 @@ public class AppScaffoldingActivity extends AppCompatActivity implements AppScaf
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         movieListController = new MovieListFragment();
-        movieListController.setLoaderProvider(this);
 
         appScaffolding = new AppScaffoldingView(this, movieListController);
         appScaffolding.setListener(this);
@@ -68,13 +67,8 @@ public class AppScaffoldingActivity extends AppCompatActivity implements AppScaf
         }
 
         System.out.println(currentURL);
-        movieListController.initLoader(0, null);
+        movieListController.setURL(currentURL);
         appScaffolding.setDrawerOpen(false);
         return true;
-    }
-
-    @Override
-    public Loader<Collection<Movie>> apply(Integer integer, Bundle bundle) {
-        return new MovieListLoader(this, currentURL);
     }
 }

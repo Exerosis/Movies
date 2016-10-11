@@ -8,9 +8,13 @@ import android.net.NetworkInfo;
 import android.support.v4.content.AsyncTaskLoader;
 import android.widget.Toast;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import org.apache.commons.io.IOUtils;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -21,34 +25,34 @@ import java.io.Reader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import me.exerosis.nanodegree.movies.R;
-import me.exerosis.nanodegree.movies.impl.movielist.model.Movie;
 
 public class MovieListLoader extends AsyncTaskLoader<Collection<Movie>> {
-    public static final String ARG_URL = "URL";
-    private URL url;
-    private Collection<Movie> movies = new ArrayList<>();
+    private URL currentURL;
+    private Multimap<URL, Movie> movies = ArrayListMultimap.create();
 
-    public MovieListLoader(Context context, URL url) {
+    public MovieListLoader(Context context) {
         super(context);
-        this.url = url;
     }
 
-    public void setUrl(URL url) {
-        this.url = url;
+    public void setURL(URL currentURL) {
+        this.currentURL = currentURL;
     }
 
     @Override
     public Collection<Movie> loadInBackground() {
-        if (!isOnline())
-            return movies;
+        if (currentURL == null || !isOnline())
+            return null;
 
-        List<Movie> movies = new ArrayList<>();
+        System.out.println("t");
+
+        List<Movie> freshMovies = new ArrayList<>();
         Closeable reader = null;
         try {
-            reader = url.openStream();
+            reader = currentURL.openStream();
             reader = new InputStreamReader((InputStream) reader);
             reader = new BufferedReader((Reader) reader);
 
@@ -63,34 +67,43 @@ public class MovieListLoader extends AsyncTaskLoader<Collection<Movie>> {
 
                 String title = ((JsonObject) movie).get("title").getAsString();
 
-                movies.add(new Movie(title, poster));
+                freshMovies.add(new Movie(title, poster));
             }
 
         } catch (IOException e) {
             Toast.makeText(getContext(), R.string.load_failed, Toast.LENGTH_SHORT).show();
+            return null;
         } finally {
             try {
-                reader.close();
+                if (reader != null)
+                    reader.close();
             } catch (IOException ignored) {
             }
         }
 
-        return movies;
+        return freshMovies;
     }
 
     @Override
     public void deliverResult(Collection<Movie> data) {
-        if (data == null || movies.equals(data))
+        if (!isStarted())
             return;
-        movies = data;
-        if (isStarted())
-            super.deliverResult(movies);
+        if (data == null)
+            data = movies.get(currentURL);
+        if (movies.get(currentURL).equals(data))
+            data = null;
+        if(data != null) {
+            movies.putAll(currentURL, data);
+            data = new ArrayList<>(data);
+        }
+        super.deliverResult(data);
     }
 
     @Override
     protected void onStartLoading() {
-        if (!movies.isEmpty())
-            deliverResult(movies);
+        Collection<Movie> data = this.movies.get(currentURL);
+        if (!data.isEmpty())
+            deliverResult(data);
     }
 
     @Override
@@ -98,7 +111,6 @@ public class MovieListLoader extends AsyncTaskLoader<Collection<Movie>> {
         super.onStopLoading();
         cancelLoad();
     }
-
 
     private boolean isOnline() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
