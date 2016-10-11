@@ -1,6 +1,7 @@
 package me.exerosis.nanodegree.movies.impl.movielist.controller;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.Collection;
+import java.util.List;
 
 import me.exerosis.nanodegree.movies.impl.movielist.model.Movie;
 import me.exerosis.nanodegree.movies.impl.movielist.view.MovieListListener;
@@ -20,11 +22,15 @@ public class MovieListFragment extends Fragment implements MovieListListener, Mo
     private MovieListView movieList;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initLoader(0, null);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         movieList = new MovieListView(inflater, container);
         movieList.setListener(this);
-
-        initLoader(0, null);
 
         return movieList.getRootView();
     }
@@ -46,6 +52,7 @@ public class MovieListFragment extends Fragment implements MovieListListener, Mo
 
     @Override
     public void onLoadFinished(Loader<Collection<Movie>> loader, Collection<Movie> data) {
+        System.out.println(((List<Movie>) data).get(0).getTitle());
         movieList.setMovies(data);
         movieList.setRefreshing(false);
     }
@@ -62,6 +69,6 @@ public class MovieListFragment extends Fragment implements MovieListListener, Mo
 
     @Override
     public void initLoader(int id, Bundle args) {
-        getLoaderManager().initLoader(id, args, this).forceLoad();
+        getLoaderManager().restartLoader(id, args, this).forceLoad();
     }
 }

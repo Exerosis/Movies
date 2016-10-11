@@ -30,7 +30,7 @@ public class AppScaffoldingActivity extends AppCompatActivity implements AppScaf
     static {
         try {
             POPULAR = new URL("http://api.themoviedb.org/3/movie/popular?api_key=80de3dcb516f2d18d76b0d4f3d7b2f05");
-            TOP_RATED = new URL("http://api.themoviedb.org/3/movie/popular?api_key=80de3dcb516f2d18d76b0d4f3d7b2f05");
+            TOP_RATED = new URL("http://api.themoviedb.org/3/movie/now_playing?api_key=80de3dcb516f2d18d76b0d4f3d7b2f05");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -58,15 +58,16 @@ public class AppScaffoldingActivity extends AppCompatActivity implements AppScaf
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_import:
-                currentURL = POPULAR;
+                currentURL = TOP_RATED;
                 break;
             case R.id.nav_gallery:
-                currentURL = TOP_RATED;
+                currentURL = POPULAR;
                 break;
             default:
                 return false;
         }
 
+        System.out.println(currentURL);
         movieListController.initLoader(0, null);
         appScaffolding.setDrawerOpen(false);
         return true;
