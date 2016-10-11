@@ -24,7 +24,8 @@ public class MovieListFragment extends Fragment implements MovieListListener, Mo
         movieList = new MovieListView(inflater, container);
         movieList.setListener(this);
 
-        getLoaderManager().initLoader(0, null, this).forceLoad();
+        initLoader(0, null);
+
         return movieList.getRootView();
     }
 
@@ -35,7 +36,7 @@ public class MovieListFragment extends Fragment implements MovieListListener, Mo
 
     @Override
     public void onRefresh() {
-        getLoaderManager().initLoader(0, null, this).forceLoad();
+        initLoader(0, null);
     }
 
     @Override
@@ -57,5 +58,10 @@ public class MovieListFragment extends Fragment implements MovieListListener, Mo
     @Override
     public void setLoaderProvider(BiFunction<Integer, Bundle, Loader<Collection<Movie>>> loaderProvider) {
         this.loaderProvider = loaderProvider;
+    }
+
+    @Override
+    public void initLoader(int id, Bundle args) {
+        getLoaderManager().initLoader(id, args, this).forceLoad();
     }
 }

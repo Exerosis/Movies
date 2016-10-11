@@ -13,7 +13,7 @@ import me.exerosis.nanodegree.movies.databinding.ScaffoldingViewBinding;
 import me.exerosis.nanodegree.movies.impl.movielist.controller.MovieListController;
 import me.exerosis.nanodegree.movies.mvc.Interactable;
 
-public class AppScaffoldingView implements AppScaffolding, Interactable<AppScaffoldingListener> {
+public class AppScaffoldingView implements AppScaffolding {
     private final ScaffoldingViewBinding binding;
     private AppCompatActivity activity;
     private AppScaffoldingListener listener;

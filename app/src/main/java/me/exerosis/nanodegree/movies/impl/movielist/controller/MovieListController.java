@@ -10,4 +10,5 @@ import me.exerosis.nanodegree.movies.mvc.BiFunction;
 
 public interface MovieListController {
     void setLoaderProvider(BiFunction<Integer, Bundle, Loader<Collection<Movie>>> loaderProvider);
+    void initLoader(int id, Bundle args);
 }

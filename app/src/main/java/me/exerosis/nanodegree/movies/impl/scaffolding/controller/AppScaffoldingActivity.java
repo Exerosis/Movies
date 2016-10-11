@@ -43,6 +43,7 @@ public class AppScaffoldingActivity extends AppCompatActivity implements AppScaf
         movieListController.setLoaderProvider(this);
 
         appScaffolding = new AppScaffoldingView(this, movieListController);
+        appScaffolding.setListener(this);
 
         setContentView(appScaffolding.getRootView());
     }
@@ -66,7 +67,9 @@ public class AppScaffoldingActivity extends AppCompatActivity implements AppScaf
                 return false;
         }
 
-        return appScaffolding.setDrawerOpen(false);
+        movieListController.initLoader(0, null);
+        appScaffolding.setDrawerOpen(false);
+        return true;
     }
 
     @Override
