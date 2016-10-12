@@ -3,6 +3,7 @@ package me.exerosis.nanodegree.movies.impl.movielist.model;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.content.AsyncTaskLoader;
@@ -13,6 +14,8 @@ import com.google.common.collect.Multimap;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import org.apache.commons.io.IOUtils;
 
@@ -31,43 +34,56 @@ import java.util.List;
 import me.exerosis.nanodegree.movies.R;
 
 public class MovieListLoader extends AsyncTaskLoader<Collection<Movie>> {
-    private URL currentURL;
-    private Multimap<URL, Movie> movies = ArrayListMultimap.create();
+    private final URL url;
+    private final List<Movie> movies = new ArrayList<>();
 
-    public MovieListLoader(Context context) {
+    public MovieListLoader(Context context, URL url) {
         super(context);
-    }
-
-    public void setURL(URL currentURL) {
-        this.currentURL = currentURL;
+        this.url = url;
     }
 
     @Override
     public Collection<Movie> loadInBackground() {
-        if (currentURL == null || !isOnline())
+        if (!isOnline())
             return null;
 
-        System.out.println("t");
-
-        List<Movie> freshMovies = new ArrayList<>();
         Closeable reader = null;
         try {
-            reader = currentURL.openStream();
+            reader = url.openStream();
             reader = new InputStreamReader((InputStream) reader);
             reader = new BufferedReader((Reader) reader);
 
             JsonObject result = (JsonObject) new JsonParser().parse((Reader) reader);
 
 
-            for (JsonElement movie : result.getAsJsonArray("results")) {
+            outside: for (JsonElement jsonMovie : result.getAsJsonArray("results")) {
+                String title = ((JsonObject) jsonMovie).get("title").getAsString();
+                for (Movie movie : movies)
+                    if (title.equals(movie.getTitle()))
+                        break outside;
 
-                URL posterURL = new URL("http://image.tmdb.org/t/p/w500" + ((JsonObject) movie).get("poster_path").getAsString() +
-                        "&api_key=80de3dcb516f2d18d76b0d4f3d7b2f05");
+                Picasso.with(getContext()).load("http://image.tmdb.org/t/p/w500" + ((JsonObject) jsonMovie).get("poster_path").getAsString() +
+                        "&api_key=80de3dcb516f2d18d76b0d4f3d7b2f05").into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                    }
+                });
+
                 Bitmap poster = BitmapFactory.decodeStream(posterURL.openConnection().getInputStream());
 
-                String title = ((JsonObject) movie).get("title").getAsString();
 
-                freshMovies.add(new Movie(title, poster));
+                movies.add(new Movie(title, poster));
             }
 
         } catch (IOException e) {
@@ -81,7 +97,7 @@ public class MovieListLoader extends AsyncTaskLoader<Collection<Movie>> {
             }
         }
 
-        return freshMovies;
+        return movies;
     }
 
     @Override
@@ -92,7 +108,7 @@ public class MovieListLoader extends AsyncTaskLoader<Collection<Movie>> {
             data = movies.get(currentURL);
         if (movies.get(currentURL).equals(data))
             data = null;
-        if(data != null) {
+        if (data != null) {
             movies.putAll(currentURL, data);
             data = new ArrayList<>(data);
         }

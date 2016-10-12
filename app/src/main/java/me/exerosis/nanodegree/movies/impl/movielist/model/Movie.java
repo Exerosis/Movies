@@ -1,12 +1,13 @@
 package me.exerosis.nanodegree.movies.impl.movielist.model;
 
+import android.databinding.Observable;
+import android.databinding.ObservableField;
 import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Movie implements Parcelable {
+public class Movie extends ObservableField<Bitmap> implements Parcelable {
     private String title;
-    private Bitmap poster;
 
     public Movie(String title, Bitmap poster) {
         this.title = title;
@@ -25,6 +26,7 @@ public class Movie implements Parcelable {
     public Bitmap getPoster() {
         return poster;
     }
+
 
     @Override
     public int describeContents() {
@@ -53,4 +55,5 @@ public class Movie implements Parcelable {
             return new Movie[size];
         }
     };
+
 }
