@@ -3,6 +3,7 @@ package me.exerosis.nanodegree.movies.impl.movielist.view;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,7 +12,6 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import me.exerosis.nanodegree.movies.databinding.MovieListCardBinding;
@@ -60,7 +60,7 @@ public class MovieListView implements ViewBase, MovieList {
     }
 
     @Override
-    public void setMovies(Collection<Movie> movies) {
+    public void setMovies(@NonNull Collection<Movie> movies) {
         this.movies.clear();
         this.movies.addAll(movies);
         binding.movieList.getAdapter().notifyDataSetChanged();
@@ -73,7 +73,7 @@ public class MovieListView implements ViewBase, MovieList {
 
     @Override
     public List<Movie> getMovies() {
-        return Collections.unmodifiableList(movies);
+        return movies;
     }
 
     @Override

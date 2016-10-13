@@ -1,7 +1,5 @@
 package me.exerosis.nanodegree.movies.impl.movielist.view;
 
-import android.os.Bundle;
-
 import java.util.Collection;
 import java.util.List;
 

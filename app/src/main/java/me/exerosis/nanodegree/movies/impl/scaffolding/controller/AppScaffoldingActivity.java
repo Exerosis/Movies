@@ -66,7 +66,6 @@ public class AppScaffoldingActivity extends AppCompatActivity implements AppScaf
                 return false;
         }
 
-        System.out.println(currentURL);
         movieListController.setURL(currentURL);
         appScaffolding.setDrawerOpen(false);
         return true;

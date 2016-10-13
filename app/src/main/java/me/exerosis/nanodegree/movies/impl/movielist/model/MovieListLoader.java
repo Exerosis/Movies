@@ -1,24 +1,16 @@
 package me.exerosis.nanodegree.movies.impl.movielist.model;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.v4.content.AsyncTaskLoader;
 import android.widget.Toast;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
-
-import org.apache.commons.io.IOUtils;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -29,19 +21,21 @@ import java.io.Reader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import me.exerosis.nanodegree.movies.R;
 
 public class MovieListLoader extends AsyncTaskLoader<Collection<Movie>> {
-    private final URL url;
-    private final List<Movie> movies;
+    private URL url;
+    private final List<Movie> movies = new ArrayList<>();
 
-    public MovieListLoader(Context context, @NonNull URL url, @NonNull List<Movie> movies) {
+    public MovieListLoader(Context context, @NonNull URL url) {
         super(context);
         this.url = url;
-        this.movies = movies;
+    }
+
+    public void setURL(@NonNull URL url) {
+        this.url = url;
     }
 
     @Override
@@ -49,6 +43,7 @@ public class MovieListLoader extends AsyncTaskLoader<Collection<Movie>> {
         if (!isOnline())
             return null;
 
+        List<Movie> newMovies = new ArrayList<>();
         Closeable reader = null;
         try {
             reader = url.openStream();
@@ -59,16 +54,12 @@ public class MovieListLoader extends AsyncTaskLoader<Collection<Movie>> {
 
             for (JsonElement jsonMovie : result.getAsJsonArray("results")) {
                 String title = ((JsonObject) jsonMovie).get("title").getAsString();
+                String posterURL = "http://image.tmdb.org/t/p/w500" + ((JsonObject) jsonMovie).get("poster_path").getAsString() + "&api_key=80de3dcb516f2d18d76b0d4f3d7b2f05";
 
-                String posterURL = "http://image.tmdb.org/t/p/w500" + ((JsonObject) jsonMovie).get("poster_path").getAsString() +
-                        "&api_key=80de3dcb516f2d18d76b0d4f3d7b2f05";
                 Movie movie = new Movie(title, posterURL);
 
-                if (movies.contains(movie))
-                    continue;
-
                 Picasso.with(getContext()).load(posterURL);
-                movies.add(movie);
+                newMovies.add(movie);
             }
 
         } catch (IOException e) {
@@ -82,7 +73,7 @@ public class MovieListLoader extends AsyncTaskLoader<Collection<Movie>> {
             }
         }
 
-        return movies;
+        return newMovies;
     }
 
     @Override
