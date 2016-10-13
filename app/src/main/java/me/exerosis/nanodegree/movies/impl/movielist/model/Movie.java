@@ -6,12 +6,13 @@ import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Movie extends ObservableField<Bitmap> implements Parcelable {
+public class Movie implements Parcelable {
     private String title;
+    private String posterURL;
 
-    public Movie(String title, Bitmap poster) {
+    public Movie(String title, String posterURL) {
         this.title = title;
-        this.poster = poster;
+        this.posterURL = posterURL;
     }
 
     @Override
@@ -23,10 +24,9 @@ public class Movie extends ObservableField<Bitmap> implements Parcelable {
         return title;
     }
 
-    public Bitmap getPoster() {
-        return poster;
+    public String getPosterURL() {
+        return posterURL;
     }
-
 
     @Override
     public int describeContents() {
@@ -36,12 +36,12 @@ public class Movie extends ObservableField<Bitmap> implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.title);
-        dest.writeParcelable(this.poster, flags);
+        dest.writeString(this.posterURL);
     }
 
     protected Movie(Parcel in) {
         this.title = in.readString();
-        this.poster = in.readParcelable(Bitmap.class.getClassLoader());
+        this.posterURL = in.readString();
     }
 
     public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {

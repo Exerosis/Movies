@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.annotation.NonNull;
 import android.support.v4.content.AsyncTaskLoader;
 import android.widget.Toast;
 
@@ -35,11 +36,12 @@ import me.exerosis.nanodegree.movies.R;
 
 public class MovieListLoader extends AsyncTaskLoader<Collection<Movie>> {
     private final URL url;
-    private final List<Movie> movies = new ArrayList<>();
+    private final List<Movie> movies;
 
-    public MovieListLoader(Context context, URL url) {
+    public MovieListLoader(Context context, @NonNull URL url, @NonNull List<Movie> movies) {
         super(context);
         this.url = url;
+        this.movies = movies;
     }
 
     @Override
@@ -55,35 +57,18 @@ public class MovieListLoader extends AsyncTaskLoader<Collection<Movie>> {
 
             JsonObject result = (JsonObject) new JsonParser().parse((Reader) reader);
 
-
-            outside: for (JsonElement jsonMovie : result.getAsJsonArray("results")) {
+            for (JsonElement jsonMovie : result.getAsJsonArray("results")) {
                 String title = ((JsonObject) jsonMovie).get("title").getAsString();
-                for (Movie movie : movies)
-                    if (title.equals(movie.getTitle()))
-                        break outside;
 
-                Picasso.with(getContext()).load("http://image.tmdb.org/t/p/w500" + ((JsonObject) jsonMovie).get("poster_path").getAsString() +
-                        "&api_key=80de3dcb516f2d18d76b0d4f3d7b2f05").into(new Target() {
-                    @Override
-                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                String posterURL = "http://image.tmdb.org/t/p/w500" + ((JsonObject) jsonMovie).get("poster_path").getAsString() +
+                        "&api_key=80de3dcb516f2d18d76b0d4f3d7b2f05";
+                Movie movie = new Movie(title, posterURL);
 
-                    }
+                if (movies.contains(movie))
+                    continue;
 
-                    @Override
-                    public void onBitmapFailed(Drawable errorDrawable) {
-
-                    }
-
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                    }
-                });
-
-                Bitmap poster = BitmapFactory.decodeStream(posterURL.openConnection().getInputStream());
-
-
-                movies.add(new Movie(title, poster));
+                Picasso.with(getContext()).load(posterURL);
+                movies.add(movie);
             }
 
         } catch (IOException e) {
@@ -102,29 +87,18 @@ public class MovieListLoader extends AsyncTaskLoader<Collection<Movie>> {
 
     @Override
     public void deliverResult(Collection<Movie> data) {
-        if (!isStarted())
-            return;
-        if (data == null)
-            data = movies.get(currentURL);
-        if (movies.get(currentURL).equals(data))
-            data = null;
-        if (data != null) {
-            movies.putAll(currentURL, data);
-            data = new ArrayList<>(data);
-        }
-        super.deliverResult(data);
+        if (isStarted())
+            super.deliverResult(data == null ? movies : data);
     }
 
     @Override
     protected void onStartLoading() {
-        Collection<Movie> data = this.movies.get(currentURL);
-        if (!data.isEmpty())
-            deliverResult(data);
+        if (!movies.isEmpty())
+            deliverResult(movies);
     }
 
     @Override
     protected void onStopLoading() {
-        super.onStopLoading();
         cancelLoad();
     }
 
