@@ -75,7 +75,7 @@ public class MovieListFragment extends Fragment implements MovieListListener, Mo
     }
 
     private void setRefreshing(boolean refreshing) {
-        if (movieList != null && !movieList.isRefreshing())
+        if (movieList != null && refreshing != movieList.isRefreshing())
             movieList.setRefreshing(refreshing);
     }
 

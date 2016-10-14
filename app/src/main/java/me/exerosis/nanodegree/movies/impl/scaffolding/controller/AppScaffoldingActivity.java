@@ -2,19 +2,15 @@ package me.exerosis.nanodegree.movies.impl.scaffolding.controller;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Collection;
 
 import me.exerosis.nanodegree.movies.R;
-import me.exerosis.nanodegree.movies.impl.movielist.model.MovieListLoader;
 import me.exerosis.nanodegree.movies.impl.movielist.controller.MovieListController;
 import me.exerosis.nanodegree.movies.impl.movielist.controller.MovieListFragment;
-import me.exerosis.nanodegree.movies.impl.movielist.model.Movie;
 import me.exerosis.nanodegree.movies.impl.scaffolding.view.AppScaffolding;
 import me.exerosis.nanodegree.movies.impl.scaffolding.view.AppScaffoldingListener;
 import me.exerosis.nanodegree.movies.impl.scaffolding.view.AppScaffoldingView;
@@ -43,9 +39,7 @@ public class AppScaffoldingActivity extends AppCompatActivity implements AppScaf
 
         appScaffolding = new AppScaffoldingView(this, movieListController);
         appScaffolding.setListener(this);
-
         setContentView(appScaffolding.getRootView());
-
     }
 
     @Override
@@ -64,11 +58,11 @@ public class AppScaffoldingActivity extends AppCompatActivity implements AppScaf
                 currentURL = POPULAR;
                 break;
             default:
-                return false;
+                movieListController.setURL(currentURL);
+                appScaffolding.setDrawerOpen(false);
+                return true;
         }
+        return false;
 
-        movieListController.setURL(currentURL);
-        appScaffolding.setDrawerOpen(false);
-        return true;
     }
 }
