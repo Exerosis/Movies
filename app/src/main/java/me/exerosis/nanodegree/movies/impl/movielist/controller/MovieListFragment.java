@@ -48,19 +48,19 @@ public class MovieListFragment extends Fragment implements MovieListListener, Mo
     }
 
     @Override
-    public Loader<Collection<Movie>> onCreateLoader(int id, Bundle args) {
+    public Loader<List<Movie>> onCreateLoader(int id, Bundle args) {
         movieList.setRefreshing(true);
         return new MovieListLoader(getContext(), url);
     }
 
     @Override
-    public void onLoadFinished(Loader<Collection<Movie>> loader, Collection<Movie> data) {
+    public void onLoadFinished(Loader<List<Movie>> loader, List<Movie> data) {
         movieList.setRefreshing(false);
         movieList.setMovies(data);
     }
 
     @Override
-    public void onLoaderReset(Loader<Collection<Movie>> loader) {
+    public void onLoaderReset(Loader<List<Movie>> loader) {
         movieList.setRefreshing(true);
         ((MovieListLoader) loader).setURL(url);
     }

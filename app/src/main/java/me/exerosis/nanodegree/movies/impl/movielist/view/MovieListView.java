@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import me.exerosis.nanodegree.movies.databinding.MovieListCardBinding;
@@ -60,7 +59,7 @@ public class MovieListView implements ViewBase, MovieList {
     }
 
     @Override
-    public void setMovies(@NonNull Collection<Movie> movies) {
+    public void setMovies(@NonNull List<Movie> movies) {
         this.movies.clear();
         this.movies.addAll(movies);
         binding.movieList.getAdapter().notifyDataSetChanged();

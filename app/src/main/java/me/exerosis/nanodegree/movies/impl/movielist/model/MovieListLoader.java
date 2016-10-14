@@ -20,16 +20,16 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import me.exerosis.nanodegree.movies.R;
 
-public class MovieListLoader extends AsyncTaskLoader<Collection<Movie>> {
+public class MovieListLoader extends AsyncTaskLoader<List<Movie>> {
     private URL url;
-    private final List<Movie> movies = new ArrayList<>();
+    private List<Movie> movies = new ArrayList<>();
 
-    public MovieListLoader(Context context, @NonNull URL url) {
+    public MovieListLoader(@NonNull Context context, @NonNull URL url) {
         super(context);
         this.url = url;
     }
@@ -39,7 +39,7 @@ public class MovieListLoader extends AsyncTaskLoader<Collection<Movie>> {
     }
 
     @Override
-    public Collection<Movie> loadInBackground() {
+    public List<Movie> loadInBackground() {
         if (!isOnline())
             return null;
 
@@ -77,9 +77,11 @@ public class MovieListLoader extends AsyncTaskLoader<Collection<Movie>> {
     }
 
     @Override
-    public void deliverResult(Collection<Movie> data) {
+    public void deliverResult(List<Movie> data) {
+        if (data != null)
+            movies = data;
         if (isStarted())
-            super.deliverResult(data == null ? movies : data);
+            super.deliverResult(Collections.unmodifiableList(movies));
     }
 
     @Override
