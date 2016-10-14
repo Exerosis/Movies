@@ -36,6 +36,7 @@ public class MovieListLoader extends AsyncTaskLoader<List<Movie>> {
 
     public void setURL(@NonNull URL url) {
         this.url = url;
+        System.out.println(url);
     }
 
     @Override

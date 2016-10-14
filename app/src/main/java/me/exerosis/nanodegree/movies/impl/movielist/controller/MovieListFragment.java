@@ -49,19 +49,22 @@ public class MovieListFragment extends Fragment implements MovieListListener, Mo
 
     @Override
     public Loader<List<Movie>> onCreateLoader(int id, Bundle args) {
-        movieList.setRefreshing(true);
+        System.out.println("Creating loader!");
+        setRefreshing(true);
         return new MovieListLoader(getContext(), url);
     }
 
     @Override
     public void onLoadFinished(Loader<List<Movie>> loader, List<Movie> data) {
-        movieList.setRefreshing(false);
+        setRefreshing(false);
         movieList.setMovies(data);
     }
 
     @Override
     public void onLoaderReset(Loader<List<Movie>> loader) {
-        movieList.setRefreshing(true);
+        System.out.println("Resetting loader!");
+        System.out.println(url);
+        setRefreshing(true);
         ((MovieListLoader) loader).setURL(url);
     }
 
@@ -71,9 +74,13 @@ public class MovieListFragment extends Fragment implements MovieListListener, Mo
         refresh();
     }
 
+    private void setRefreshing(boolean refreshing) {
+        if (movieList != null && !movieList.isRefreshing())
+            movieList.setRefreshing(refreshing);
+    }
+
     @Override
     public void refresh() {
-        if (movieList != null)
-            getLoaderManager().initLoader(LOADER_ID, null, this).forceLoad();
+        getLoaderManager().restartLoader(LOADER_ID, null, this).forceLoad();
     }
 }

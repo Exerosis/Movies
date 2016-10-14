@@ -45,6 +45,7 @@ public class AppScaffoldingActivity extends AppCompatActivity implements AppScaf
         appScaffolding.setListener(this);
 
         setContentView(appScaffolding.getRootView());
+
     }
 
     @Override
@@ -56,10 +57,10 @@ public class AppScaffoldingActivity extends AppCompatActivity implements AppScaf
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.nav_import:
+            case R.id.nav_top_rated:
                 currentURL = TOP_RATED;
                 break;
-            case R.id.nav_gallery:
+            case R.id.nav_popular:
                 currentURL = POPULAR;
                 break;
             default:

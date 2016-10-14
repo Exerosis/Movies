@@ -32,12 +32,13 @@ public class AppScaffoldingView implements AppScaffolding {
         this.listener = listener;
         binding.navigationView.setNavigationItemSelectedListener(listener);
 
+        activity.setSupportActionBar(binding.toolbar);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(activity, binding.drawer, binding.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.syncState();
 
-        binding.drawer.setDrawerListener(toggle);
+        binding.drawer.addDrawerListener(toggle);
 
-        activity.setSupportActionBar(binding.toolbar);
     }
 
 
