@@ -30,7 +30,6 @@ public class AppScaffoldingView implements AppScaffolding {
     @Override
     public void setListener(AppScaffoldingListener listener) {
         this.listener = listener;
-        binding.navigationView.setNavigationItemSelectedListener(listener);
 
         activity.setSupportActionBar(binding.toolbar);
 
@@ -39,6 +38,7 @@ public class AppScaffoldingView implements AppScaffolding {
 
         binding.drawer.addDrawerListener(toggle);
 
+        binding.navigationView.setNavigationItemSelectedListener(listener);
     }
 
 

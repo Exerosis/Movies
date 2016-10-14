@@ -26,14 +26,14 @@ public class MovieListFragment extends Fragment implements MovieListListener, Mo
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (url != null)
-            refresh();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         movieList = new MovieListView(inflater, container);
         movieList.setListener(this);
+        if (url != null)
+            refresh();
         return movieList.getRootView();
     }
 

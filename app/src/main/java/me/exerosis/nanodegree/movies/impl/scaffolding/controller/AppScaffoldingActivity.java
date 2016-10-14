@@ -58,11 +58,12 @@ public class AppScaffoldingActivity extends AppCompatActivity implements AppScaf
                 currentURL = POPULAR;
                 break;
             default:
-                movieListController.setURL(currentURL);
-                appScaffolding.setDrawerOpen(false);
-                return true;
+                return false;
         }
-        return false;
+
+        movieListController.setURL(currentURL);
+        appScaffolding.setDrawerOpen(false);
+        return true;
 
     }
 }
