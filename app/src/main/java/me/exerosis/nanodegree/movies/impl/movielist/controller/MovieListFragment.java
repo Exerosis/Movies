@@ -33,7 +33,7 @@ public class MovieListFragment extends Fragment implements MovieListListener, Mo
         movieList = new MovieListView(inflater, container);
         movieList.setListener(this);
         if (url != null)
-            refresh();
+            getLoaderManager().restartLoader(LOADER_ID, null, this).forceLoad();
         return movieList.getRootView();
     }
 
@@ -44,12 +44,11 @@ public class MovieListFragment extends Fragment implements MovieListListener, Mo
 
     @Override
     public void onRefresh() {
-        refresh();
+        getLoaderManager().initLoader(LOADER_ID, null, this).forceLoad();
     }
 
     @Override
     public Loader<List<Movie>> onCreateLoader(int id, Bundle args) {
-        System.out.println("Creating loader!");
         setRefreshing(true);
         return new MovieListLoader(getContext(), url);
     }
@@ -62,25 +61,17 @@ public class MovieListFragment extends Fragment implements MovieListListener, Mo
 
     @Override
     public void onLoaderReset(Loader<List<Movie>> loader) {
-        System.out.println("Resetting loader!");
-        System.out.println(url);
-        setRefreshing(true);
-        ((MovieListLoader) loader).setURL(url);
     }
 
     @Override
     public void setURL(URL url) {
         this.url = url;
-        refresh();
+        if(movieList != null)
+            getLoaderManager().restartLoader(LOADER_ID, null, this).forceLoad();
     }
 
     private void setRefreshing(boolean refreshing) {
         if (movieList != null && refreshing != movieList.isRefreshing())
             movieList.setRefreshing(refreshing);
-    }
-
-    @Override
-    public void refresh() {
-        getLoaderManager().restartLoader(LOADER_ID, null, this).forceLoad();
     }
 }

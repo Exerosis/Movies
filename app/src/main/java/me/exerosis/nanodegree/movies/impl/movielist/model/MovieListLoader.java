@@ -26,17 +26,12 @@ import java.util.List;
 import me.exerosis.nanodegree.movies.R;
 
 public class MovieListLoader extends AsyncTaskLoader<List<Movie>> {
-    private URL url;
+    private final URL url;
     private List<Movie> movies = new ArrayList<>();
 
     public MovieListLoader(@NonNull Context context, @NonNull URL url) {
         super(context);
         this.url = url;
-    }
-
-    public void setURL(@NonNull URL url) {
-        this.url = url;
-        System.out.println(url);
     }
 
     @Override
