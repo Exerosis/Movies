@@ -1,4 +1,4 @@
-package me.exerosis.nanodegree.movies.impl.movielist.controller;
+package me.exerosis.nanodegree.movies.impl.grid.controller;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,26 +9,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.exerosis.nanodegree.movies.impl.movielist.model.Movie;
-import me.exerosis.nanodegree.movies.impl.movielist.model.MovieListLoader;
-import me.exerosis.nanodegree.movies.impl.movielist.view.MovieListListener;
-import me.exerosis.nanodegree.movies.impl.movielist.view.MovieListView;
-import me.exerosis.nanodegree.movies.impl.movielist.view.recyclerview.MovieListCard;
+import me.exerosis.nanodegree.movies.impl.grid.model.Movie;
+import me.exerosis.nanodegree.movies.impl.grid.model.MovieGridLoader;
+import me.exerosis.nanodegree.movies.impl.grid.view.MovieGridView;
+import me.exerosis.nanodegree.movies.impl.grid.view.card.MovieHolderView;
 
-public class MovieListFragment extends Fragment implements MovieListListener, MovieListController {
+public class MovieGridFragment extends Fragment implements MovieGridController {
     public static final String ARG_URL = "URL";
     public static int LOADER_ID = 0;
-    private MovieListView view;
+    private MovieGridView view;
     private List<Movie> movies = new ArrayList<>();
 
-    public static MovieListFragment newInstance(String url) {
+    public static MovieGridFragment newInstance(String url) {
         Bundle args = new Bundle();
         args.putSerializable(ARG_URL, url);
-        MovieListFragment fragment = new MovieListFragment();
+        MovieGridFragment fragment = new MovieGridFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -36,22 +34,23 @@ public class MovieListFragment extends Fragment implements MovieListListener, Mo
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getLoaderManager().restartLoader(LOADER_ID, getArguments(), this).forceLoad();
+        getLoaderManager().initLoader(LOADER_ID, getArguments(), this).forceLoad();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = new MovieListView(inflater, container);
+        view = new MovieGridView(inflater, container);
         view.setListener(this);
-        view.setAdapter(new RecyclerView.Adapter<MovieListCard>() {
+        view.setAdapter(new RecyclerView.Adapter<MovieHolderView>() {
             @Override
-            public MovieListCard onCreateViewHolder(ViewGroup parent, int viewType) {
-                LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-                return new MovieListCard(inflater, parent);
+            public MovieHolderView onCreateViewHolder(ViewGroup parent, int viewType) {
+                MovieHolderView viewHolder = new MovieHolderView(parent);
+                viewHolder.setListener(MovieGridFragment.this);
+                return viewHolder;
             }
 
             @Override
-            public void onBindViewHolder(MovieListCard holder, int position) {
+            public void onBindViewHolder(MovieHolderView holder, int position) {
                 holder.setMovie(movies.get(position));
             }
 
@@ -73,7 +72,7 @@ public class MovieListFragment extends Fragment implements MovieListListener, Mo
     public Loader<List<Movie>> onCreateLoader(int id, Bundle args) {
         if(!args.containsKey(ARG_URL))
             throw new IllegalArgumentException();
-        return new MovieListLoader(getContext(), (String) args.get(ARG_URL));
+        return new MovieGridLoader(getContext(), args.getString(ARG_URL));
     }
 
     @Override
@@ -86,5 +85,10 @@ public class MovieListFragment extends Fragment implements MovieListListener, Mo
 
     @Override
     public void onLoaderReset(Loader<List<Movie>> loader) {
+    }
+
+    @Override
+    public void onClick(Movie movie) {
+        System.out.println(movie.getTitle());
     }
 }

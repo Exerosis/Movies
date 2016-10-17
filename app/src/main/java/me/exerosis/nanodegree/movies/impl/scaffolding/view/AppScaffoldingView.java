@@ -2,7 +2,6 @@ package me.exerosis.nanodegree.movies.impl.scaffolding.view;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,9 +9,6 @@ import android.view.View;
 
 import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.databinding.ScaffoldingViewBinding;
-import me.exerosis.nanodegree.movies.impl.movielist.controller.MovieListController;
-import me.exerosis.nanodegree.movies.impl.movielist.controller.MovieListFragment;
-import me.exerosis.nanodegree.movies.mvc.Interactable;
 
 public class AppScaffoldingView implements AppScaffolding {
     private final ScaffoldingViewBinding binding;

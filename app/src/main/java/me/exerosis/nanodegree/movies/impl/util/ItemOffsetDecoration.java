@@ -1,4 +1,4 @@
-package me.exerosis.nanodegree.movies.impl.movielist.view.recyclerview;
+package me.exerosis.nanodegree.movies.impl.util;
 
 import android.content.Context;
 import android.graphics.Rect;

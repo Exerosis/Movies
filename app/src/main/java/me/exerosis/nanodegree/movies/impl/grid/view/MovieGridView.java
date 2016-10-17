@@ -1,4 +1,4 @@
-package me.exerosis.nanodegree.movies.impl.movielist.view;
+package me.exerosis.nanodegree.movies.impl.grid.view;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -10,21 +10,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import me.exerosis.nanodegree.movies.databinding.MovieListViewBinding;
-import me.exerosis.nanodegree.movies.impl.movielist.view.recyclerview.ItemOffsetDecoration;
-import me.exerosis.nanodegree.movies.impl.movielist.view.recyclerview.MovieListCard;
+import me.exerosis.nanodegree.movies.impl.util.ItemOffsetDecoration;
+import me.exerosis.nanodegree.movies.impl.grid.view.card.MovieHolderView;
 import me.exerosis.nanodegree.movies.R;
-import me.exerosis.nanodegree.movies.impl.movielist.model.Movie;
 import me.exerosis.nanodegree.movies.mvc.ViewBase;
 
 
-public class MovieListView implements ViewBase, MovieList {
+public class MovieGridView implements ViewBase, MovieGrid {
     private final MovieListViewBinding binding;
-    private MovieListListener listener;
+    private MovieGridListener listener;
 
-    public MovieListView(LayoutInflater inflater, ViewGroup container) {
+    public MovieGridView(LayoutInflater inflater, ViewGroup container) {
         binding = DataBindingUtil.inflate(inflater, R.layout.movie_list_view, container, false);
         initialize(container.getContext());
     }
@@ -36,7 +33,7 @@ public class MovieListView implements ViewBase, MovieList {
     }
 
     @Override
-    public void setAdapter(@NonNull RecyclerView.Adapter<MovieListCard> adapter) {
+    public void setAdapter(@NonNull RecyclerView.Adapter<MovieHolderView> adapter) {
         binding.movieList.setAdapter(adapter);
     }
 
@@ -56,13 +53,13 @@ public class MovieListView implements ViewBase, MovieList {
     }
 
     @Override
-    public void setListener(MovieListListener listener) {
+    public void setListener(MovieGridListener listener) {
         this.listener = listener;
         binding.swipeRefreshLayout.setOnRefreshListener(listener);
     }
 
     @Override
-    public MovieListListener getListener() {
+    public MovieGridListener getListener() {
         return listener;
     }
 

@@ -1,4 +1,4 @@
-package me.exerosis.nanodegree.movies.impl.movielist.model;
+package me.exerosis.nanodegree.movies.impl.grid.model;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -25,11 +25,11 @@ import java.util.List;
 
 import me.exerosis.nanodegree.movies.R;
 
-public class MovieListLoader extends AsyncTaskLoader<List<Movie>> {
+public class MovieGridLoader extends AsyncTaskLoader<List<Movie>> {
     private final String url;
     private List<Movie> movies = new ArrayList<>();
 
-    public MovieListLoader(@NonNull Context context, @NonNull String url) {
+    public MovieGridLoader(@NonNull Context context, @NonNull String url) {
         super(context);
         this.url = url;
     }

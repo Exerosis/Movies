@@ -1,8 +1,5 @@
-package me.exerosis.nanodegree.movies.impl.movielist.model;
+package me.exerosis.nanodegree.movies.impl.grid.model;
 
-import android.databinding.Observable;
-import android.databinding.ObservableField;
-import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
