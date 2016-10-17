@@ -5,12 +5,13 @@ import android.databinding.ObservableField;
 import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 public class Movie implements Parcelable {
     private String title;
     private String posterURL;
 
-    public Movie(String title, String posterURL) {
+    public Movie(@NonNull String title, String posterURL) {
         this.title = title;
         this.posterURL = posterURL;
     }

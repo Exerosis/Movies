@@ -26,10 +26,10 @@ import java.util.List;
 import me.exerosis.nanodegree.movies.R;
 
 public class MovieListLoader extends AsyncTaskLoader<List<Movie>> {
-    private final URL url;
+    private final String url;
     private List<Movie> movies = new ArrayList<>();
 
-    public MovieListLoader(@NonNull Context context, @NonNull URL url) {
+    public MovieListLoader(@NonNull Context context, @NonNull String url) {
         super(context);
         this.url = url;
     }
@@ -42,7 +42,7 @@ public class MovieListLoader extends AsyncTaskLoader<List<Movie>> {
         List<Movie> newMovies = new ArrayList<>();
         Closeable reader = null;
         try {
-            reader = url.openStream();
+            reader = new URL(url).openStream();
             reader = new InputStreamReader((InputStream) reader);
             reader = new BufferedReader((Reader) reader);
 
@@ -50,7 +50,11 @@ public class MovieListLoader extends AsyncTaskLoader<List<Movie>> {
 
             for (JsonElement jsonMovie : result.getAsJsonArray("results")) {
                 String title = ((JsonObject) jsonMovie).get("title").getAsString();
-                String posterURL = "http://image.tmdb.org/t/p/w500" + ((JsonObject) jsonMovie).get("poster_path").getAsString() + "&api_key=80de3dcb516f2d18d76b0d4f3d7b2f05";
+                JsonElement posterElement = ((JsonObject) jsonMovie).get("poster_path");
+                String posterURL = null;
+                if (!posterElement.isJsonNull())
+                    posterURL = "http://image.tmdb.org/t/p/w500" + posterElement.getAsString() + "&api_key=80de3dcb516f2d18d76b0d4f3d7b2f05";
+
 
                 Movie movie = new Movie(title, posterURL);
 
@@ -59,7 +63,6 @@ public class MovieListLoader extends AsyncTaskLoader<List<Movie>> {
             }
 
         } catch (IOException e) {
-            Toast.makeText(getContext(), R.string.load_failed, Toast.LENGTH_SHORT).show();
             return null;
         } finally {
             try {
@@ -76,6 +79,8 @@ public class MovieListLoader extends AsyncTaskLoader<List<Movie>> {
     public void deliverResult(List<Movie> data) {
         if (data != null)
             movies = data;
+        else
+            Toast.makeText(getContext(), R.string.load_failed, Toast.LENGTH_SHORT).show();
         if (isStarted())
             super.deliverResult(Collections.unmodifiableList(movies));
     }

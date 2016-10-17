@@ -10,10 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import me.exerosis.nanodegree.movies.databinding.MovieListCardBinding;
 import me.exerosis.nanodegree.movies.databinding.MovieListViewBinding;
 import me.exerosis.nanodegree.movies.impl.movielist.view.recyclerview.ItemOffsetDecoration;
 import me.exerosis.nanodegree.movies.impl.movielist.view.recyclerview.MovieListCard;
@@ -23,9 +21,7 @@ import me.exerosis.nanodegree.movies.mvc.ViewBase;
 
 
 public class MovieListView implements ViewBase, MovieList {
-    public static final String ARG_MOVIES = "MOVIES";
     private final MovieListViewBinding binding;
-    private final ArrayList<Movie> movies = new ArrayList<>();
     private MovieListListener listener;
 
     public MovieListView(LayoutInflater inflater, ViewGroup container) {
@@ -37,42 +33,21 @@ public class MovieListView implements ViewBase, MovieList {
         //RecyclerView
         binding.movieList.setLayoutManager(new GridLayoutManager(context, context.getResources().getInteger(R.integer.movie_list_columns)));
         binding.movieList.addItemDecoration(new ItemOffsetDecoration(context, R.dimen.movie_list_item_offset));
-
-        //Not quite ideal having an adapter in this class but I think it still counts as pretty dumb(and it's very much part of the view)
-        binding.movieList.setAdapter(new RecyclerView.Adapter<MovieListCard>() {
-            @Override
-            public MovieListCard onCreateViewHolder(ViewGroup parent, int viewType) {
-                LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-                return new MovieListCard(DataBindingUtil.<MovieListCardBinding>inflate(inflater, R.layout.movie_list_card, parent, false));
-            }
-
-            @Override
-            public void onBindViewHolder(MovieListCard holder, int position) {
-                holder.displayMovie(movies.get(position));
-            }
-
-            @Override
-            public int getItemCount() {
-                return movies.size();
-            }
-        });
     }
 
     @Override
-    public void setMovies(@NonNull List<Movie> movies) {
-        this.movies.clear();
-        this.movies.addAll(movies);
-        binding.movieList.getAdapter().notifyDataSetChanged();
+    public void setAdapter(@NonNull RecyclerView.Adapter<MovieListCard> adapter) {
+        binding.movieList.setAdapter(adapter);
+    }
+
+    @Override
+    public RecyclerView.Adapter getAdapter() {
+        return binding.movieList.getAdapter();
     }
 
     @Override
     public void setRefreshing(boolean refreshing) {
         binding.swipeRefreshLayout.setRefreshing(refreshing);
-    }
-
-    @Override
-    public List<Movie> getMovies() {
-        return movies;
     }
 
     @Override
@@ -98,8 +73,6 @@ public class MovieListView implements ViewBase, MovieList {
 
     @Override
     public Bundle getViewState() {
-        Bundle state = new Bundle();
-        state.putParcelableArrayList(ARG_MOVIES, movies);
-        return state;
+        return null;
     }
 }

@@ -11,6 +11,7 @@ import android.view.View;
 import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.databinding.ScaffoldingViewBinding;
 import me.exerosis.nanodegree.movies.impl.movielist.controller.MovieListController;
+import me.exerosis.nanodegree.movies.impl.movielist.controller.MovieListFragment;
 import me.exerosis.nanodegree.movies.mvc.Interactable;
 
 public class AppScaffoldingView implements AppScaffolding {
@@ -18,13 +19,11 @@ public class AppScaffoldingView implements AppScaffolding {
     private AppCompatActivity activity;
     private AppScaffoldingListener listener;
 
-    public AppScaffoldingView(AppCompatActivity activity, MovieListController movieListController) {
+    public AppScaffoldingView(AppCompatActivity activity) {
         binding = DataBindingUtil.setContentView(activity, R.layout.scaffolding_view);
         this.activity = activity;
 
-        activity.getSupportFragmentManager().beginTransaction()
-                .replace(binding.content.getId(), (Fragment) movieListController, "movie_list")
-                .commit();
+        binding.navigationView.setCheckedItem(R.id.nav_popular);
     }
 
     @Override
@@ -48,6 +47,11 @@ public class AppScaffoldingView implements AppScaffolding {
             return false;
         binding.drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public int getFragmentContainerID() {
+        return binding.fragmentContainer.getId();
     }
 
     @Override
