@@ -1,8 +1,11 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/tools">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.CardView
+        card_view:cardBackgroundColor="@android:color/white"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
 
         <ImageView
             android:adjustViewBounds="true"
@@ -10,6 +13,5 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/cover_error" />
-
-    </RelativeLayout>
+    </android.support.v7.widget.CardView>
 </layout>
