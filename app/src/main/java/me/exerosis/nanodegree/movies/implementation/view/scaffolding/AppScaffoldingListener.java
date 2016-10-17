@@ -1,4 +1,4 @@
-package me.exerosis.nanodegree.movies.impl.scaffolding.view;
+package me.exerosis.nanodegree.movies.implementation.view.scaffolding;
 
 
 import android.support.design.widget.NavigationView;

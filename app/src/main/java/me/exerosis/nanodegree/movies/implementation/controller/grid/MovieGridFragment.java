@@ -1,4 +1,4 @@
-package me.exerosis.nanodegree.movies.impl.grid.controller;
+package me.exerosis.nanodegree.movies.implementation.controller.grid;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,10 +12,10 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.exerosis.nanodegree.movies.impl.grid.model.Movie;
-import me.exerosis.nanodegree.movies.impl.grid.model.MovieGridLoader;
-import me.exerosis.nanodegree.movies.impl.grid.view.MovieGridView;
-import me.exerosis.nanodegree.movies.impl.grid.view.card.MovieHolderView;
+import me.exerosis.nanodegree.movies.implementation.model.Movie;
+import me.exerosis.nanodegree.movies.implementation.model.MovieGridLoader;
+import me.exerosis.nanodegree.movies.implementation.view.grid.MovieGridView;
+import me.exerosis.nanodegree.movies.implementation.view.holder.MovieHolderView;
 
 public class MovieGridFragment extends Fragment implements MovieGridController {
     public static final String ARG_URL = "URL";
@@ -70,7 +70,7 @@ public class MovieGridFragment extends Fragment implements MovieGridController {
 
     @Override
     public Loader<List<Movie>> onCreateLoader(int id, Bundle args) {
-        if(!args.containsKey(ARG_URL))
+        if (!args.containsKey(ARG_URL))
             throw new IllegalArgumentException();
         return new MovieGridLoader(getContext(), args.getString(ARG_URL));
     }

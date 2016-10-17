@@ -1,4 +1,4 @@
-package me.exerosis.nanodegree.movies.impl.grid.view;
+package me.exerosis.nanodegree.movies.implementation.view.grid;
 
 import android.support.v4.widget.SwipeRefreshLayout;
 

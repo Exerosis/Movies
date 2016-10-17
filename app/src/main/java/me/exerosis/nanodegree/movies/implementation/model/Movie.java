@@ -1,4 +1,4 @@
-package me.exerosis.nanodegree.movies.impl.grid.model;
+package me.exerosis.nanodegree.movies.implementation.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

@@ -1,4 +1,4 @@
-package me.exerosis.nanodegree.movies.impl.scaffolding.controller;
+package me.exerosis.nanodegree.movies.implementation.controller.scaffolding;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -6,10 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import me.exerosis.nanodegree.movies.R;
-import me.exerosis.nanodegree.movies.impl.grid.controller.MovieGridFragment;
-import me.exerosis.nanodegree.movies.impl.scaffolding.view.AppScaffolding;
-import me.exerosis.nanodegree.movies.impl.scaffolding.view.AppScaffoldingListener;
-import me.exerosis.nanodegree.movies.impl.scaffolding.view.AppScaffoldingView;
+import me.exerosis.nanodegree.movies.implementation.controller.grid.MovieGridFragment;
+import me.exerosis.nanodegree.movies.implementation.view.scaffolding.AppScaffolding;
+import me.exerosis.nanodegree.movies.implementation.view.scaffolding.AppScaffoldingListener;
+import me.exerosis.nanodegree.movies.implementation.view.scaffolding.AppScaffoldingView;
 
 public class AppScaffoldingActivity extends AppCompatActivity implements AppScaffoldingController, AppScaffoldingListener {
     public static final String STATE_URL = "URL";

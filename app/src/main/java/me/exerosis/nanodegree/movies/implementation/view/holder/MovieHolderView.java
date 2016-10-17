@@ -1,4 +1,4 @@
-package me.exerosis.nanodegree.movies.impl.grid.view.card;
+package me.exerosis.nanodegree.movies.implementation.view.holder;
 
 
 import android.databinding.DataBindingUtil;
@@ -13,9 +13,7 @@ import com.squareup.picasso.Picasso;
 
 import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.databinding.MovieListCardBinding;
-import me.exerosis.nanodegree.movies.impl.grid.model.Movie;
-import me.exerosis.nanodegree.movies.mvc.Interactable;
-import me.exerosis.nanodegree.movies.mvc.ViewBase;
+import me.exerosis.nanodegree.movies.implementation.model.Movie;
 
 
 public class MovieHolderView extends RecyclerView.ViewHolder implements MovieHolder {
@@ -24,7 +22,7 @@ public class MovieHolderView extends RecyclerView.ViewHolder implements MovieHol
     private Movie movie;
 
     public MovieHolderView(ViewGroup parent) {
-        super(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.movie_list_card, parent, false).getRoot());
+        super(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.movie_holder_view, parent, false).getRoot());
         binding = DataBindingUtil.getBinding(itemView);
 
         binding.poster.setOnClickListener(this);

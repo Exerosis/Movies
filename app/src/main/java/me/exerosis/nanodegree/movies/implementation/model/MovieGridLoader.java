@@ -1,4 +1,4 @@
-package me.exerosis.nanodegree.movies.impl.grid.model;
+package me.exerosis.nanodegree.movies.implementation.model;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

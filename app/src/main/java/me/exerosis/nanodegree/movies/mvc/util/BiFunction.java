@@ -1,4 +1,4 @@
-package me.exerosis.nanodegree.movies.mvc;
+package me.exerosis.nanodegree.movies.mvc.util;
 
 public interface BiFunction<T, U, R> {
 

@@ -1,4 +1,4 @@
-package me.exerosis.nanodegree.movies.impl.util;
+package me.exerosis.nanodegree.movies.mvc.util;
 
 import android.content.Context;
 import android.graphics.Rect;

@@ -1,4 +1,4 @@
-package me.exerosis.nanodegree.movies.impl.scaffolding.view;
+package me.exerosis.nanodegree.movies.implementation.view.scaffolding;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -16,7 +16,7 @@ public class AppScaffoldingView implements AppScaffolding {
     private AppScaffoldingListener listener;
 
     public AppScaffoldingView(AppCompatActivity activity) {
-        binding = DataBindingUtil.setContentView(activity, R.layout.scaffolding_view);
+        binding = DataBindingUtil.setContentView(activity, R.layout.app_scaffolding_view);
         this.activity = activity;
 
         binding.navigationView.setCheckedItem(R.id.nav_popular);

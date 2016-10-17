@@ -1,4 +1,4 @@
-package me.exerosis.nanodegree.movies.impl.grid.view;
+package me.exerosis.nanodegree.movies.implementation.view.grid;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import me.exerosis.nanodegree.movies.databinding.MovieListViewBinding;
-import me.exerosis.nanodegree.movies.impl.util.ItemOffsetDecoration;
-import me.exerosis.nanodegree.movies.impl.grid.view.card.MovieHolderView;
+import me.exerosis.nanodegree.movies.mvc.util.ItemOffsetDecoration;
+import me.exerosis.nanodegree.movies.implementation.view.holder.MovieHolderView;
 import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.mvc.ViewBase;
 
@@ -22,7 +22,7 @@ public class MovieGridView implements ViewBase, MovieGrid {
     private MovieGridListener listener;
 
     public MovieGridView(LayoutInflater inflater, ViewGroup container) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.movie_list_view, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.movie_grid_view, container, false);
         initialize(container.getContext());
     }
 
