@@ -12,12 +12,12 @@ import android.view.ViewGroup;
 import com.squareup.picasso.Picasso;
 
 import me.exerosis.nanodegree.movies.R;
-import me.exerosis.nanodegree.movies.databinding.MovieListCardBinding;
+import me.exerosis.nanodegree.movies.databinding.MovieHolderViewBinding;
 import me.exerosis.nanodegree.movies.implementation.model.Movie;
 
 
 public class MovieHolderView extends RecyclerView.ViewHolder implements MovieHolder {
-    private final MovieListCardBinding binding;
+    private final MovieHolderViewBinding binding;
     private MovieHolderListener listener;
     private Movie movie;
 

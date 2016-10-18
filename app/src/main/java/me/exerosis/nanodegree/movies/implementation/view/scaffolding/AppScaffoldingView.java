@@ -8,10 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import me.exerosis.nanodegree.movies.R;
-import me.exerosis.nanodegree.movies.databinding.ScaffoldingViewBinding;
+import me.exerosis.nanodegree.movies.databinding.AppScaffoldingViewBinding;
 
 public class AppScaffoldingView implements AppScaffolding {
-    private final ScaffoldingViewBinding binding;
+    private final AppScaffoldingViewBinding binding;
     private AppCompatActivity activity;
     private AppScaffoldingListener listener;
 
