@@ -3,6 +3,7 @@ package me.exerosis.nanodegree.movies.implementation.controller.movies;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,19 +28,26 @@ public class MoviesFragment extends Fragment implements MoviesController {
         view.newTab(true).setIcon(R.drawable.ic_menu_camera).setTag(0);
         view.newTab().setIcon(R.drawable.ic_menu_gallery).setTag(1);
 
+        view.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                return fragments[position];
+            }
+
+            @Override
+            public int getCount() {
+                return fragments.length;
+            }
+        });
+
         return view.getRootView();
     }
 
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        if (tab.getTag() == null)
-            return;
-
-        getFragmentManager().beginTransaction()
-                .replace(view.getFragmentContainerId(), fragments[(int) tab.getTag()], "test")
-                .addToBackStack("test")
-                .commit();
+        if (tab.getTag() != null)
+            view.setCurrentPage((Integer) tab.getTag());
     }
 
     @Override

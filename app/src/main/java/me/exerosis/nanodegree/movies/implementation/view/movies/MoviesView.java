@@ -3,6 +3,7 @@ package me.exerosis.nanodegree.movies.implementation.view.movies;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,27 @@ public class MoviesView implements Movies {
 
     public MoviesView(LayoutInflater inflater, ViewGroup parent) {
         binding = DataBindingUtil.inflate(inflater, R.layout.movies_view, parent, false);
+    }
+
+
+    @Override
+    public void setCurrentPage(int position) {
+        binding.moviesViewPager.setCurrentItem(position, false);
+    }
+
+    @Override
+    public int getCurrentPage() {
+        return binding.moviesViewPager.getCurrentItem();
+    }
+
+    @Override
+    public void setAdapter(FragmentPagerAdapter adapter) {
+        binding.moviesViewPager.setTag(adapter);
+    }
+
+    @Override
+    public FragmentPagerAdapter getAdapter() {
+        return (FragmentPagerAdapter) binding.moviesViewPager.getAdapter();
     }
 
     @Override
