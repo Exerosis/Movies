@@ -12,52 +12,19 @@ import me.exerosis.nanodegree.movies.databinding.AppScaffoldingViewBinding;
 
 public class AppScaffoldingView implements AppScaffolding {
     private final AppScaffoldingViewBinding binding;
-    private AppCompatActivity activity;
-    private AppScaffoldingListener listener;
 
     public AppScaffoldingView(AppCompatActivity activity) {
         binding = DataBindingUtil.setContentView(activity, R.layout.app_scaffolding_view);
-        this.activity = activity;
-
-        binding.navigationView.setCheckedItem(R.id.nav_popular);
-    }
-
-    @Override
-    public void setListener(AppScaffoldingListener listener) {
-        this.listener = listener;
-
-        activity.setSupportActionBar(binding.toolbar);
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(activity, binding.drawer, binding.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        toggle.syncState();
-
-        binding.drawer.addDrawerListener(toggle);
-
-        binding.navigationView.setNavigationItemSelectedListener(listener);
-    }
-
-
-    @Override
-    public boolean setDrawerOpen(boolean open) {
-        if (!binding.drawer.isDrawerOpen(GravityCompat.START))
-            return false;
-        binding.drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 
     @Override
     public int getFragmentContainerID() {
-        return binding.fragmentContainer.getId();
+        return binding.appScaffoldingContainer.getId();
     }
 
     @Override
     public View getRootView() {
         return binding.getRoot();
-    }
-
-    @Override
-    public AppScaffoldingListener getListener() {
-        return listener;
     }
 
     @Override

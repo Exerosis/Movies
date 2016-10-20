@@ -1,8 +1,7 @@
 package me.exerosis.nanodegree.movies.implementation.controller.movies;
 
-/**
- * Created by Home on 10/19/2016.
- */
 
-public interface MoviesController {
+import me.exerosis.nanodegree.movies.implementation.view.movies.MoviesListener;
+
+public interface MoviesController extends MoviesListener {
 }

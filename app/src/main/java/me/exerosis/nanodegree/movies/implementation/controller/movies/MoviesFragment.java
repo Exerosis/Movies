@@ -2,41 +2,48 @@ package me.exerosis.nanodegree.movies.implementation.controller.movies;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import me.exerosis.nanodegree.movies.R;
+import me.exerosis.nanodegree.movies.implementation.controller.grid.MovieGridFragment;
 import me.exerosis.nanodegree.movies.implementation.view.movies.MoviesView;
 
 public class MoviesFragment extends Fragment implements MoviesController {
+    public static final int TAB_COUNT = 2;
+    private final Fragment[] fragments = new Fragment[TAB_COUNT];
     private MoviesView view;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = new MoviesView(inflater, container);
 
+        fragments[0] = MovieGridFragment.newInstance("http://api.themoviedb.org/3/movie/popular?api_key=80de3dcb516f2d18d76b0d4f3d7b2f05");
+        fragments[1] = MovieGridFragment.newInstance("http://api.themoviedb.org/3/movie/top_rated?api_key=80de3dcb516f2d18d76b0d4f3d7b2f05");
 
-        view.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                return null;
-            }
-
-            @Override
-            public int getCount() {
-                return 0;
-            }
-
-        });
-
+        view.newTab(true).setIcon(R.drawable.ic_menu_camera).setTag(fragments[0]);
+        view.newTab().setIcon(R.drawable.ic_menu_gallery).setTag(fragments[1]);
 
         return view.getRootView();
     }
 
 
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
 
+    }
 
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
 
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
+    }
 }

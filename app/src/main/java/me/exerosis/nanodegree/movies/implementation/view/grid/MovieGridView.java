@@ -28,34 +28,34 @@ public class MovieGridView implements ViewBase, MovieGrid {
 
     private void initialize(Context context) {
         //RecyclerView
-        binding.movieList.setLayoutManager(new GridLayoutManager(context, context.getResources().getInteger(R.integer.movie_list_columns)));
-        binding.movieList.addItemDecoration(new ItemOffsetDecoration(context, R.dimen.movie_list_item_offset));
+        binding.movieGrid.setLayoutManager(new GridLayoutManager(context, context.getResources().getInteger(R.integer.movie_list_columns)));
+        binding.movieGrid.addItemDecoration(new ItemOffsetDecoration(context, R.dimen.movie_list_item_offset));
     }
 
     @Override
     public void setAdapter(@NonNull RecyclerView.Adapter<MovieHolderView> adapter) {
-        binding.movieList.setAdapter(adapter);
+        binding.movieGrid.setAdapter(adapter);
     }
 
     @Override
     public RecyclerView.Adapter getAdapter() {
-        return binding.movieList.getAdapter();
+        return binding.movieGrid.getAdapter();
     }
 
     @Override
     public void setRefreshing(boolean refreshing) {
-        binding.swipeRefreshLayout.setRefreshing(refreshing);
+        binding.movieGridRefreshLayout.setRefreshing(refreshing);
     }
 
     @Override
     public boolean isRefreshing() {
-        return binding.swipeRefreshLayout.isRefreshing();
+        return binding.movieGridRefreshLayout.isRefreshing();
     }
 
     @Override
     public void setListener(MovieGridListener listener) {
         this.listener = listener;
-        binding.swipeRefreshLayout.setOnRefreshListener(listener);
+        binding.movieGridRefreshLayout.setOnRefreshListener(listener);
     }
 
     @Override
