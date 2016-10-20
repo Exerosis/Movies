@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.databinding.MoviesViewBinding;
 
 public class MoviesView implements Movies {
@@ -26,7 +27,13 @@ public class MoviesView implements Movies {
     public TabLayout.Tab newTab(boolean selected) {
         TabLayout.Tab tab = binding.moviesTabLayout.newTab();
         binding.moviesTabLayout.addTab(tab, selected);
+
         return tab;
+    }
+
+    @Override
+    public int getFragmentContainerId() {
+        return binding.moviesContainer.getId();
     }
 
     @Override

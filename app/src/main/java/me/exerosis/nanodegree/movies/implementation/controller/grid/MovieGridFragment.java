@@ -17,6 +17,7 @@ import me.exerosis.nanodegree.movies.implementation.model.MovieGridLoader;
 import me.exerosis.nanodegree.movies.implementation.view.grid.MovieGridView;
 import me.exerosis.nanodegree.movies.implementation.view.holder.MovieHolderView;
 
+
 public class MovieGridFragment extends Fragment implements MovieGridController {
     public static final String ARG_URL = "URL";
     public static int LOADER_ID = 0;

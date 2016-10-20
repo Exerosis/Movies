@@ -19,12 +19,13 @@ public class MoviesFragment extends Fragment implements MoviesController {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = new MoviesView(inflater, container);
+        view.setListener(this);
 
         fragments[0] = MovieGridFragment.newInstance("http://api.themoviedb.org/3/movie/popular?api_key=80de3dcb516f2d18d76b0d4f3d7b2f05");
         fragments[1] = MovieGridFragment.newInstance("http://api.themoviedb.org/3/movie/top_rated?api_key=80de3dcb516f2d18d76b0d4f3d7b2f05");
 
-        view.newTab(true).setIcon(R.drawable.ic_menu_camera).setTag(fragments[0]);
-        view.newTab().setIcon(R.drawable.ic_menu_gallery).setTag(fragments[1]);
+        view.newTab(true).setIcon(R.drawable.ic_menu_camera).setTag(0);
+        view.newTab().setIcon(R.drawable.ic_menu_gallery).setTag(1);
 
         return view.getRootView();
     }
@@ -32,7 +33,13 @@ public class MoviesFragment extends Fragment implements MoviesController {
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
+        if (tab.getTag() == null)
+            return;
 
+        getFragmentManager().beginTransaction()
+                .replace(view.getFragmentContainerId(), fragments[(int) tab.getTag()], "test")
+                .addToBackStack("test")
+                .commit();
     }
 
     @Override

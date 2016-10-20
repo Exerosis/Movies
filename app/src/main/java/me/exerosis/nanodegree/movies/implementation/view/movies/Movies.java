@@ -10,4 +10,6 @@ public interface Movies extends ViewBase, Interactable<MoviesListener> {
 
     TabLayout.Tab newTab();
     TabLayout.Tab newTab(boolean selected);
+
+    int getFragmentContainerId();
 }
