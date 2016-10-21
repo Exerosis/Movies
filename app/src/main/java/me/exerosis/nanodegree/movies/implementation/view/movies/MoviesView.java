@@ -17,6 +17,9 @@ public class MoviesView implements Movies {
 
     public MoviesView(LayoutInflater inflater, ViewGroup parent) {
         binding = DataBindingUtil.inflate(inflater, R.layout.movies_view, parent, false);
+
+        binding.moviesViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.moviesTabLayout));
+        binding.moviesTabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(binding.moviesViewPager));
     }
 
 
@@ -32,7 +35,7 @@ public class MoviesView implements Movies {
 
     @Override
     public void setAdapter(FragmentPagerAdapter adapter) {
-        binding.moviesViewPager.setTag(adapter);
+        binding.moviesViewPager.setAdapter(adapter);
     }
 
     @Override
@@ -55,7 +58,7 @@ public class MoviesView implements Movies {
 
     @Override
     public int getFragmentContainerId() {
-        return binding.moviesContainer.getId();
+        return 0;
     }
 
     @Override

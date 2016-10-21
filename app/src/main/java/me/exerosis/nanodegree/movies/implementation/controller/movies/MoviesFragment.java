@@ -25,8 +25,13 @@ public class MoviesFragment extends Fragment implements MoviesController {
         fragments[0] = MovieGridFragment.newInstance("http://api.themoviedb.org/3/movie/popular?api_key=80de3dcb516f2d18d76b0d4f3d7b2f05");
         fragments[1] = MovieGridFragment.newInstance("http://api.themoviedb.org/3/movie/top_rated?api_key=80de3dcb516f2d18d76b0d4f3d7b2f05");
 
-        view.newTab(true).setIcon(R.drawable.ic_menu_camera).setTag(0);
-        view.newTab().setIcon(R.drawable.ic_menu_gallery).setTag(1);
+        TabLayout.Tab popularTab = view.newTab(true).setIcon(R.drawable.ic_menu_camera).setTag(0);
+        TabLayout.Tab topRatedTab = view.newTab().setIcon(R.drawable.ic_menu_gallery).setTag(1);
+
+        if(getResources().getBoolean(R.bool.tablet_mode)){
+            popularTab.setText("Popular");
+            topRatedTab.setText("Top Rated");
+        }
 
         view.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
             @Override
@@ -40,14 +45,14 @@ public class MoviesFragment extends Fragment implements MoviesController {
             }
         });
 
+        view.setCurrentPage(0);
+
         return view.getRootView();
     }
 
-
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        if (tab.getTag() != null)
-            view.setCurrentPage((Integer) tab.getTag());
+
     }
 
     @Override
@@ -57,6 +62,5 @@ public class MoviesFragment extends Fragment implements MoviesController {
 
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
-
     }
 }
