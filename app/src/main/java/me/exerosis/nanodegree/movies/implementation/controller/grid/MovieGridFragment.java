@@ -15,6 +15,7 @@ import java.util.List;
 import me.exerosis.nanodegree.movies.implementation.model.Movie;
 import me.exerosis.nanodegree.movies.implementation.model.MovieGridLoader;
 import me.exerosis.nanodegree.movies.implementation.view.grid.MovieGridView;
+import me.exerosis.nanodegree.movies.implementation.view.holder.MovieHolderListener;
 import me.exerosis.nanodegree.movies.implementation.view.holder.MovieHolderView;
 
 
@@ -23,6 +24,7 @@ public class MovieGridFragment extends Fragment implements MovieGridController {
     public static int LOADER_ID = 0;
     private MovieGridView view;
     private List<Movie> movies = new ArrayList<>();
+    private MovieHolderListener listener;
 
     public static MovieGridFragment newInstance(String url) {
         Bundle args = new Bundle();
@@ -46,7 +48,7 @@ public class MovieGridFragment extends Fragment implements MovieGridController {
             @Override
             public MovieHolderView onCreateViewHolder(ViewGroup parent, int viewType) {
                 MovieHolderView viewHolder = new MovieHolderView(parent);
-                viewHolder.setListener(MovieGridFragment.this);
+                viewHolder.setListener(listener);
                 return viewHolder;
             }
 
@@ -89,7 +91,12 @@ public class MovieGridFragment extends Fragment implements MovieGridController {
     }
 
     @Override
-    public void onClick(Movie movie) {
-        System.out.println(movie.getTitle());
+    public void setListener(MovieHolderListener listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    public MovieHolderListener getListener() {
+        return listener;
     }
 }

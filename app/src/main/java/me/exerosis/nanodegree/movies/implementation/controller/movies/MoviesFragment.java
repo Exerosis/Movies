@@ -10,12 +10,14 @@ import android.view.ViewGroup;
 
 import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.implementation.controller.grid.MovieGridFragment;
+import me.exerosis.nanodegree.movies.implementation.view.holder.MovieHolderListener;
 import me.exerosis.nanodegree.movies.implementation.view.movies.MoviesView;
 
 public class MoviesFragment extends Fragment implements MoviesController {
     public static final int TAB_COUNT = 2;
-    private final Fragment[] fragments = new Fragment[TAB_COUNT];
+    private final MovieGridFragment[] fragments = new MovieGridFragment[TAB_COUNT];
     private MoviesView view;
+    private MovieHolderListener listener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -28,7 +30,7 @@ public class MoviesFragment extends Fragment implements MoviesController {
         TabLayout.Tab popularTab = view.newTab(true).setIcon(R.drawable.ic_menu_camera).setTag(0);
         TabLayout.Tab topRatedTab = view.newTab().setIcon(R.drawable.ic_menu_gallery).setTag(1);
 
-        if(getResources().getBoolean(R.bool.tablet_mode)){
+        if (getResources().getBoolean(R.bool.tablet_mode)) {
             popularTab.setText("Popular");
             topRatedTab.setText("Top Rated");
         }
@@ -45,6 +47,8 @@ public class MoviesFragment extends Fragment implements MoviesController {
             }
         });
 
+        fragments[0].setListener(listener);
+
         view.setCurrentPage(0);
 
         return view.getRootView();
@@ -52,15 +56,30 @@ public class MoviesFragment extends Fragment implements MoviesController {
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-
+        if (tab.getTag() != null)
+            fragments[(int) tab.getTag()].setListener(listener);
     }
 
     @Override
     public void onTabUnselected(TabLayout.Tab tab) {
-
+        if (tab.getTag() != null)
+            fragments[(int) tab.getTag()].setListener(null);
     }
 
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
+    }
+
+
+    @Override
+    public void setListener(MovieHolderListener listener) {
+        this.listener = listener;
+        if (view != null)
+            fragments[view.getCurrentPage()].setListener(listener);
+    }
+
+    @Override
+    public MovieHolderListener getListener() {
+        return listener;
     }
 }

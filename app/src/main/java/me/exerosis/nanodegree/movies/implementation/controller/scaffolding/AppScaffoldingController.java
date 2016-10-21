@@ -1,4 +1,6 @@
 package me.exerosis.nanodegree.movies.implementation.controller.scaffolding;
 
-public interface AppScaffoldingController  {
+import me.exerosis.nanodegree.movies.implementation.view.holder.MovieHolderListener;
+
+public interface AppScaffoldingController extends MovieHolderListener {
 }
