@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
 
     <android.support.design.widget.CoordinatorLayout
@@ -10,13 +11,6 @@
 
 
         <!-- Layer 0 -->
-        <ImageView
-            android:id="@+id/movie_details_background_image"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:elevation="0dip"
-            android:scaleType="centerCrop"
-            android:src="@drawable/image" />
 
         <!-- Layer 1 -->
         <android.support.design.widget.AppBarLayout
@@ -25,14 +19,14 @@
             android:layout_height="192dp"
             android:background="@android:color/transparent"
             android:fitsSystemWindows="true"
-            android:theme="@style/AppOverlay">
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
             <!--android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar-->
 
             <android.support.design.widget.CollapsingToolbarLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
-                app:contentScrim="?attr/colorAccent"
+                app:contentScrim="?attr/colorPrimary"
                 app:expandedTitleMarginBottom="32dp"
                 app:expandedTitleMarginEnd="64dp"
                 app:expandedTitleMarginStart="48dp"
@@ -43,24 +37,56 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:elevation="4dip"
-                    app:layout_collapseMode="pin" />
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
 
 
-        <!-- Fragment with recyclerview inside -->
+        <!-- Content -->
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:elevation="3dip"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/sample_string" />
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+                <ImageView
+                    app:srcCompat="@mipmap/ic_launcher"
+                    android:id="@+id/imageView"
+                    android:adjustViewBounds="false"
+                    android:cropToPadding="true"
+                    android:scaleType="fitStart"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginBottom="75dp"
+                    android:layout_height="150dp"
+                    android:layout_width="90dp" />
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView5" />
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView4" />
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView3" />
+
+            </GridLayout>
         </android.support.v4.widget.NestedScrollView>
+
 
         <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"
@@ -69,6 +95,14 @@
             android:clickable="true"
             app:layout_anchor="@+id/movie_details_app_bar"
             app:layout_anchorGravity="bottom|right|end" />
+
+        <ImageView
+            android:id="@+id/movie_details_background_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="0dip"
+            android:scaleType="centerCrop"
+            android:src="@drawable/image" />
 
     </android.support.design.widget.CoordinatorLayout>
 </layout>
