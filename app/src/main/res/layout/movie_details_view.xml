@@ -16,7 +16,7 @@
             android:layout_height="200dp"
             android:elevation="0dip"
             android:scaleType="centerCrop"
-            android:src="@drawable/nnn" />
+            android:src="@drawable/image" />
 
         <!-- Layer 1 -->
         <android.support.design.widget.AppBarLayout
