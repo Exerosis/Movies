@@ -33,7 +33,7 @@ public class AppScaffoldingActivity extends AppCompatActivity implements AppScaf
     @Override
     public void onClick(Movie movie) {
         getSupportFragmentManager().beginTransaction()
-                .replace(view.getFragmentContainerID(), new MovieDetailsFragment())
+                .replace(view.getFragmentContainerID(), MovieDetailsFragment.newInstance(movie))
                 .addToBackStack("movie")
                 .commit();
     }
