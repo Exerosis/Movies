@@ -51,9 +51,21 @@ public class MovieGridLoader extends AsyncTaskLoader<List<Movie>> {
 
             for (JsonElement jsonMovie : result.getAsJsonArray("results")) {
                 String title = ((JsonObject) jsonMovie).get("title").getAsString();
-                String description = ((JsonObject) jsonMovie).get("overview").getAsString();
-                String tagline = ((JsonObject) jsonMovie).get("tagline").getAsString();
-                String date = ((JsonObject) jsonMovie).get("release_date").getAsString();
+
+                String description = null;
+                JsonElement descriptionElement = ((JsonObject) jsonMovie).get("overview");
+                if (descriptionElement != null)
+                    description = descriptionElement.getAsString();
+
+                String tagline = null;
+                JsonElement taglineElement = ((JsonObject) jsonMovie).get("tagline");
+                if (taglineElement != null)
+                    tagline = taglineElement.getAsString();
+
+                String date = null;
+                JsonElement dateElement = ((JsonObject) jsonMovie).get("release_date");
+                if (dateElement != null)
+                    date = dateElement.getAsString();
 
                 JsonElement posterElement = ((JsonObject) jsonMovie).get("poster_path");
                 String posterURL = null;
@@ -63,13 +75,16 @@ public class MovieGridLoader extends AsyncTaskLoader<List<Movie>> {
                 JsonElement backdropElement = ((JsonObject) jsonMovie).get("backdrop_path");
                 String backdropURL = null;
                 if (!backdropElement.isJsonNull())
-                    backdropURL = "http://image.tmdb.org/t/p/w500" + backdropElement.getAsString() + "&api_key=80de3dcb516f2d18d76b0d4f3d7b2f05";
+                    backdropURL = "http://image.tmdb.org/t/p/w780" + backdropElement.getAsString();
 
                 String genres = "";
-                for (JsonElement genre : ((JsonObject) jsonMovie).get("genres").getAsJsonArray()) {
-                    genres+=genre.getAsJsonObject().get("name").getAsString();
-                }
-
+                JsonElement genresElement = ((JsonObject) jsonMovie).get("genres");
+                System.out.println(((JsonObject) jsonMovie).has("tagline"));
+                if (genresElement != null)
+                    for (JsonElement genre : genresElement.getAsJsonArray()) {
+                        System.out.println(genre);
+                        genres += genre.getAsJsonObject().get("name").getAsString();
+                    }
 
                 Movie movie = new Movie(title, description, tagline, date, genres, posterURL, backdropURL);
 

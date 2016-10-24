@@ -8,6 +8,22 @@
     app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
 
     <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/movie_details_runtime_title"
+        app:layout_constraintLeft_toLeftOf="@+id/movie_details_quick_look_bar" />
+
+    <TextView
+        android:text="Runtime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/movie_details_runtime_title"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="188dp" />
+
+    <TextView
         android:text="Interstellar chronicles the adventures of a group of explorers who make use of a newly discovered wormhole to surpass the limitations on human space travel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -97,9 +113,9 @@
         android:layout_width="0dp"
         android:layout_height="567dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="17dp"
         tools:layout_editor_absoluteX="17dp"
-        tools:layout_editor_absoluteY="0dp" />
+        tools:layout_editor_absoluteY="0dp"
+        app:layout_constraintGuide_begin="17dp" />
 
     <android.support.constraint.Guideline
         android:id="@+id/poster_end_guide"
