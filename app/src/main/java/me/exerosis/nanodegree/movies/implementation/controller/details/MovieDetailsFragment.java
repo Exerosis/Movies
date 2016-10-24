@@ -25,9 +25,8 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContro
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = new MovieDetailsView(inflater, container);
         movie = getArguments().getParcelable(ARG_MOVIE);
-
+        view = new MovieDetailsView(inflater, container, movie);
 
         return view.getRootView();
     }

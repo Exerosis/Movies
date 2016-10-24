@@ -39,7 +39,7 @@
         android:text="Drama, Science Fiction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/movie_details_tags"
+        android:id="@+id/movie_details_genres"
         app:layout_constraintLeft_toLeftOf="@+id/text_start_guide"
         app:layout_constraintTop_toBottomOf="@+id/movie_details_date"
         android:textStyle="normal|italic"

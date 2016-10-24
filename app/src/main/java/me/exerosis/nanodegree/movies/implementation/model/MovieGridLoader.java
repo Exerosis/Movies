@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.AsyncTaskLoader;
 import android.widget.Toast;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -50,13 +51,27 @@ public class MovieGridLoader extends AsyncTaskLoader<List<Movie>> {
 
             for (JsonElement jsonMovie : result.getAsJsonArray("results")) {
                 String title = ((JsonObject) jsonMovie).get("title").getAsString();
+                String description = ((JsonObject) jsonMovie).get("overview").getAsString();
+                String tagline = ((JsonObject) jsonMovie).get("tagline").getAsString();
+                String date = ((JsonObject) jsonMovie).get("release_date").getAsString();
+
                 JsonElement posterElement = ((JsonObject) jsonMovie).get("poster_path");
                 String posterURL = null;
                 if (!posterElement.isJsonNull())
                     posterURL = "http://image.tmdb.org/t/p/w500" + posterElement.getAsString() + "&api_key=80de3dcb516f2d18d76b0d4f3d7b2f05";
 
+                JsonElement backdropElement = ((JsonObject) jsonMovie).get("backdrop_path");
+                String backdropURL = null;
+                if (!backdropElement.isJsonNull())
+                    backdropURL = "http://image.tmdb.org/t/p/w500" + backdropElement.getAsString() + "&api_key=80de3dcb516f2d18d76b0d4f3d7b2f05";
 
-                Movie movie = new Movie(title, posterURL);
+                String genres = "";
+                for (JsonElement genre : ((JsonObject) jsonMovie).get("genres").getAsJsonArray()) {
+                    genres+=genre.getAsJsonObject().get("name").getAsString();
+                }
+
+
+                Movie movie = new Movie(title, description, tagline, date, genres, posterURL, backdropURL);
 
                 Picasso.with(getContext()).load(posterURL);
                 newMovies.add(movie);

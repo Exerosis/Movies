@@ -59,7 +59,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/movie_details_quote" />
 
                 <TextView
-                    android:id="@+id/movie_details_quote"
+                    android:id="@+id/movie_details_tagline"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -75,7 +75,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/movie_details_quick_look_bar" />
 
                 <TextView
-                    android:id="@+id/movie_details_tags"
+                    android:id="@+id/movie_details_genres"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:elevation="3dp"
@@ -245,7 +245,7 @@
         </android.support.v4.widget.NestedScrollView>
 
         <ImageView
-            android:id="@+id/movie_details_background_image"
+            android:id="@+id/movie_details_backdrop"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="0dip"
