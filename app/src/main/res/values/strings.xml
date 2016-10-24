@@ -6,7 +6,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
+    <string name="quote">Mankind was born on earth. It was never meant to die here.</string>
     <string name="action_settings">Settings</string>
     <string name="nav_menu_top_rated">Top Rated</string>
     <string name="nav_menu_popular">Popular</string>
@@ -22,4 +22,8 @@ Nam vel amet nam consequat, augue libero rutrum fusce leo proin consequat, nunc 
 Gravida sed vitae amet. Pellentesque morbi morbi dui nec turpis. Nibh mus nunc nec nec vivamus, ut cras etiam erat, consequat porta. Duis tellus ut, aliquet quam ut nulla vivamus scelerisque justo, a velit id vitae. Consectetuer laoreet elementum, tellus montes. Quis nec volutpat phasellus taciti. Mollis sollicitudin, et eget consectetuer quod cras justo. Varius eu aenean dictum. Euismod sit suscipit lacinia nullam, vehicula varius at, lacus elit inceptos ligula lorem in, id volutpat amet enim ipsum laoreet, interdum elit vestibulum in eget. Varius mauris sociis esse massa venenatis sollicitudin, amet consequat habitant porttitor amet elementum amet, dolor ligula egestas pharetra metus feugiat, mi pretium ac dui.
 Imperdiet id felis lectus accumsan class, neque nullam quam, adipiscing turpis velrpis vel aliquam, praesent eget ullamcorper mauris, lacus etiam ipsum enim. Id tortor, tincidunt dignissim, id integer convallis, iaculis et erat, sunt aliquam. Lectus maecenas ultricies mi phasellus condimentum tempor, pede facilisis in et. In elit placerat ipsum praesent erat, nibh vitae, vel molestie nec sodales sed lectus quisque. Imperdiet nunc ipsum non ullamcorper, egestas ligula ac nam imperdiet, et mauris placerat in et, mi metus vitae, condimentum maecenas."/>
 </string>
+    <string name="interstellar_chronicles_the_adventures_of_a_group_of_explorers_who_make_use_of_a_newly_discovered_wormhole_to_surpass_the_limitations_on_human_space_travel">Interstellar chronicles the adventures of a group of explorers who make use of a newly discovered wormhole to surpass the limitations on human space travel</string>
+    <string name="drama_science_fiction">Drama, Science Fiction</string>
+    <string name="november_2014">November 2014</string>
+    <string name="interstellar">Interstellar</string>
 </resources>
