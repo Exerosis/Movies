@@ -3,6 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <RelativeLayout
+        android:id="@+id/movie_details_progress_splash"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:layout_centerInParent="true"
+            android:id="@+id/movie_details_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -17,9 +27,9 @@
             android:id="@+id/movie_details_app_bar"
             android:layout_width="match_parent"
             android:layout_height="192dp"
+            android:background="@android:color/transparent"
             android:fitsSystemWindows="true"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:background="@android:color/transparent">
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <android.support.design.widget.CollapsingToolbarLayout
                 android:layout_width="match_parent"
@@ -131,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     app:layout_constraintGuide_percent="0.33333334"
-                    tools:layout_editor_absoluteX="128dp"
+                    tools:layout_editor_absoluteX="0dp"
                     tools:layout_editor_absoluteY="0dp" />
 
                 <android.support.constraint.Guideline
@@ -140,7 +150,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     app:layout_constraintGuide_end="128dp"
-                    tools:layout_editor_absoluteX="256dp"
+                    tools:layout_editor_absoluteX="-127dp"
                     tools:layout_editor_absoluteY="0dp" />
 
                 <TextView
@@ -221,7 +231,7 @@
 
                 <android.support.constraint.Guideline
                     android:id="@+id/content_card_guide"
-                    android:layout_width="384dp"
+                    android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:orientation="horizontal"
                     app:layout_constraintGuide_begin="32dp"
@@ -231,7 +241,7 @@
                 <android.support.constraint.Guideline
                     android:id="@+id/poster_start_guide"
                     android:layout_width="0dp"
-                    android:layout_height="900dp"
+                    android:layout_height="0dp"
                     android:orientation="vertical"
                     app:layout_constraintGuide_begin="17dp"
                     tools:layout_editor_absoluteX="17dp"
@@ -240,7 +250,7 @@
                 <android.support.constraint.Guideline
                     android:id="@+id/poster_end_guide"
                     android:layout_width="wrap_content"
-                    android:layout_height="900dp"
+                    android:layout_height="0dp"
                     android:orientation="vertical"
                     app:layout_constraintGuide_begin="121dp"
                     tools:layout_editor_absoluteX="121dp"
@@ -248,7 +258,7 @@
 
                 <android.support.constraint.Guideline
                     android:id="@+id/poster_bottom_guide"
-                    android:layout_width="384dp"
+                    android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:orientation="horizontal"
                     app:layout_constraintGuide_begin="154dp"
@@ -257,7 +267,7 @@
 
                 <android.support.constraint.Guideline
                     android:id="@+id/quick_look_bottom_guide"
-                    android:layout_width="384dp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layout_constraintGuide_begin="239dp"
@@ -266,7 +276,7 @@
 
                 <android.support.constraint.Guideline
                     android:id="@+id/quick_look_top_guide"
-                    android:layout_width="384dp"
+                    android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:orientation="horizontal"
                     app:layout_constraintGuide_begin="188dp"
@@ -279,7 +289,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     app:layout_constraintGuide_end="11dp"
-                    tools:layout_editor_absoluteX="373dp"
+                    tools:layout_editor_absoluteX="-10dp"
                     tools:layout_editor_absoluteY="0dp" />
 
                 <ImageView

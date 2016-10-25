@@ -189,7 +189,7 @@
     <android.support.constraint.Guideline
         android:id="@+id/poster_start_guide"
         android:layout_width="0dp"
-        android:layout_height="900dp"
+        android:layout_height="567dp"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="17dp"
         tools:layout_editor_absoluteX="17dp"
@@ -198,7 +198,7 @@
     <android.support.constraint.Guideline
         android:id="@+id/poster_end_guide"
         android:layout_width="wrap_content"
-        android:layout_height="900dp"
+        android:layout_height="567dp"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="121dp"
         tools:layout_editor_absoluteX="121dp"

@@ -10,21 +10,16 @@ import android.widget.Toast;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.squareup.picasso.Picasso;
 
-import java.io.BufferedReader;
-import java.io.Closeable;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import me.exerosis.nanodegree.movies.R;
+import me.exerosis.nanodegree.movies.implementation.util.JsonUtilities;
 
 public class MovieGridLoader extends AsyncTaskLoader<List<Movie>> {
     private final String url;
@@ -40,69 +35,38 @@ public class MovieGridLoader extends AsyncTaskLoader<List<Movie>> {
         if (!isOnline())
             return null;
 
-        List<Movie> newMovies = new ArrayList<>();
-        Closeable reader = null;
+        JsonObject result = null;
         try {
-            reader = new URL(url).openStream();
-            reader = new InputStreamReader((InputStream) reader);
-            reader = new BufferedReader((Reader) reader);
-
-            JsonObject result = (JsonObject) new JsonParser().parse((Reader) reader);
+            result = JsonUtilities.fromURL(new URL(url));
+            List<Movie> newMovies = new ArrayList<>();
 
             for (JsonElement jsonMovie : result.getAsJsonArray("results")) {
-                String title = ((JsonObject) jsonMovie).get("title").getAsString();
 
-                String description = null;
-                JsonElement descriptionElement = ((JsonObject) jsonMovie).get("overview");
-                if (descriptionElement != null)
-                    description = descriptionElement.getAsString();
+                String title = JsonUtilities.getStringAt(jsonMovie, "title");
+                String description = JsonUtilities.getStringAt(jsonMovie, "overview");
+                String date = JsonUtilities.getStringAt(jsonMovie, "release_date");
+                String posterURL = "http://image.tmdb.org/t/p/w500" + JsonUtilities.getStringAt(jsonMovie, "poster_path");
+                String backdropURL = "http://image.tmdb.org/t/p/w780" + JsonUtilities.getStringAt(jsonMovie, "backdrop_path");
+                String movieURL = "https://api.themoviedb.org/3/movie/" + JsonUtilities.getStringAt(jsonMovie, "id") + "?api_key=80de3dcb516f2d18d76b0d4f&language=en-US";
+                JsonObject movieDetails = JsonUtilities.fromURL(new URL(movieURL));
 
-                String tagline = null;
-                JsonElement taglineElement = ((JsonObject) jsonMovie).get("tagline");
-                if (taglineElement != null)
-                    tagline = taglineElement.getAsString();
+                String tagline = JsonUtilities.getStringAt(movieDetails, "tagline");
 
-                String date = null;
-                JsonElement dateElement = ((JsonObject) jsonMovie).get("release_date");
-                if (dateElement != null)
-                    date = dateElement.getAsString();
-
-                JsonElement posterElement = ((JsonObject) jsonMovie).get("poster_path");
-                String posterURL = null;
-                if (!posterElement.isJsonNull())
-                    posterURL = "http://image.tmdb.org/t/p/w500" + posterElement.getAsString() + "&api_key=80de3dcb516f2d18d76b0d4f3d7b2f05";
-
-                JsonElement backdropElement = ((JsonObject) jsonMovie).get("backdrop_path");
-                String backdropURL = null;
-                if (!backdropElement.isJsonNull())
-                    backdropURL = "http://image.tmdb.org/t/p/w780" + backdropElement.getAsString();
 
                 String genres = "";
-                JsonElement genresElement = ((JsonObject) jsonMovie).get("genres");
-                System.out.println(((JsonObject) jsonMovie).has("tagline"));
-                if (genresElement != null)
-                    for (JsonElement genre : genresElement.getAsJsonArray()) {
-                        System.out.println(genre);
-                        genres += genre.getAsJsonObject().get("name").getAsString();
-                    }
-
-                Movie movie = new Movie(title, description, tagline, date, genres, posterURL, backdropURL);
+                for (JsonElement genreElement : JsonUtilities.getArrayAt(movieDetails, "genres"))
+                    genres+="," + JsonUtilities.getStringAt(genreElement, "name");
+                genres = genres.replaceFirst(",", "");
 
                 Picasso.with(getContext()).load(posterURL);
-                newMovies.add(movie);
+                newMovies.add(new Movie(title, description, tagline, date, genres, posterURL, backdropURL));
             }
 
-        } catch (IOException e) {
-            return null;
-        } finally {
-            try {
-                if (reader != null)
-                    reader.close();
-            } catch (IOException ignored) {
-            }
+            return newMovies;
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
-
-        return newMovies;
+        return null;
     }
 
     @Override

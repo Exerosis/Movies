@@ -24,10 +24,19 @@ public class MovieDetailsView implements MovieDetails {
     private final MovieDetailsViewBinding binding;
     private MovieDetailsListener listener;
 
-    public MovieDetailsView(LayoutInflater inflater, ViewGroup parent, Movie movie) {
+    public MovieDetailsView(LayoutInflater inflater, final ViewGroup parent, Movie movie) {
         binding = DataBindingUtil.inflate(inflater, R.layout.movie_details_view, parent, false);
 
-        Picasso.with(parent.getContext()).load(movie.getBackdropURL()).into(binding.movieDetailsBackdrop);
+        Picasso.with(parent.getContext()).load(movie.getBackdropURL()).into(binding.movieDetailsBackdrop, new Callback() {
+            @Override
+            public void onSuccess() {
+                binding.movieDetailsProgressSplash.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onError() {
+            }
+        });
 
         Picasso.with(parent.getContext()).load(movie.getPosterURL()).into(new Target() {
             @Override

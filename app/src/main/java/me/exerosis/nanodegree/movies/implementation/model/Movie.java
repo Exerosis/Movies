@@ -13,7 +13,7 @@ public class Movie implements Parcelable {
     private String posterURL;
     private String backdropURL;
 
-    public Movie(@NonNull String title, @NonNull String description, @NonNull String tagline, @NonNull String date, @NonNull String genres, String posterURL, String backdropURL) {
+    public Movie(String title, String description, String tagline, String date, String genres, String posterURL, String backdropURL) {
         this.title = title;
         this.description = description;
         this.tagline = tagline;
