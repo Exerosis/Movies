@@ -38,6 +38,14 @@ public class MovieDetailsView implements MovieDetails {
                         Palette.Swatch swatch = palette.getVibrantSwatch();
                         binding.movieDetailsFab.setBackgroundTintList(ColorStateList.valueOf(swatch.getRgb()));
                         binding.movieDetailsQuickLookBar.setBackgroundColor(swatch.getRgb());
+
+                        binding.movieDetailsCertification.setTextColor(swatch.getTitleTextColor());
+                        binding.movieDetailsRating.setTextColor(swatch.getTitleTextColor());
+                        binding.movieDetailsRuntime.setTextColor(swatch.getTitleTextColor());
+
+                        binding.movieDetailsRuntimeTitle.setTextColor(swatch.getBodyTextColor());
+                        binding.movieDetailsRatingTitle.setTextColor(swatch.getBodyTextColor());
+                        binding.movieDetailsRuntimeTitle.setTextColor(swatch.getBodyTextColor());
                     }
                 });
             }
