@@ -6,6 +6,7 @@ import android.databinding.ViewDataBinding;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.media.MediaMetadataCompat;
 import android.support.v7.graphics.Palette;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +46,7 @@ public class MovieDetailsView implements MovieDetails {
 
                         binding.movieDetailsRuntimeTitle.setTextColor(swatch.getBodyTextColor());
                         binding.movieDetailsRatingTitle.setTextColor(swatch.getBodyTextColor());
-                        binding.movieDetailsRuntimeTitle.setTextColor(swatch.getBodyTextColor());
+                        binding.movieDetailsCertificationTitle.setTextColor(swatch.getBodyTextColor());
                     }
                 });
             }
@@ -60,10 +61,10 @@ public class MovieDetailsView implements MovieDetails {
         });
 
         binding.movieDetailsTitle.setText(movie.getTitle());
-        binding.movieDetailsTagline.setText(movie.getTagline());
+       // binding.movieDetailsTagline.setText(movie.getTagline());
         binding.movieDetailsDescription.setText(movie.getDescription());
         binding.movieDetailsDate.setText(movie.getDate());
-        binding.movieDetailsGenres.setText(movie.getGenres());
+       // binding.movieDetailsGenres.setText(movie.getGenres());
     }
 
     @Override
