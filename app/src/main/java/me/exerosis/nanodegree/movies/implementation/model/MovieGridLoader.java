@@ -47,7 +47,7 @@ public class MovieGridLoader extends AsyncTaskLoader<List<Movie>> {
                 String date = JsonUtilities.getStringAt(jsonMovie, "release_date");
                 String posterURL = "http://image.tmdb.org/t/p/w500" + JsonUtilities.getStringAt(jsonMovie, "poster_path");
                 String backdropURL = "http://image.tmdb.org/t/p/w780" + JsonUtilities.getStringAt(jsonMovie, "backdrop_path");
-                String movieURL = "https://api.themoviedb.org/3/movie/" + JsonUtilities.getStringAt(jsonMovie, "id") + "?api_key=80de3dcb516f2d18d76b0d4f&language=en-US";
+                String movieURL = "https://api.themoviedb.org/3/movie/" + JsonUtilities.getStringAt(jsonMovie, "id") + "?api_key=80de3dcb516f2d18d76b0d4f3d7b2f05";
                 JsonObject movieDetails = JsonUtilities.fromURL(new URL(movieURL));
 
                 String tagline = JsonUtilities.getStringAt(movieDetails, "tagline");
@@ -55,8 +55,8 @@ public class MovieGridLoader extends AsyncTaskLoader<List<Movie>> {
 
                 String genres = "";
                 for (JsonElement genreElement : JsonUtilities.getArrayAt(movieDetails, "genres"))
-                    genres+="," + JsonUtilities.getStringAt(genreElement, "name");
-                genres = genres.replaceFirst(",", "");
+                    genres += "," + JsonUtilities.getStringAt(genreElement, "name");
+                genres = genres.replaceFirst(", ", "");
 
                 Picasso.with(getContext()).load(posterURL);
                 newMovies.add(new Movie(title, description, tagline, date, genres, posterURL, backdropURL));

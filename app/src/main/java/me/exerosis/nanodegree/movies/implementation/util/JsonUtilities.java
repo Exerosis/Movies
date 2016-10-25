@@ -22,13 +22,18 @@ public final class JsonUtilities {
 
     }
 
+    public static Integer getIntegerAt(JsonElement element, String key){
+        JsonElement result = element.getAsJsonObject().get(key);
+        return result == null || result.isJsonNull() ? null : result.getAsInt();
+    }
+
     public static String getStringAt(JsonElement element, String key){
-        JsonElement result = element.getAsJsonObject().get("overview");
+        JsonElement result = element.getAsJsonObject().get(key);
         return result == null || result.isJsonNull() ? null : result.getAsString();
     }
 
     public static JsonArray getArrayAt(JsonElement element, String key){
-        JsonElement result = element.getAsJsonObject().get("overview");
+        JsonElement result = element.getAsJsonObject().get(key);
         return result == null || result.isJsonNull() ? null : result.getAsJsonArray();
     }
 
@@ -43,8 +48,8 @@ public final class JsonUtilities {
             return (JsonObject) new JsonParser().parse((Reader) reader);
 
         } finally {
-            if (reader != null)
-                reader.close();
+//            if (reader != null)
+//                reader.close();
         }
     }
 

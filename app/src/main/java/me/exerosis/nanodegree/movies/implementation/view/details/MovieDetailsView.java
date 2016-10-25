@@ -27,10 +27,13 @@ public class MovieDetailsView implements MovieDetails {
     public MovieDetailsView(LayoutInflater inflater, final ViewGroup parent, Movie movie) {
         binding = DataBindingUtil.inflate(inflater, R.layout.movie_details_view, parent, false);
 
+        binding.movieDetailsLayout.setVisibility(View.INVISIBLE);
         Picasso.with(parent.getContext()).load(movie.getBackdropURL()).into(binding.movieDetailsBackdrop, new Callback() {
             @Override
             public void onSuccess() {
-                binding.movieDetailsProgressSplash.setVisibility(View.INVISIBLE);
+                
+                binding.movieDetailsSplash.setVisibility(View.INVISIBLE);
+                binding.movieDetailsLayout.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -70,10 +73,10 @@ public class MovieDetailsView implements MovieDetails {
         });
 
         binding.movieDetailsTitle.setText(movie.getTitle());
-       // binding.movieDetailsTagline.setText(movie.getTagline());
+        binding.movieDetailsTagline.setText(movie.getTagline());
         binding.movieDetailsDescription.setText(movie.getDescription());
         binding.movieDetailsDate.setText(movie.getDate());
-       // binding.movieDetailsGenres.setText(movie.getGenres());
+        binding.movieDetailsGenres.setText(movie.getGenres());
     }
 
     @Override
