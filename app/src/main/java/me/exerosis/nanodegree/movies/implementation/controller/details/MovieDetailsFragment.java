@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import me.exerosis.nanodegree.movies.implementation.model.Movie;
 import me.exerosis.nanodegree.movies.implementation.model.Details;
 import me.exerosis.nanodegree.movies.implementation.model.MovieDetailsLoader;
-import me.exerosis.nanodegree.movies.implementation.view.details.MovieDetailsSplashScreenView;
+import me.exerosis.nanodegree.movies.implementation.view.splash.SplashScreenView;
 import me.exerosis.nanodegree.movies.implementation.view.details.MovieDetailsView;
 
 public class MovieDetailsFragment extends Fragment implements MovieDetailsController, LoaderManager.LoaderCallbacks<Details> {
@@ -40,7 +40,7 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContro
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.inflater = inflater;
         this.container = container;
-        view = new MovieDetailsSplashScreenView(inflater, container).getRootView();
+        view = new SplashScreenView(inflater, container).getRootView();
         if (getLoaderManager().getLoader(LOADER_ID) != null)
             if (!getLoaderManager().hasRunningLoaders())
                 getLoaderManager().initLoader(LOADER_ID, getArguments(), this).forceLoad();
