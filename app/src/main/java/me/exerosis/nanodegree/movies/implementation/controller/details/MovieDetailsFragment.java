@@ -1,7 +1,9 @@
 package me.exerosis.nanodegree.movies.implementation.controller.details;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringDef;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -12,19 +14,18 @@ import android.view.ViewGroup;
 import me.exerosis.nanodegree.movies.implementation.model.Movie;
 import me.exerosis.nanodegree.movies.implementation.model.Details;
 import me.exerosis.nanodegree.movies.implementation.model.MovieDetailsLoader;
+import me.exerosis.nanodegree.movies.implementation.view.details.MovieDetails;
 import me.exerosis.nanodegree.movies.implementation.view.splash.SplashScreenView;
 import me.exerosis.nanodegree.movies.implementation.view.details.MovieDetailsView;
 
-public class MovieDetailsFragment extends Fragment implements MovieDetailsController, LoaderManager.LoaderCallbacks<Details> {
-    public static final String ARG_MOVIE = "MOVIE";
-    public static final int LOADER_ID = 0;
-    private View view;
-    private LayoutInflater inflater;
-    private ViewGroup container;
+public class MovieDetailsFragment extends Fragment implements MovieDetailsController {
+    public static final String ARG_DETAILS = "DETAILS";
+    private MovieDetails view;
+    private Details details;
 
-    public static MovieDetailsFragment newInstance(Movie movie) {
+    public static MovieDetailsFragment newInstance(Details details) {
         Bundle args = new Bundle();
-        args.putParcelable(ARG_MOVIE, movie);
+        args.putParcelable(ARG_DETAILS, details);
         MovieDetailsFragment fragment = new MovieDetailsFragment();
         fragment.setArguments(args);
         return fragment;
@@ -33,33 +34,11 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContro
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getLoaderManager().initLoader(LOADER_ID, getArguments(), this).forceLoad();
+        details = getArguments().getParcelable(ARG_DETAILS);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        this.inflater = inflater;
-        this.container = container;
-        view = new SplashScreenView(inflater, container).getRootView();
-        if (getLoaderManager().getLoader(LOADER_ID) != null)
-            if (!getLoaderManager().hasRunningLoaders())
-                getLoaderManager().initLoader(LOADER_ID, getArguments(), this).forceLoad();
-        return view;
-    }
-
-    @Override
-    public Loader<Details> onCreateLoader(int id, Bundle args) {
-        return new MovieDetailsLoader(this.getContext(), (Movie) args.getParcelable(ARG_MOVIE));
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Details> loader, Details data) {
-        System.out.println("test");
-        view = new MovieDetailsView(inflater, container, data).getRootView();
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Details> loader) {
-
+        return new MovieDetailsView(inflater, container, details).getRootView();
     }
 }

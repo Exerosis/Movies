@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import me.exerosis.nanodegree.movies.R;
-import me.exerosis.nanodegree.movies.databinding.MovieDetailsSplashScreenViewBinding;
 import me.exerosis.nanodegree.movies.databinding.SplashScreenViewBinding;
 
 public class SplashScreenView implements SplashScreen {
