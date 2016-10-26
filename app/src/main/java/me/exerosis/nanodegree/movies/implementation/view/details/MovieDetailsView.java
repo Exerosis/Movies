@@ -18,30 +18,19 @@ import com.squareup.picasso.Target;
 
 import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.databinding.MovieDetailsViewBinding;
+import me.exerosis.nanodegree.movies.implementation.model.Details;
 import me.exerosis.nanodegree.movies.implementation.model.Movie;
 
 public class MovieDetailsView implements MovieDetails {
     private final MovieDetailsViewBinding binding;
     private MovieDetailsListener listener;
 
-    public MovieDetailsView(LayoutInflater inflater, final ViewGroup parent, Movie movie) {
+    public MovieDetailsView(LayoutInflater inflater, final ViewGroup parent, Details details) {
         binding = DataBindingUtil.inflate(inflater, R.layout.movie_details_view, parent, false);
 
-        binding.movieDetailsLayout.setVisibility(View.INVISIBLE);
-        Picasso.with(parent.getContext()).load(movie.getBackdropURL()).into(binding.movieDetailsBackdrop, new Callback() {
-            @Override
-            public void onSuccess() {
-                
-                binding.movieDetailsSplash.setVisibility(View.INVISIBLE);
-                binding.movieDetailsLayout.setVisibility(View.VISIBLE);
-            }
+        Picasso.with(parent.getContext()).load(details.getBackdropURL()).into(binding.movieDetailsBackdrop);
 
-            @Override
-            public void onError() {
-            }
-        });
-
-        Picasso.with(parent.getContext()).load(movie.getPosterURL()).into(new Target() {
+        Picasso.with(parent.getContext()).load(details.getMovie().getPosterURL()).into(new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                 binding.movieDetailsPoster.setImageBitmap(bitmap);
@@ -72,11 +61,11 @@ public class MovieDetailsView implements MovieDetails {
             }
         });
 
-        binding.movieDetailsTitle.setText(movie.getTitle());
-        binding.movieDetailsTagline.setText(movie.getTagline());
-        binding.movieDetailsDescription.setText(movie.getDescription());
-        binding.movieDetailsDate.setText(movie.getDate());
-        binding.movieDetailsGenres.setText(movie.getGenres());
+        binding.movieDetailsTitle.setText(details.getMovie().getTitle());
+        binding.movieDetailsTagline.setText(details.getTagline());
+        binding.movieDetailsDescription.setText(details.getDescription());
+        binding.movieDetailsDate.setText(details.getDate());
+        binding.movieDetailsGenres.setText(details.getGenres());
     }
 
     @Override

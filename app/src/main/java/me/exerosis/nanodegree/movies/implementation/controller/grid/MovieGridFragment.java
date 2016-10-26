@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.exerosis.nanodegree.movies.implementation.model.Movie;
-import me.exerosis.nanodegree.movies.implementation.model.MovieGridLoader;
+import me.exerosis.nanodegree.movies.implementation.model.MoviesLoader;
 import me.exerosis.nanodegree.movies.implementation.view.grid.MovieGridView;
 import me.exerosis.nanodegree.movies.implementation.view.holder.MovieHolderListener;
 import me.exerosis.nanodegree.movies.implementation.view.holder.MovieHolderView;
@@ -75,7 +75,7 @@ public class MovieGridFragment extends Fragment implements MovieGridController {
     public Loader<List<Movie>> onCreateLoader(int id, Bundle args) {
         if (!args.containsKey(ARG_URL))
             throw new IllegalArgumentException();
-        return new MovieGridLoader(getContext(), args.getString(ARG_URL));
+        return new MoviesLoader(getContext(), args.getString(ARG_URL));
     }
 
     @Override

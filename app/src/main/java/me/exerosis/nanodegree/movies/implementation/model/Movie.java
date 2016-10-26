@@ -2,29 +2,16 @@ package me.exerosis.nanodegree.movies.implementation.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 
 public class Movie implements Parcelable {
     private String title;
-    private String description;
-    private String tagline;
-    private String date;
-    private String genres;
+    private int id;
     private String posterURL;
-    private String backdropURL;
 
-    public Movie(String title, String description, String tagline, String date, String genres, String posterURL, String backdropURL) {
+    public Movie(String title, int id, String posterURL) {
         this.title = title;
-        this.description = description;
-        this.tagline = tagline;
-        this.date = date;
-        this.genres = genres;
+        this.id = id;
         this.posterURL = posterURL;
-        this.backdropURL = backdropURL;
-    }
-
-    public String getGenres() {
-        return genres;
     }
 
     @Override
@@ -32,24 +19,12 @@ public class Movie implements Parcelable {
         return obj instanceof Movie && title.equals(((Movie) obj).title);
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public String getBackdropURL() {
-        return backdropURL;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getTagline() {
-        return tagline;
-    }
-
     public String getTitle() {
         return title;
+    }
+
+    public int getID() {
+        return id;
     }
 
     public String getPosterURL() {
@@ -64,15 +39,17 @@ public class Movie implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.title);
+        dest.writeInt(this.id);
         dest.writeString(this.posterURL);
     }
 
     protected Movie(Parcel in) {
         this.title = in.readString();
+        this.id = in.readInt();
         this.posterURL = in.readString();
     }
 
-    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
         @Override
         public Movie createFromParcel(Parcel source) {
             return new Movie(source);
@@ -83,5 +60,4 @@ public class Movie implements Parcelable {
             return new Movie[size];
         }
     };
-
 }

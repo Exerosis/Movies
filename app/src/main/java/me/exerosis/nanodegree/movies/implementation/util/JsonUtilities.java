@@ -1,5 +1,8 @@
 package me.exerosis.nanodegree.movies.implementation.util;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.JsonReader;
 
 import com.google.gson.JsonArray;
@@ -22,17 +25,24 @@ public final class JsonUtilities {
 
     }
 
-    public static Integer getIntegerAt(JsonElement element, String key){
+    public static boolean isOnline(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = connectivityManager.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    public static int getIntegerAt(JsonElement element, String key) {
         JsonElement result = element.getAsJsonObject().get(key);
         return result == null || result.isJsonNull() ? null : result.getAsInt();
     }
 
-    public static String getStringAt(JsonElement element, String key){
+    public static String getStringAt(JsonElement element, String key) {
         JsonElement result = element.getAsJsonObject().get(key);
         return result == null || result.isJsonNull() ? null : result.getAsString();
     }
 
-    public static JsonArray getArrayAt(JsonElement element, String key){
+    public static JsonArray getArrayAt(JsonElement element, String key) {
         JsonElement result = element.getAsJsonObject().get(key);
         return result == null || result.isJsonNull() ? null : result.getAsJsonArray();
     }
@@ -48,8 +58,8 @@ public final class JsonUtilities {
             return (JsonObject) new JsonParser().parse((Reader) reader);
 
         } finally {
-//            if (reader != null)
-//                reader.close();
+            if (reader != null)
+                reader.close();
         }
     }
 
