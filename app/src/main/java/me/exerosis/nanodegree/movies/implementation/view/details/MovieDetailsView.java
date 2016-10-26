@@ -79,6 +79,7 @@ public class MovieDetailsView implements MovieDetails {
             }
         });
 
+
         color = 255;
         binding.movieDetailsScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
