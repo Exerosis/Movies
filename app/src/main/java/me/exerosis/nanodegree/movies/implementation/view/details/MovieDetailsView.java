@@ -22,6 +22,7 @@ import me.exerosis.nanodegree.movies.implementation.model.Details;
 
 public class MovieDetailsView implements MovieDetails {
     private final MovieDetailsViewBinding binding;
+    private int color;
 
     public MovieDetailsView(LayoutInflater inflater, final ViewGroup parent) {
         binding = DataBindingUtil.inflate(inflater, R.layout.movie_details_view, parent, false);
@@ -78,10 +79,11 @@ public class MovieDetailsView implements MovieDetails {
             }
         });
 
+        color = 255;
         binding.movieDetailsScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                binding.movieDetailsToolbar.setBackgroundColor(Color.argb(255 - scrollY, 30, 30, 30));
+                binding.movieDetailsToolbar.setBackgroundColor(Color.argb(color -= (oldScrollY-scrollY)*(255/v.getHeight()), 30, 30, 30));
             }
         });
     }
