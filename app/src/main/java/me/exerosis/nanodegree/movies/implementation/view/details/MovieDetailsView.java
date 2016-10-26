@@ -4,13 +4,16 @@ import android.content.res.ColorStateList;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.media.MediaMetadataCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.graphics.Palette;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -28,6 +31,13 @@ public class MovieDetailsView implements MovieDetails {
     public MovieDetailsView(LayoutInflater inflater, final ViewGroup parent, Details details) {
         binding = DataBindingUtil.inflate(inflater, R.layout.movie_details_view, parent, false);
 
+        binding.movieDetailsScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                binding.movieDetailsToolbar.setBackgroundColor(Color.argb(255 - scrollY, 30, 30, 30));
+            }
+        });
+
         Picasso.with(parent.getContext()).load(details.getBackdropURL()).into(binding.movieDetailsBackdrop);
 
         Picasso.with(parent.getContext()).load(details.getMovie().getPosterURL()).into(new Target() {
@@ -38,6 +48,8 @@ public class MovieDetailsView implements MovieDetails {
                     @Override
                     public void onGenerated(Palette palette) {
                         Palette.Swatch swatch = palette.getVibrantSwatch();
+                        if (swatch == null)
+                            return;
                         binding.movieDetailsFab.setBackgroundTintList(ColorStateList.valueOf(swatch.getRgb()));
                         binding.movieDetailsQuickLookBar.setBackgroundColor(swatch.getRgb());
 

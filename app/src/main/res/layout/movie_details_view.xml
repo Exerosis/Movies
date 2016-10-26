@@ -11,6 +11,14 @@
 
 
         <!-- Layer 0 -->
+        <ImageView
+            android:id="@+id/movie_details_backdrop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="0dip"
+            android:scaleType="centerCrop"
+            android:src="@drawable/image" />
+
 
         <!-- Layer 1 -->
         <android.support.design.widget.AppBarLayout
@@ -33,16 +41,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:elevation="4dip"
-                    app:layout_collapseMode="pin" />
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
 
 
         <android.support.v4.widget.NestedScrollView
+            android:id="@+id/movie_details_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="1dp"
+            android:elevation="3dip"
             app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
             <!-- Content -->
             <android.support.constraint.ConstraintLayout
@@ -341,14 +351,6 @@
             </android.support.constraint.ConstraintLayout>
 
         </android.support.v4.widget.NestedScrollView>
-
-        <ImageView
-            android:id="@+id/movie_details_backdrop"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:elevation="0dip"
-            android:scaleType="centerCrop"
-            android:src="@drawable/image" />
 
     </android.support.design.widget.CoordinatorLayout>
 

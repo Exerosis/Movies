@@ -43,8 +43,7 @@ public class AppScaffoldingActivity extends AppCompatActivity implements AppScaf
     @Override
     public void onDetailsLoaded(@NonNull Details details) {
         getSupportFragmentManager().beginTransaction()
-                .replace(view.getFragmentContainerID(), MovieDetailsFragment.newInstance(details))
-                .addToBackStack("details")
-                .commit();
+                .replace(view.getFragmentContainerID(), MovieDetailsFragment.newInstance(details)).
+                addToBackStack("movies").commit();
     }
 }
