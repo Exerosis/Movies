@@ -1,6 +1,7 @@
 package me.exerosis.nanodegree.movies.implementation.controller.details.splash;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -20,6 +21,7 @@ import me.exerosis.nanodegree.movies.implementation.view.splash.SplashScreenView
 public class MovieDetailsSplashScreenFragment extends Fragment implements MovieDetailsSplashScreenController, LoaderManager.LoaderCallbacks<Details> {
     public static final String ARG_MOVIE = "MOVIE";
     public static final int LOADER_ID = 0;
+    public static final Handler HANDLER = new Handler();
     private SplashScreen view;
     private MovieDetailsSplashScreenListener listener;
 
@@ -51,9 +53,14 @@ public class MovieDetailsSplashScreenFragment extends Fragment implements MovieD
     }
 
     @Override
-    public void onLoadFinished(Loader<Details> loader, Details data) {
+    public void onLoadFinished(Loader<Details> loader, final Details data) {
         if (data != null)
-            listener.onDetailsLoaded(data);
+            HANDLER.post(new Runnable() {
+                @Override
+                public void run() {
+                    listener.onDetailsLoaded(data);
+                }
+            });
     }
 
     @Override

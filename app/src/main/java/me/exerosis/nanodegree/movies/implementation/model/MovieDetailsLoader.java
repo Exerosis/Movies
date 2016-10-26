@@ -27,6 +27,12 @@ public class MovieDetailsLoader extends AsyncTaskLoader<Details> {
             return null;
 
         try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        try {
             URL url = new URL("https://api.themoviedb.org/3/movie/" + movie.getID() + "?api_key=80de3dcb516f2d18d76b0d4f3d7b2f05");
             JsonObject results = JsonUtilities.fromURL(url);
 

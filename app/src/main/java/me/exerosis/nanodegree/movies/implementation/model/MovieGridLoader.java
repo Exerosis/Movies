@@ -18,11 +18,11 @@ import java.util.List;
 import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.implementation.util.JsonUtilities;
 
-public class MoviesLoader extends AsyncTaskLoader<List<Movie>> {
+public class MovieGridLoader extends AsyncTaskLoader<List<Movie>> {
     private final String url;
     private List<Movie> movies = new ArrayList<>();
 
-    public MoviesLoader(@NonNull Context context, @NonNull String url) {
+    public MovieGridLoader(@NonNull Context context, @NonNull String url) {
         super(context);
         this.url = url;
     }

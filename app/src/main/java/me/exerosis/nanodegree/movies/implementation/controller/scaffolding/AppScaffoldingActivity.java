@@ -28,7 +28,7 @@ public class AppScaffoldingActivity extends AppCompatActivity implements AppScaf
         movies.setListener(this);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(view.getFragmentContainerID(), movies)
+                .replace(view.getFragmentContainerID(), movies).addToBackStack("movies")
                 .commit();
     }
 
