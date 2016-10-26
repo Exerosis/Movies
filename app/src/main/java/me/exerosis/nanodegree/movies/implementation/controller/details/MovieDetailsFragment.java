@@ -54,6 +54,7 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContro
 
     @Override
     public void onLoadFinished(Loader<Details> loader, Details data) {
+        System.out.println("test");
         view = new MovieDetailsView(inflater, container, data).getRootView();
     }
 
