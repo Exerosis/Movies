@@ -81,9 +81,11 @@ public class MovieGridFragment extends Fragment implements MovieGridController {
     @Override
     public void onLoadFinished(Loader<List<Movie>> loader, List<Movie> movies) {
         this.movies = movies;
+        if (view == null)
+            return;
+
         view.getAdapter().notifyDataSetChanged();
-        if (view != null)
-            view.setRefreshing(false);
+        view.setRefreshing(false);
     }
 
     @Override

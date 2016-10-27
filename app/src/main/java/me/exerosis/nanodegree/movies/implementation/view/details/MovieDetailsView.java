@@ -58,11 +58,6 @@ public class MovieDetailsView implements MovieDetails {
                         binding.movieDetailsRuntimeTitle.setTextColor(swatch.getBodyTextColor());
                         binding.movieDetailsRatingTitle.setTextColor(swatch.getBodyTextColor());
                         binding.movieDetailsCertificationTitle.setTextColor(swatch.getBodyTextColor());
-                        try {
-                            Thread.sleep(500);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
 
                         binding.movieDetailsLayout.setVisibility(View.VISIBLE);
                         binding.movieDetailsSplashScreen.setVisibility(View.GONE);
@@ -76,15 +71,6 @@ public class MovieDetailsView implements MovieDetails {
 
             @Override
             public void onPrepareLoad(Drawable placeHolderDrawable) {
-            }
-        });
-
-
-        color = 255;
-        binding.movieDetailsScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                binding.movieDetailsToolbar.setBackgroundColor(Color.argb(color -= (oldScrollY-scrollY)*(255/v.getHeight()), 30, 30, 30));
             }
         });
     }
