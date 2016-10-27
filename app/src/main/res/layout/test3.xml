@@ -29,7 +29,8 @@
         android:textStyle="normal|bold"
         app:layout_constraintLeft_toLeftOf="@+id/movie_details_content_card"
         app:layout_constraintRight_toLeftOf="@+id/runtime_guide"
-        app:layout_constraintTop_toBottomOf="@+id/movie_details_runtime_title" />
+        app:layout_constraintTop_toBottomOf="@+id/movie_details_runtime_title"
+        android:text="Test" />
 
 
     <TextView
@@ -54,7 +55,8 @@
         android:textStyle="normal|bold"
         app:layout_constraintLeft_toLeftOf="@+id/runtime_guide"
         app:layout_constraintRight_toLeftOf="@+id/certification_guide"
-        app:layout_constraintTop_toBottomOf="@+id/movie_details_vote_average_title" />
+        app:layout_constraintTop_toBottomOf="@+id/movie_details_vote_average_title"
+        android:text="Test" />
 
     <TextView
         android:id="@+id/movie_details_popularity_title"
@@ -78,7 +80,8 @@
         android:textStyle="normal|bold"
         app:layout_constraintLeft_toLeftOf="@+id/certification_guide"
         app:layout_constraintRight_toRightOf="@+id/movie_details_content_card"
-        app:layout_constraintTop_toBottomOf="@+id/movie_details_vote_average_title" />
+        app:layout_constraintTop_toBottomOf="@+id/movie_details_vote_average_title"
+        android:text="Test" />
 
     <android.support.constraint.Guideline
         android:id="@+id/runtime_guide"
@@ -244,7 +247,7 @@
         android:elevation="4dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/poster_bottom_guide"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="@+id/poster_start_guide"
         app:layout_constraintRight_toLeftOf="@+id/poster_end_guide"
         app:layout_constraintTop_toTopOf="parent"
