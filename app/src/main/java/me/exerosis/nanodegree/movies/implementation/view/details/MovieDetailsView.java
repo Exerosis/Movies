@@ -22,7 +22,6 @@ import me.exerosis.nanodegree.movies.implementation.model.Details;
 
 public class MovieDetailsView implements MovieDetails {
     private final MovieDetailsViewBinding binding;
-    private int color;
 
     public MovieDetailsView(LayoutInflater inflater, final ViewGroup parent) {
         binding = DataBindingUtil.inflate(inflater, R.layout.movie_details_view, parent, false);
