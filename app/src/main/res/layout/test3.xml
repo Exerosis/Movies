@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:elevation="5dp"
-        android:text="Runtime"
+        android:text="@string/movie_details_title_runtime"
         android:textColor="?android:attr/textColorSecondary"
         android:textSize="14sp"
         app:layout_constraintLeft_toLeftOf="@+id/movie_details_content_card"
@@ -25,7 +25,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="5dp"
-        android:text="2hrs  49mins"
         android:textSize="15sp"
         android:textStyle="normal|bold"
         app:layout_constraintLeft_toLeftOf="@+id/movie_details_content_card"
@@ -34,12 +33,12 @@
 
 
     <TextView
-        android:id="@+id/movie_details_certification_title"
+        android:id="@+id/movie_details_vote_average_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:elevation="5dp"
-        android:text="Certification"
+        android:text="@string/movie_details_title_vote_average"
         android:textColor="?android:attr/textColorSecondary"
         android:textSize="14sp"
         app:layout_constraintLeft_toLeftOf="@+id/runtime_guide"
@@ -47,24 +46,23 @@
         app:layout_constraintTop_toTopOf="@+id/quick_look_top_guide" />
 
     <TextView
-        android:id="@+id/movie_details_certification"
+        android:id="@+id/movie_details_vote_average"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="5dp"
-        android:text="PG-13"
         android:textSize="15sp"
         android:textStyle="normal|bold"
         app:layout_constraintLeft_toLeftOf="@+id/runtime_guide"
         app:layout_constraintRight_toLeftOf="@+id/certification_guide"
-        app:layout_constraintTop_toBottomOf="@+id/movie_details_certification_title" />
+        app:layout_constraintTop_toBottomOf="@+id/movie_details_vote_average_title" />
 
     <TextView
-        android:id="@+id/movie_details_rating_title"
+        android:id="@+id/movie_details_popularity_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:elevation="5dp"
-        android:text="Rating"
+        android:text="@string/movie_details_popularity"
         android:textColor="?android:attr/textColorSecondary"
         android:textSize="14sp"
         app:layout_constraintLeft_toLeftOf="@+id/certification_guide"
@@ -72,16 +70,15 @@
         app:layout_constraintTop_toTopOf="@+id/quick_look_top_guide" />
 
     <TextView
-        android:id="@+id/movie_details_rating"
+        android:id="@+id/movie_details_popularity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="5dp"
-        android:text="88%"
         android:textSize="15sp"
         android:textStyle="normal|bold"
         app:layout_constraintLeft_toLeftOf="@+id/certification_guide"
         app:layout_constraintRight_toRightOf="@+id/movie_details_content_card"
-        app:layout_constraintTop_toBottomOf="@+id/movie_details_certification_title" />
+        app:layout_constraintTop_toBottomOf="@+id/movie_details_vote_average_title" />
 
     <android.support.constraint.Guideline
         android:id="@+id/runtime_guide"
@@ -179,7 +176,7 @@
 
     <android.support.constraint.Guideline
         android:id="@+id/content_card_guide"
-        android:layout_width="384dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="32dp"
@@ -189,7 +186,7 @@
     <android.support.constraint.Guideline
         android:id="@+id/poster_start_guide"
         android:layout_width="0dp"
-        android:layout_height="567dp"
+        android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="17dp"
         tools:layout_editor_absoluteX="17dp"
@@ -198,7 +195,7 @@
     <android.support.constraint.Guideline
         android:id="@+id/poster_end_guide"
         android:layout_width="wrap_content"
-        android:layout_height="567dp"
+        android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="121dp"
         tools:layout_editor_absoluteX="121dp"
@@ -206,7 +203,7 @@
 
     <android.support.constraint.Guideline
         android:id="@+id/poster_bottom_guide"
-        android:layout_width="384dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="154dp"
@@ -215,7 +212,7 @@
 
     <android.support.constraint.Guideline
         android:id="@+id/quick_look_bottom_guide"
-        android:layout_width="384dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="239dp"
@@ -224,7 +221,7 @@
 
     <android.support.constraint.Guideline
         android:id="@+id/quick_look_top_guide"
-        android:layout_width="384dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="188dp"

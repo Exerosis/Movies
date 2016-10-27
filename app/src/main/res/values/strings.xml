@@ -13,4 +13,7 @@
     <string name="tags">Drama, Science Fiction</string>
     <string name="date">November 2014</string>
     <string name="title">Interstellar</string>
+    <string name="movie_details_popularity">Popularity</string>
+    <string name="movie_details_title_vote_average">Vote Average</string>
+    <string name="movie_details_title_runtime">Runtime</string>
 </resources>

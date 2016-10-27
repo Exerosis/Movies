@@ -47,9 +47,12 @@ public class MoviesFragment extends Fragment implements MoviesController {
             }
         });
 
-        fragments[0].setListener(listener);
-
         view.setCurrentPage(0);
+
+        if (listener != null) {
+            fragments[0].setListener(listener);
+            fragments[1].setListener(listener);
+        }
 
         return view.getRootView();
     }
@@ -74,8 +77,10 @@ public class MoviesFragment extends Fragment implements MoviesController {
     @Override
     public void setListener(MovieHolderListener listener) {
         this.listener = listener;
-        if (view != null)
-            fragments[view.getCurrentPage()].setListener(listener);
+        if (view == null)
+            return;
+        fragments[0].setListener(listener);
+        fragments[1].setListener(listener);
     }
 
     @Override

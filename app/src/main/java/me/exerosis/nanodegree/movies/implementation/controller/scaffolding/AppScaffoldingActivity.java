@@ -20,7 +20,9 @@ public class AppScaffoldingActivity extends AppCompatActivity implements AppScaf
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         view = new AppScaffoldingView(this);
-        movie = savedInstanceState.getParcelable(ARG_MOVIE);
+
+        if (savedInstanceState != null)
+            movie = savedInstanceState.getParcelable(ARG_MOVIE);
 
         if (movie != null)
             displayFragment(MovieDetailsFragment.newInstance(movie), false);

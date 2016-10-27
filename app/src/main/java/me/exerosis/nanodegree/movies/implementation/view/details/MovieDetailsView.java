@@ -3,11 +3,8 @@ package me.exerosis.nanodegree.movies.implementation.view.details;
 import android.content.res.ColorStateList;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.StrictMode;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.graphics.Palette;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,8 +29,12 @@ public class MovieDetailsView implements MovieDetails {
         binding.movieDetailsTitle.setText(details.getMovie().getTitle());
         binding.movieDetailsTagline.setText(details.getTagline());
         binding.movieDetailsDescription.setText(details.getDescription());
+
         binding.movieDetailsDate.setText(details.getDate());
         binding.movieDetailsGenres.setText(details.getGenres());
+        binding.movieDetailsRuntime.setText(details.getRuntime());
+        binding.movieDetailsVoteAverage.setText(details.getVoteAverage());
+        binding.movieDetailsPopularity.setText(details.getPopularity());
 
         Picasso.with(getRootView().getContext()).load(details.getBackdropURL()).into(binding.movieDetailsBackdrop);
 
@@ -45,18 +46,18 @@ public class MovieDetailsView implements MovieDetails {
                     @Override
                     public void onGenerated(Palette palette) {
                         Palette.Swatch swatch = palette.getVibrantSwatch();
-                        if (swatch == null)
-                            return;
-                        binding.movieDetailsFab.setBackgroundTintList(ColorStateList.valueOf(swatch.getRgb()));
-                        binding.movieDetailsQuickLookBar.setBackgroundColor(swatch.getRgb());
+                        if (swatch != null) {
+                            binding.movieDetailsFab.setBackgroundTintList(ColorStateList.valueOf(swatch.getRgb()));
+                            binding.movieDetailsQuickLookBar.setBackgroundColor(swatch.getRgb());
 
-                        binding.movieDetailsCertification.setTextColor(swatch.getTitleTextColor());
-                        binding.movieDetailsRating.setTextColor(swatch.getTitleTextColor());
-                        binding.movieDetailsRuntime.setTextColor(swatch.getTitleTextColor());
+                            binding.movieDetailsPopularity.setTextColor(swatch.getTitleTextColor());
+                            binding.movieDetailsVoteAverage.setTextColor(swatch.getTitleTextColor());
+                            binding.movieDetailsRuntime.setTextColor(swatch.getTitleTextColor());
 
-                        binding.movieDetailsRuntimeTitle.setTextColor(swatch.getBodyTextColor());
-                        binding.movieDetailsRatingTitle.setTextColor(swatch.getBodyTextColor());
-                        binding.movieDetailsCertificationTitle.setTextColor(swatch.getBodyTextColor());
+                            binding.movieDetailsRuntimeTitle.setTextColor(swatch.getBodyTextColor());
+                            binding.movieDetailsPopularityTitle.setTextColor(swatch.getBodyTextColor());
+                            binding.movieDetailsVoteAverageTitle.setTextColor(swatch.getBodyTextColor());
+                        }
 
                         binding.movieDetailsLayout.setVisibility(View.VISIBLE);
                         binding.movieDetailsSplashScreen.setVisibility(View.GONE);

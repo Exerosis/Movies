@@ -1,6 +1,7 @@
 package me.exerosis.nanodegree.movies.implementation.model;
 
 
+import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,14 +12,28 @@ public class Details implements Parcelable {
     private final String genres;
     private final String date;
     private final String backdropURL;
+    private final String popularity;
+    private final String runtime;
+    private final String voteAverage;
 
-    public Details(Movie movie, String tagline, String description, String genres, String date, String backdropURL) {
+    public Details(Movie movie, String voteAverage, String tagline, String popularity, String runtime, String description, String genres, String date, String backdropURL) {
         this.movie = movie;
+        this.voteAverage = voteAverage;
         this.tagline = tagline;
+        this.popularity = popularity;
+        this.runtime = runtime;
         this.description = description;
         this.genres = genres;
         this.date = date;
         this.backdropURL = backdropURL;
+    }
+
+    public String getVoteAverage() {
+        return voteAverage;
+    }
+
+    public String getRuntime() {
+        return runtime;
     }
 
     public Movie getMovie() {
@@ -45,6 +60,10 @@ public class Details implements Parcelable {
         return backdropURL;
     }
 
+    public String getPopularity() {
+        return popularity;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -58,6 +77,9 @@ public class Details implements Parcelable {
         dest.writeString(this.genres);
         dest.writeString(this.date);
         dest.writeString(this.backdropURL);
+        dest.writeString(this.popularity);
+        dest.writeString(this.runtime);
+        dest.writeString(this.voteAverage);
     }
 
     protected Details(Parcel in) {
@@ -67,9 +89,12 @@ public class Details implements Parcelable {
         this.genres = in.readString();
         this.date = in.readString();
         this.backdropURL = in.readString();
+        this.popularity = in.readString();
+        this.runtime = in.readString();
+        this.voteAverage = in.readString();
     }
 
-    public static final Parcelable.Creator<Details> CREATOR = new Parcelable.Creator<Details>() {
+    public static final Creator<Details> CREATOR = new Creator<Details>() {
         @Override
         public Details createFromParcel(Parcel source) {
             return new Details(source);
