@@ -1,6 +1,8 @@
 package me.exerosis.nanodegree.movies.implementation.controller.scaffolding;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import me.exerosis.nanodegree.movies.implementation.controller.details.MovieDetailsFragment;
@@ -10,26 +12,53 @@ import me.exerosis.nanodegree.movies.implementation.view.scaffolding.AppScaffold
 import me.exerosis.nanodegree.movies.implementation.view.scaffolding.AppScaffoldingView;
 
 public class AppScaffoldingActivity extends AppCompatActivity implements AppScaffoldingController {
+    public final static String ARG_MOVIE = "MOVIE";
     private AppScaffolding view;
+    private Movie movie;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         view = new AppScaffoldingView(this);
-        MoviesFragment movies = new MoviesFragment();
+        movie = savedInstanceState.getParcelable(ARG_MOVIE);
 
-        movies.setListener(this);
+        if (movie != null)
+            displayFragment(MovieDetailsFragment.newInstance(movie), false);
+        else {
+            MoviesFragment movies = new MoviesFragment();
+            movies.setListener(this);
+            displayFragment(movies, true);
+        }
+    }
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(view.getFragmentContainerID(), movies).addToBackStack(MoviesFragment.class.getName())
-                .commit();
+    @Override
+    public void onBackPressed() {
+        movie = null;
+        super.onBackPressed();
     }
 
     @Override
     public void onClick(Movie movie) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(view.getFragmentContainerID(), MovieDetailsFragment.newInstance(movie)).
-                addToBackStack(MovieDetailsFragment.class.getName()).commit();
+        this.movie = movie;
+        displayFragment(MovieDetailsFragment.newInstance(movie), true);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        System.out.println(movie);
+        if (movie != null)
+            outState.putParcelable(ARG_MOVIE, movie);
+        super.onSaveInstanceState(outState);
+    }
+
+    private void displayFragment(Fragment fragment, boolean backstack) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction()
+                .replace(view.getFragmentContainerID(), fragment);
+
+        if (backstack)
+            transaction.addToBackStack(fragment.getClass().getName()).commit();
+        else
+            transaction.commit();
     }
 
 }

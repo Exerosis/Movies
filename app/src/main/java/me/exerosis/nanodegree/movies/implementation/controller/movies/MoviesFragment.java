@@ -35,7 +35,7 @@ public class MoviesFragment extends Fragment implements MoviesController {
             topRatedTab.setText("Top Rated");
         }
 
-        view.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
+        view.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
                 return fragments[position];
