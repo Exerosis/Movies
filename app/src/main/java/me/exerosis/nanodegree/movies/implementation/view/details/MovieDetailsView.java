@@ -1,6 +1,7 @@
 package me.exerosis.nanodegree.movies.implementation.view.details;
 
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
