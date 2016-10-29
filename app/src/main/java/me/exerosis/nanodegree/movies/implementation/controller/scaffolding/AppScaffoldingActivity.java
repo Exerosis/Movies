@@ -17,16 +17,14 @@ public class AppScaffoldingActivity extends AppCompatActivity implements AppScaf
     private Movie movie;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreate(Bundle inState) {
+        super.onCreate(inState);
         view = new AppScaffoldingView(this);
 
-        if (savedInstanceState != null)
-            movie = savedInstanceState.getParcelable(ARG_MOVIE);
-
-        if (movie != null)
+        if (inState != null) {
+            movie = inState.getParcelable(ARG_MOVIE);
             displayFragment(MovieDetailsFragment.newInstance(movie), false);
-        else {
+        } else {
             MoviesFragment movies = new MoviesFragment();
             movies.setListener(this);
             displayFragment(movies, true);
@@ -47,7 +45,6 @@ public class AppScaffoldingActivity extends AppCompatActivity implements AppScaf
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        System.out.println(movie);
         if (movie != null)
             outState.putParcelable(ARG_MOVIE, movie);
         super.onSaveInstanceState(outState);
@@ -60,7 +57,7 @@ public class AppScaffoldingActivity extends AppCompatActivity implements AppScaf
         if (backstack)
             transaction.addToBackStack(fragment.getClass().getName()).commit();
         else
-            transaction.commit();
+            transaction.disallowAddToBackStack().commit();
     }
 
 }
