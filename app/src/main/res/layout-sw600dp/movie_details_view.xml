@@ -240,7 +240,7 @@
                         app:layout_constraintBottom_toTopOf="@+id/content_card_guide"
                         app:layout_constraintRight_toLeftOf="@+id/fab_guide"
                         app:layout_constraintTop_toTopOf="@+id/content_card_guide"
-                        app:srcCompat="@drawable/star" />
+                        app:srcCompat="@drawable/heart" />
 
                     <android.support.constraint.Guideline
                         android:id="@+id/content_card_guide"
