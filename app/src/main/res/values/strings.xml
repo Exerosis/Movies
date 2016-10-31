@@ -7,4 +7,7 @@
     <string name="tab_popular">Popular</string>
     <string name="movie_poster_content_description">Movie Poster</string>
     <string name="movie_backdrop_content_description">Movie Backdrop</string>
+    <string name="movie_details_popular">Popular</string>
+    <string name="movie_details_vote_average">Vote Average</string>
+    <string name="movie_details_runtime">Runtime</string>
 </resources>

@@ -30,7 +30,7 @@ public class MoviesFragment extends Fragment implements MoviesController {
         TabLayout.Tab popularTab = view.newTab(true).setIcon(R.drawable.heart).setTag(0);
         TabLayout.Tab topRatedTab = view.newTab().setIcon(R.drawable.star).setTag(1);
 
-        if (getResources().getBoolean(R.bool.tablet_mode)) {
+        if (getResources().getBoolean(R.bool.wide_mode)) {
             popularTab.setText("Popular");
             topRatedTab.setText("Top Rated");
         }
