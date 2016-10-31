@@ -19,6 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".implementation.controller.details.container.MovieDetailsContainerActivity">
+
+        </activity>
     </application>
 
 </manifest>
