@@ -22,8 +22,9 @@ public class AppScaffoldingActivity extends AppCompatActivity implements AppScaf
         view = new AppScaffoldingView(this);
 
         if (inState != null) {
-            movie = inState.getParcelable(ARG_MOVIE);
-            displayFragment(MovieDetailsFragment.newInstance(movie), false);
+           movie = inState.getParcelable(ARG_MOVIE);
+            if (movie != null)
+                displayFragment(MovieDetailsFragment.newInstance(movie), false);
         } else {
             MoviesFragment movies = new MoviesFragment();
             movies.setListener(this);
@@ -59,5 +60,4 @@ public class AppScaffoldingActivity extends AppCompatActivity implements AppScaf
         else
             transaction.disallowAddToBackStack().commit();
     }
-
 }
