@@ -27,8 +27,8 @@ public class MoviesFragment extends Fragment implements MoviesController {
         fragments[0] = MovieGridFragment.newInstance("http://api.themoviedb.org/3/movie/popular?api_key=80de3dcb516f2d18d76b0d4f3d7b2f05");
         fragments[1] = MovieGridFragment.newInstance("http://api.themoviedb.org/3/movie/top_rated?api_key=80de3dcb516f2d18d76b0d4f3d7b2f05");
 
-        TabLayout.Tab popularTab = view.newTab(true).setIcon(R.drawable.ic_menu_camera).setTag(0);
-        TabLayout.Tab topRatedTab = view.newTab().setIcon(R.drawable.ic_menu_gallery).setTag(1);
+        TabLayout.Tab popularTab = view.newTab(true).setIcon(R.drawable.star).setTag(0);
+        TabLayout.Tab topRatedTab = view.newTab().setIcon(R.drawable.star).setTag(1);
 
         if (getResources().getBoolean(R.bool.tablet_mode)) {
             popularTab.setText("Popular");
