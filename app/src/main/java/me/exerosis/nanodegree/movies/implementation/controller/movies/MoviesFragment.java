@@ -7,6 +7,7 @@ import android.support.annotation.StringRes;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,6 @@ public class MoviesFragment extends Fragment implements MoviesController {
             fragments[0].setListener(listener);
             fragments[1].setListener(listener);
         }
-
         return view.getRootView();
     }
 
@@ -65,6 +65,7 @@ public class MoviesFragment extends Fragment implements MoviesController {
 
     private TextView getTextView(String text, @DrawableRes int drawable) {
         TextView textView = new TextView(getContext());
+        textView.setGravity(Gravity.CENTER_HORIZONTAL);
         if (widthMode > 0) {
             textView.setText(text);
             if (widthMode == 2)
