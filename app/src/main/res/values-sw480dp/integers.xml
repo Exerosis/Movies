@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <bool name="wide_mode">true</bool>
+    <integer name="width_mode">2</integer>
 </resources>

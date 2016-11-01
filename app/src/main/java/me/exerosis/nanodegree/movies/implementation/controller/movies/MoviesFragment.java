@@ -1,12 +1,16 @@
 package me.exerosis.nanodegree.movies.implementation.controller.movies;
 
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.IntegerRes;
+import android.support.annotation.StringRes;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.implementation.controller.grid.MovieGridFragment;
@@ -18,6 +22,7 @@ public class MoviesFragment extends Fragment implements MoviesController {
     private final MovieGridFragment[] fragments = new MovieGridFragment[TAB_COUNT];
     private MoviesView view;
     private MovieHolderListener listener;
+    private int widthMode;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -27,13 +32,10 @@ public class MoviesFragment extends Fragment implements MoviesController {
         fragments[0] = MovieGridFragment.newInstance("http://api.themoviedb.org/3/movie/popular?api_key=80de3dcb516f2d18d76b0d4f3d7b2f05");
         fragments[1] = MovieGridFragment.newInstance("http://api.themoviedb.org/3/movie/top_rated?api_key=80de3dcb516f2d18d76b0d4f3d7b2f05");
 
-        TabLayout.Tab popularTab = view.newTab(true).setIcon(R.drawable.heart).setTag(0);
-        TabLayout.Tab topRatedTab = view.newTab().setIcon(R.drawable.star).setTag(1);
+        widthMode = getResources().getInteger(R.integer.width_mode);
 
-        if (getResources().getBoolean(R.bool.wide_mode)) {
-            popularTab.setText("Popular");
-            topRatedTab.setText("Top Rated");
-        }
+        view.newTab(true).setCustomView(getTextView("Popular", R.drawable.heart));
+        view.newTab().setCustomView(getTextView("Top Rated", R.drawable.star));
 
         view.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
@@ -55,6 +57,23 @@ public class MoviesFragment extends Fragment implements MoviesController {
         }
 
         return view.getRootView();
+    }
+
+    private TextView getTextView(@StringRes int text, @DrawableRes int drawable) {
+        return getTextView(getResources().getString(text), drawable);
+    }
+
+    private TextView getTextView(String text, @DrawableRes int drawable) {
+        TextView textView = new TextView(getContext());
+        if (widthMode > 0) {
+            textView.setText(text);
+            if (widthMode == 2)
+                textView.setCompoundDrawablesWithIntrinsicBounds(drawable, 0, 0, 0);
+            else if (widthMode < 3)
+                textView.setCompoundDrawablesWithIntrinsicBounds(0, drawable, 0, 0);
+        } else
+            textView.setCompoundDrawablesWithIntrinsicBounds(0, drawable, 0, 0);
+        return textView;
     }
 
     @Override
