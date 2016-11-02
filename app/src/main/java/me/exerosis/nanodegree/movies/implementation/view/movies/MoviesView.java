@@ -54,7 +54,7 @@ public class MoviesView implements Movies {
         TabLayout.Tab tab = binding.moviesTabLayout.newTab();
         binding.moviesTabLayout.addTab(tab, selected);
 
-        tab.setCustomView(R.layout.movies_tab_view);
+       // tab.setCustomView(R.layout.movies_tab_view);
         tab.setIcon(drawable);
 
         if (getRootView().getResources().getInteger(R.integer.width_mode) > 0)
