@@ -52,13 +52,13 @@ public class MoviesView implements Movies {
     @Override
     public TabLayout.Tab newTab(String title, @DrawableRes int drawable, boolean selected) {
         TabLayout.Tab tab = binding.moviesTabLayout.newTab();
+        binding.moviesTabLayout.addTab(tab, selected);
+
         tab.setCustomView(R.layout.movies_tab_view);
         tab.setIcon(drawable);
 
         if (getRootView().getResources().getInteger(R.integer.width_mode) > 0)
             tab.setText(title);
-
-        binding.moviesTabLayout.addTab(tab, selected);
 
         return tab;
     }
