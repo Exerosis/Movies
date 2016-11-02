@@ -1,17 +1,12 @@
 package me.exerosis.nanodegree.movies.implementation.controller.movies;
 
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.IntegerRes;
-import android.support.annotation.StringRes;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.implementation.controller.grid.MovieGridFragment;
@@ -33,8 +28,8 @@ public class MoviesFragment extends Fragment implements MoviesController {
         fragments[0] = MovieGridFragment.newInstance("http://api.themoviedb.org/3/movie/popular?api_key=80de3dcb516f2d18d76b0d4f3d7b2f05");
         fragments[1] = MovieGridFragment.newInstance("http://api.themoviedb.org/3/movie/top_rated?api_key=80de3dcb516f2d18d76b0d4f3d7b2f05");
 
-        view.newTab("Popular", R.drawable.heart, true);
-        view.newTab("Top Rated", R.drawable.star);
+        view.newTab("Popular", R.animator.favorites_tab_icon, true);
+        view.newTab("Top Rated", R.drawable.star_selected);
 
         view.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
