@@ -33,10 +33,8 @@ public class MoviesFragment extends Fragment implements MoviesController {
         fragments[0] = MovieGridFragment.newInstance("http://api.themoviedb.org/3/movie/popular?api_key=80de3dcb516f2d18d76b0d4f3d7b2f05");
         fragments[1] = MovieGridFragment.newInstance("http://api.themoviedb.org/3/movie/top_rated?api_key=80de3dcb516f2d18d76b0d4f3d7b2f05");
 
-        widthMode = getResources().getInteger(R.integer.width_mode);
-
-        view.newTab(true).setCustomView(getTextView("Popular", R.drawable.heart));
-        view.newTab().setCustomView(getTextView("Top Rated", R.drawable.star));
+        view.newTab("Popular", R.drawable.heart, true);
+        view.newTab("Top Rated", R.drawable.star);
 
         view.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
@@ -59,25 +57,6 @@ public class MoviesFragment extends Fragment implements MoviesController {
         return view.getRootView();
     }
 
-    private TextView getTextView(@StringRes int text, @DrawableRes int drawable) {
-        return getTextView(getResources().getString(text), drawable);
-    }
-
-    private TextView getTextView(String text, @DrawableRes int drawable) {
-        TextView textView = new TextView(getContext());
-        textView.setGravity(Gravity.CENTER_HORIZONTAL);
-        if (widthMode > 0) {
-            textView.setText(text);
-            if (widthMode == 2)
-                textView.setCompoundDrawablesWithIntrinsicBounds(drawable, 0, 0, 0);
-            else if (widthMode < 3)
-                textView.setCompoundDrawablesWithIntrinsicBounds(0, drawable, 0, 0);
-        } else
-            textView.setCompoundDrawablesWithIntrinsicBounds(0, drawable, 0, 0);
-        return textView;
-    }
-
-    @Override
     public void onTabSelected(TabLayout.Tab tab) {
         if (tab.getTag() != null)
             fragments[(int) tab.getTag()].setListener(listener);

@@ -1,5 +1,6 @@
 package me.exerosis.nanodegree.movies.implementation.view.movies;
 
+import android.support.annotation.DrawableRes;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentPagerAdapter;
 
@@ -13,8 +14,8 @@ public interface Movies extends ViewBase, Interactable<MoviesListener> {
     void setAdapter(FragmentPagerAdapter adapter);
     FragmentPagerAdapter getAdapter();
 
-    TabLayout.Tab newTab();
-    TabLayout.Tab newTab(boolean selected);
+    TabLayout.Tab newTab(String title, @DrawableRes int drawable);
+    TabLayout.Tab newTab(String title, @DrawableRes int drawable, boolean selected);
 
     int getFragmentContainerId();
 }

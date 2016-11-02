@@ -2,6 +2,7 @@ package me.exerosis.nanodegree.movies.implementation.view.movies;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.LayoutInflater;
@@ -44,13 +45,19 @@ public class MoviesView implements Movies {
     }
 
     @Override
-    public TabLayout.Tab newTab() {
-        return newTab(false);
+    public TabLayout.Tab newTab(String title, @DrawableRes int drawable) {
+        return newTab(title, drawable, false);
     }
 
     @Override
-    public TabLayout.Tab newTab(boolean selected) {
+    public TabLayout.Tab newTab(String title, @DrawableRes int drawable, boolean selected) {
         TabLayout.Tab tab = binding.moviesTabLayout.newTab();
+        tab.setCustomView(R.layout.movies_tab_view);
+        tab.setIcon(drawable);
+
+        if (getRootView().getResources().getInteger(R.integer.width_mode) > 0)
+            tab.setText(title);
+
         binding.moviesTabLayout.addTab(tab, selected);
 
         return tab;
