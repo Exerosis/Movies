@@ -51,13 +51,13 @@ public class MovieHolderView extends RecyclerView.ViewHolder implements MovieHol
     }
 
     @Override
-    public void setListener(MovieHolderListener listener) {
-        this.listener = listener;
+    public MovieHolderListener getListener() {
+        return listener;
     }
 
     @Override
-    public MovieHolderListener getListener() {
-        return listener;
+    public void setListener(MovieHolderListener listener) {
+        this.listener = listener;
     }
 
     @Override

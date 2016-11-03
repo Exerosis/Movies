@@ -7,8 +7,11 @@ import me.exerosis.nanodegree.movies.implementation.view.holder.MovieHolderView;
 import me.exerosis.nanodegree.movies.mvc.Interactable;
 
 public interface MovieGrid extends Interactable<MovieGridListener> {
-    void setAdapter(@NonNull RecyclerView.Adapter<MovieHolderView> adapter);
     RecyclerView.Adapter getAdapter();
-    void setRefreshing(boolean refreshing);
+
+    void setAdapter(@NonNull RecyclerView.Adapter<MovieHolderView> adapter);
+
     boolean isRefreshing();
+
+    void setRefreshing(boolean refreshing);
 }

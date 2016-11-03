@@ -5,5 +5,6 @@ import android.view.View;
 
 public interface ViewBase {
     View getRootView();
+
     Bundle getViewState();
 }

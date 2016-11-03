@@ -9,5 +9,5 @@ import me.exerosis.nanodegree.movies.mvc.ViewBase;
 
 
 public interface MovieHolder extends ViewBase, Interactable<MovieHolderListener>, View.OnClickListener {
-    void setMovie(@NonNull  Movie movie);
+    void setMovie(@NonNull Movie movie);
 }

@@ -10,11 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import me.exerosis.nanodegree.movies.databinding.MovieGridViewBinding;
-import me.exerosis.nanodegree.movies.mvc.util.ItemOffsetDecoration;
-import me.exerosis.nanodegree.movies.implementation.view.holder.MovieHolderView;
 import me.exerosis.nanodegree.movies.R;
+import me.exerosis.nanodegree.movies.databinding.MovieGridViewBinding;
+import me.exerosis.nanodegree.movies.implementation.view.holder.MovieHolderView;
 import me.exerosis.nanodegree.movies.mvc.ViewBase;
+import me.exerosis.nanodegree.movies.mvc.util.ItemOffsetDecoration;
 
 
 public class MovieGridView implements ViewBase, MovieGrid {
@@ -33,18 +33,13 @@ public class MovieGridView implements ViewBase, MovieGrid {
     }
 
     @Override
-    public void setAdapter(@NonNull RecyclerView.Adapter<MovieHolderView> adapter) {
-        binding.movieGrid.setAdapter(adapter);
-    }
-
-    @Override
     public RecyclerView.Adapter getAdapter() {
         return binding.movieGrid.getAdapter();
     }
 
     @Override
-    public void setRefreshing(boolean refreshing) {
-        binding.movieGridRefreshLayout.setRefreshing(refreshing);
+    public void setAdapter(@NonNull RecyclerView.Adapter<MovieHolderView> adapter) {
+        binding.movieGrid.setAdapter(adapter);
     }
 
     @Override
@@ -53,14 +48,19 @@ public class MovieGridView implements ViewBase, MovieGrid {
     }
 
     @Override
-    public void setListener(MovieGridListener listener) {
-        this.listener = listener;
-        binding.movieGridRefreshLayout.setOnRefreshListener(listener);
+    public void setRefreshing(boolean refreshing) {
+        binding.movieGridRefreshLayout.setRefreshing(refreshing);
     }
 
     @Override
     public MovieGridListener getListener() {
         return listener;
+    }
+
+    @Override
+    public void setListener(MovieGridListener listener) {
+        this.listener = listener;
+        binding.movieGridRefreshLayout.setOnRefreshListener(listener);
     }
 
     @Override

@@ -93,12 +93,12 @@ public class MovieGridFragment extends Fragment implements MovieGridController {
     }
 
     @Override
-    public void setListener(MovieHolderListener listener) {
-        this.listener = listener;
+    public MovieHolderListener getListener() {
+        return listener;
     }
 
     @Override
-    public MovieHolderListener getListener() {
-        return listener;
+    public void setListener(MovieHolderListener listener) {
+        this.listener = listener;
     }
 }

@@ -7,7 +7,6 @@ import android.widget.Toast;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.net.URL;
@@ -33,7 +32,7 @@ public class MovieGridLoader extends AsyncTaskLoader<List<Movie>> {
             return null;
 
         try {
-           JsonObject result = JsonUtilities.fromURL(new URL(url));
+            JsonObject result = JsonUtilities.fromURL(new URL(url));
             List<Movie> newMovies = new ArrayList<>();
 
             for (JsonElement jsonMovie : result.getAsJsonArray("results")) {

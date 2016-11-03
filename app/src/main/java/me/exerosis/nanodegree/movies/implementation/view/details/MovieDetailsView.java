@@ -1,7 +1,6 @@
 package me.exerosis.nanodegree.movies.implementation.view.details;
 
 import android.content.res.ColorStateList;
-import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -24,6 +23,7 @@ public class MovieDetailsView implements MovieDetails {
     public MovieDetailsView(LayoutInflater inflater, final ViewGroup parent) {
         binding = DataBindingUtil.inflate(inflater, R.layout.movie_details_view, parent, false);
     }
+
 
     @Override
     public void setDetails(Details details) {

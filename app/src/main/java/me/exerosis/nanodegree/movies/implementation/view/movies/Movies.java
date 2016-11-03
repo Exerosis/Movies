@@ -8,13 +8,16 @@ import me.exerosis.nanodegree.movies.mvc.Interactable;
 import me.exerosis.nanodegree.movies.mvc.ViewBase;
 
 public interface Movies extends ViewBase, Interactable<MoviesListener> {
-    void setCurrentPage(int position);
     int getCurrentPage();
 
-    void setAdapter(FragmentPagerAdapter adapter);
+    void setCurrentPage(int position);
+
     FragmentPagerAdapter getAdapter();
 
+    void setAdapter(FragmentPagerAdapter adapter);
+
     TabLayout.Tab newTab(String title, @DrawableRes int drawable);
+
     TabLayout.Tab newTab(String title, @DrawableRes int drawable, boolean selected);
 
     int getFragmentContainerId();

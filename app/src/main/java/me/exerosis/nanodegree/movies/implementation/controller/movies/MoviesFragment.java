@@ -67,6 +67,10 @@ public class MoviesFragment extends Fragment implements MoviesController {
     public void onTabReselected(TabLayout.Tab tab) {
     }
 
+    @Override
+    public MovieHolderListener getListener() {
+        return listener;
+    }
 
     @Override
     public void setListener(MovieHolderListener listener) {
@@ -75,10 +79,5 @@ public class MoviesFragment extends Fragment implements MoviesController {
             return;
         fragments[0].setListener(listener);
         fragments[1].setListener(listener);
-    }
-
-    @Override
-    public MovieHolderListener getListener() {
-        return listener;
     }
 }

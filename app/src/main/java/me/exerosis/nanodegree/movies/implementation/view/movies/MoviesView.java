@@ -23,6 +23,10 @@ public class MoviesView implements Movies {
         binding.moviesTabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(binding.moviesViewPager));
     }
 
+    @Override
+    public int getCurrentPage() {
+        return binding.moviesViewPager.getCurrentItem();
+    }
 
     @Override
     public void setCurrentPage(int position) {
@@ -30,18 +34,13 @@ public class MoviesView implements Movies {
     }
 
     @Override
-    public int getCurrentPage() {
-        return binding.moviesViewPager.getCurrentItem();
+    public FragmentPagerAdapter getAdapter() {
+        return (FragmentPagerAdapter) binding.moviesViewPager.getAdapter();
     }
 
     @Override
     public void setAdapter(FragmentPagerAdapter adapter) {
         binding.moviesViewPager.setAdapter(adapter);
-    }
-
-    @Override
-    public FragmentPagerAdapter getAdapter() {
-        return (FragmentPagerAdapter) binding.moviesViewPager.getAdapter();
     }
 
     @Override
@@ -70,14 +69,14 @@ public class MoviesView implements Movies {
     }
 
     @Override
-    public void setListener(MoviesListener listener) {
-        this.listener = listener;
-        binding.moviesTabLayout.addOnTabSelectedListener(listener);
+    public MoviesListener getListener() {
+        return listener;
     }
 
     @Override
-    public MoviesListener getListener() {
-        return listener;
+    public void setListener(MoviesListener listener) {
+        this.listener = listener;
+        binding.moviesTabLayout.addOnTabSelectedListener(listener);
     }
 
     @Override
