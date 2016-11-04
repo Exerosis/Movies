@@ -14,21 +14,24 @@ public class AppScaffoldingActivity extends AppCompatActivity implements AppScaf
     private AppScaffolding view;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        MoviesFragment movies = (MoviesFragment) getSupportFragmentManager().
+                findFragmentByTag(MoviesFragment.class.getName());
+        if (movies != null)
+            movies.setListener(this);
+    }
+
+    @Override
     public void onCreate(Bundle inState) {
         super.onCreate(inState);
         view = new AppScaffoldingView(this);
 
-        MoviesFragment movies = (MoviesFragment) getSupportFragmentManager().
-                findFragmentByTag(MoviesFragment.class.getName());
-
-        if (movies == null) {
-            movies = new MoviesFragment();
+        if (getSupportFragmentManager().findFragmentByTag(MoviesFragment.class.getName()) == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(view.getFragmentContainerID(), movies, MoviesFragment.class.getName())
+                    .replace(view.getFragmentContainerID(), new MoviesFragment(), MoviesFragment.class.getName())
                     .disallowAddToBackStack().commit();
         }
-
-        movies.setListener(this);
     }
 
     @Override

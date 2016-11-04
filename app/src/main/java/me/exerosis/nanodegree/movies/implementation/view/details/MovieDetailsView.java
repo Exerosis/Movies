@@ -50,13 +50,6 @@ public class MovieDetailsView implements MovieDetails {
         });
     }
 
-    private Animation getFadeAnimation(@AnimRes int anim) {
-        Animation animation = AnimationUtils.loadAnimation(getRootView().getContext(), anim);
-        animation.setFillAfter(true);
-        return animation;
-    }
-
-
     @Override
     public void setDetails(Details details) {
         binding.movieDetailsTitle.setText(details.getMovie().getTitle());
@@ -117,5 +110,11 @@ public class MovieDetailsView implements MovieDetails {
     @Override
     public Bundle getViewState() {
         return null;
+    }
+
+    private Animation getFadeAnimation(@AnimRes int anim) {
+        Animation animation = AnimationUtils.loadAnimation(getRootView().getContext(), anim);
+        animation.setFillAfter(true);
+        return animation;
     }
 }
