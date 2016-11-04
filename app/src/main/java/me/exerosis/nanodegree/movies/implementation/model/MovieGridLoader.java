@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 import me.exerosis.nanodegree.movies.R;
-import me.exerosis.nanodegree.movies.implementation.util.JsonUtilities;
+import me.exerosis.nanodegree.movies.mvc.implementation.JsonUtilities;
 
 public class MovieGridLoader extends AsyncTaskLoader<List<Movie>> {
     private final String url;

@@ -1,4 +1,4 @@
-package me.exerosis.nanodegree.movies.implementation.util;
+package me.exerosis.nanodegree.movies.mvc.implementation;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -43,7 +43,6 @@ public final class JsonUtilities {
         JsonElement result = element.getAsJsonObject().get(key);
         return result == null || result.isJsonNull() ? null : result.getAsJsonArray();
     }
-
 
     public static JsonObject fromURL(URL url) throws IOException {
         Closeable reader = null;
