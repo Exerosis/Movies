@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.implementation.util.JsonUtilities;
 
 @SuppressLint("SimpleDateFormat")
@@ -41,7 +42,7 @@ public class MovieDetailsLoader extends AsyncTaskLoader<Details> {
         }
 
         try {
-            URL url = new URL("https://api.themoviedb.org/3/movie/" + movie.getID() + "?api_key=80de3dcb516f2d18d76b0d4f3d7b2f05");
+            URL url = new URL("https://api.themoviedb.org/3/movie/" + movie.getID() + "?api_key=" + getContext().getString(R.string.api_key));
             JsonObject results = JsonUtilities.fromURL(url);
 
 
