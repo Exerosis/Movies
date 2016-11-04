@@ -14,7 +14,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import me.exerosis.nanodegree.movies.R;
-import me.exerosis.nanodegree.movies.mvc.implementation.JsonUtilities;
 
 @SuppressLint("SimpleDateFormat")
 public class MovieDetailsLoader extends AsyncTaskLoader<Details> {

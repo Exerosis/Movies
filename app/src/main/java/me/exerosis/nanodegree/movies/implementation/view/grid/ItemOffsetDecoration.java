@@ -1,4 +1,4 @@
-package me.exerosis.nanodegree.movies.mvc.implementation;
+package me.exerosis.nanodegree.movies.implementation.view.grid;
 
 import android.content.Context;
 import android.graphics.Rect;

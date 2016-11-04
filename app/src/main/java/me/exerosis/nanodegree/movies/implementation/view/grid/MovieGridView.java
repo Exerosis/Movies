@@ -13,11 +13,9 @@ import android.view.ViewGroup;
 import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.databinding.MovieGridViewBinding;
 import me.exerosis.nanodegree.movies.implementation.view.holder.MovieHolderView;
-import me.exerosis.nanodegree.movies.mvc.ViewBase;
-import me.exerosis.nanodegree.movies.mvc.implementation.ItemOffsetDecoration;
 
 
-public class MovieGridView implements ViewBase, MovieGrid {
+public class MovieGridView implements MovieGrid {
     private final MovieGridViewBinding binding;
     private MovieGridListener listener;
 
@@ -27,13 +25,13 @@ public class MovieGridView implements ViewBase, MovieGrid {
     }
 
     private void initialize(Context context) {
-        //RecyclerView
         binding.movieGrid.setLayoutManager(new GridLayoutManager(context, context.getResources().getInteger(R.integer.movie_list_columns)));
         binding.movieGrid.addItemDecoration(new ItemOffsetDecoration(context, R.dimen.movie_list_item_offset));
     }
 
     @Override
-    public RecyclerView.Adapter getAdapter() {
+    @SuppressWarnings("unchecked")
+    public RecyclerView.Adapter<MovieHolderView> getAdapter() {
         return binding.movieGrid.getAdapter();
     }
 

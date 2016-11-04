@@ -1,6 +1,6 @@
 package me.exerosis.nanodegree.movies.mvc;
 
-public interface Interactable<T> {
+public interface Listenable<T> {
     T getListener();
 
     void setListener(T listener);
