@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.AnimRes;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.graphics.Palette;
 import android.view.LayoutInflater;
@@ -21,33 +22,38 @@ import me.exerosis.nanodegree.movies.databinding.MovieDetailsViewBinding;
 import me.exerosis.nanodegree.movies.implementation.model.Details;
 
 public class MovieDetailsView implements MovieDetails {
+    private final static float FADE_BOUND = 50;
     private final MovieDetailsViewBinding binding;
-    private final float spaceHeight;
-    private final static float BOUND = 75;
+    private final Animation fadeInAnimation;
+    private final Animation fadeOutAnimation;
 
     public MovieDetailsView(LayoutInflater inflater, final ViewGroup parent) {
         binding = DataBindingUtil.inflate(inflater, R.layout.movie_details_view, parent, false);
 
-        spaceHeight = binding.movieDetailsSpace.getMeasuredHeight();
+        fadeInAnimation = getFadeAnimation(R.anim.fade_in);
+        fadeOutAnimation = getFadeAnimation(R.anim.fade_out);
+
+        binding.movieDetailsAppBar.startAnimation(fadeOutAnimation);
+
         binding.movieDetailsScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                float newPos = spaceHeight - (scrollY + BOUND);
-                float oldPos = spaceHeight - (oldScrollY + BOUND);
+                float spaceHeight = binding.movieDetailsSpace.getMeasuredHeight();
+                float newPos = spaceHeight - (scrollY + FADE_BOUND);
+                float oldPos = spaceHeight - (oldScrollY + FADE_BOUND);
 
-                int id = -1;
                 if (oldPos > 0 && newPos <= 0)
-                    id = R.anim.fade_in;
+                    binding.movieDetailsAppBar.startAnimation(fadeInAnimation);
                 else if (oldPos <= 0 && newPos > 0)
-                    id = R.anim.fade_out;
-
-                if (id == -1)
-                    return;
-                Animation animation = AnimationUtils.loadAnimation(parent.getContext(), id);
-                animation.setFillAfter(true);
-                binding.movieDetailsAppBar.startAnimation(animation);
+                    binding.movieDetailsAppBar.startAnimation(fadeOutAnimation);
             }
         });
+    }
+
+    private Animation getFadeAnimation(@AnimRes int anim) {
+        Animation animation = AnimationUtils.loadAnimation(getRootView().getContext(), anim);
+        animation.setFillAfter(true);
+        return animation;
     }
 
 
