@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.graphics.Palette;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,22 @@ public class MovieDetailsView implements MovieDetails {
 
     public MovieDetailsView(LayoutInflater inflater, final ViewGroup parent) {
         binding = DataBindingUtil.inflate(inflater, R.layout.movie_details_view, parent, false);
+        binding.movieDetailsScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                float spaceHeight = binding.movieDetailsSpace.getMeasuredHeight();
+                float bound = 200;
+                float pos = Math.max(0, (spaceHeight - scrollY)) - bound;
+                if (pos < 0) {
+                    binding.movieDetailsAppBar.getBackground().setAlpha((int) (Math.abs(pos) * (255 / bound)));
+                    binding.movieDetailsToolbar.setElevation((Math.abs(pos) * (10 / bound)));
+                }
+                if (pos > 0) {
+                    binding.movieDetailsAppBar.getBackground().setAlpha(0);
+                    binding.movieDetailsToolbar.setElevation(0);
+                }
+            }
+        });
     }
 
 
@@ -50,6 +67,7 @@ public class MovieDetailsView implements MovieDetails {
                         if (swatch != null) {
                             binding.movieDetailsFab.setBackgroundTintList(ColorStateList.valueOf(swatch.getRgb()));
                             binding.movieDetailsQuickLookBar.setBackgroundColor(swatch.getRgb());
+//                            binding.movieDetailsAppBar.setBackgroundColor(swatch.getRgb());
 
                             binding.movieDetailsPopularity.setTextColor(swatch.getTitleTextColor());
                             binding.movieDetailsVoteAverage.setTextColor(swatch.getTitleTextColor());
