@@ -22,24 +22,30 @@ import me.exerosis.nanodegree.movies.implementation.model.Details;
 
 public class MovieDetailsView implements MovieDetails {
     private final MovieDetailsViewBinding binding;
+    private final float spaceHeight;
+    private final static float BOUND = 75;
 
     public MovieDetailsView(LayoutInflater inflater, final ViewGroup parent) {
         binding = DataBindingUtil.inflate(inflater, R.layout.movie_details_view, parent, false);
+
+        spaceHeight = binding.movieDetailsSpace.getMeasuredHeight();
         binding.movieDetailsScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                float spaceHeight = binding.movieDetailsSpace.getMeasuredHeight();
-                float bound = 200;
-                float newPos = (spaceHeight - scrollY) - bound;
-                float oldPos = (spaceHeight - oldScrollY) - bound;
+                float newPos = spaceHeight - (scrollY + BOUND);
+                float oldPos = spaceHeight - (oldScrollY + BOUND);
 
-                if (oldPos > 0 && newPos < 0) {
-                    Animation animation = AnimationUtils.loadAnimation(parent.getContext(), R.anim.fade_out);
-                    binding.movieDetailsToolbar.startAnimation(animation);
-                } else if (oldPos < 0 && newPos > 0) {
-                    Animation animation = AnimationUtils.loadAnimation(parent.getContext(), R.anim.fade_in);
-                    binding.movieDetailsToolbar.startAnimation(animation);
-                }
+                int id = -1;
+                if (oldPos > 0 && newPos <= 0)
+                    id = R.anim.fade_in;
+                else if (oldPos <= 0 && newPos > 0)
+                    id = R.anim.fade_out;
+
+                if (id == -1)
+                    return;
+                Animation animation = AnimationUtils.loadAnimation(parent.getContext(), id);
+                animation.setFillAfter(true);
+                binding.movieDetailsAppBar.startAnimation(animation);
             }
         });
     }
@@ -70,7 +76,7 @@ public class MovieDetailsView implements MovieDetails {
                         if (swatch != null) {
                             binding.movieDetailsFab.setBackgroundTintList(ColorStateList.valueOf(swatch.getRgb()));
                             binding.movieDetailsQuickLookBar.setBackgroundColor(swatch.getRgb());
-//                            binding.movieDetailsAppBar.setBackgroundColor(swatch.getRgb());
+                            binding.movieDetailsAppBar.setBackgroundColor(swatch.getRgb());
 
                             binding.movieDetailsPopularity.setTextColor(swatch.getTitleTextColor());
                             binding.movieDetailsVoteAverage.setTextColor(swatch.getTitleTextColor());
