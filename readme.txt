@@ -1,0 +1,1 @@
+API Key is under res/strings/api_key.
