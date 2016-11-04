@@ -14,13 +14,17 @@ import me.exerosis.nanodegree.movies.databinding.MoviesViewBinding;
 
 public class MoviesView implements Movies {
     private final MoviesViewBinding binding;
-    private MoviesListener listener;
 
     public MoviesView(LayoutInflater inflater, ViewGroup parent) {
         binding = DataBindingUtil.inflate(inflater, R.layout.movies_view, parent, false);
 
         binding.moviesViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.moviesTabLayout));
         binding.moviesTabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(binding.moviesViewPager));
+
+        newTab("Popular", R.drawable.favorites_tab_icon, true);
+        newTab("Top Rated", R.drawable.top_rated_tab_selector);
+
+        setCurrentPage(0);
     }
 
     @Override
@@ -44,12 +48,21 @@ public class MoviesView implements Movies {
     }
 
     @Override
-    public TabLayout.Tab newTab(String title, @DrawableRes int drawable) {
-        return newTab(title, drawable, false);
+    public View getRootView() {
+        return binding.getRoot();
     }
 
     @Override
-    public TabLayout.Tab newTab(String title, @DrawableRes int drawable, boolean selected) {
+    public Bundle getViewState() {
+        return null;
+    }
+
+
+    private TabLayout.Tab newTab(String title, @DrawableRes int drawable) {
+        return newTab(title, drawable, false);
+    }
+
+    private TabLayout.Tab newTab(String title, @DrawableRes int drawable, boolean selected) {
         TabLayout.Tab tab = binding.moviesTabLayout.newTab();
         binding.moviesTabLayout.addTab(tab, selected);
 
@@ -61,31 +74,5 @@ public class MoviesView implements Movies {
             tab.setText(title);
 
         return tab;
-    }
-
-    @Override
-    public int getFragmentContainerId() {
-        return 0;
-    }
-
-    @Override
-    public MoviesListener getListener() {
-        return listener;
-    }
-
-    @Override
-    public void setListener(MoviesListener listener) {
-        this.listener = listener;
-        binding.moviesTabLayout.addOnTabSelectedListener(listener);
-    }
-
-    @Override
-    public View getRootView() {
-        return binding.getRoot();
-    }
-
-    @Override
-    public Bundle getViewState() {
-        return null;
     }
 }
