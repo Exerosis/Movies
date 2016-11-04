@@ -1,4 +1,4 @@
-package me.exerosis.nanodegree.movies.implementation.controller.scaffolding;
+package me.exerosis.nanodegree.movies.implementation.controller.movies.container;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,11 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import me.exerosis.nanodegree.movies.implementation.controller.details.container.MovieDetailsContainerActivity;
 import me.exerosis.nanodegree.movies.implementation.controller.movies.MoviesFragment;
 import me.exerosis.nanodegree.movies.implementation.model.Movie;
-import me.exerosis.nanodegree.movies.implementation.view.scaffolding.AppScaffolding;
-import me.exerosis.nanodegree.movies.implementation.view.scaffolding.AppScaffoldingView;
+import me.exerosis.nanodegree.movies.implementation.view.movies.container.MoviesContainerView;
 
-public class AppScaffoldingActivity extends AppCompatActivity implements AppScaffoldingController {
-    private AppScaffolding view;
+public class MoviesContainerActivity extends AppCompatActivity implements MoviesContainerController {
+    private MoviesContainerView view;
 
     @Override
     protected void onResume() {
@@ -25,11 +24,11 @@ public class AppScaffoldingActivity extends AppCompatActivity implements AppScaf
     @Override
     public void onCreate(Bundle inState) {
         super.onCreate(inState);
-        view = new AppScaffoldingView(this);
+        view = new MoviesContainerView(this);
 
         if (getSupportFragmentManager().findFragmentByTag(MoviesFragment.class.getName()) == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(view.getFragmentContainerID(), new MoviesFragment(), MoviesFragment.class.getName())
+                    .replace(view.getContainerID(), new MoviesFragment(), MoviesFragment.class.getName())
                     .disallowAddToBackStack().commit();
         }
     }

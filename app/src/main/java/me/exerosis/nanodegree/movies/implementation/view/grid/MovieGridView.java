@@ -14,7 +14,7 @@ import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.databinding.MovieGridViewBinding;
 import me.exerosis.nanodegree.movies.implementation.view.holder.MovieHolderView;
 import me.exerosis.nanodegree.movies.mvc.ViewBase;
-import me.exerosis.nanodegree.movies.mvc.util.ItemOffsetDecoration;
+import me.exerosis.nanodegree.movies.mvc.implementation.ItemOffsetDecoration;
 
 
 public class MovieGridView implements ViewBase, MovieGrid {

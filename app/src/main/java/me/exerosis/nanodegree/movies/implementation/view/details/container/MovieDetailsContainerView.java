@@ -8,8 +8,9 @@ import android.view.View;
 
 import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.databinding.MovieDetailsContainerBinding;
+import me.exerosis.nanodegree.movies.mvc.Container;
 
-public class MovieDetailsContainerView implements MovieDetailsContainer {
+public class MovieDetailsContainerView implements Container {
     private final MovieDetailsContainerBinding binding;
 
     public MovieDetailsContainerView(Activity activity) {
