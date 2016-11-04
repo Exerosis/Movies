@@ -10,6 +10,8 @@ import android.support.v7.graphics.Palette;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -28,14 +30,15 @@ public class MovieDetailsView implements MovieDetails {
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 float spaceHeight = binding.movieDetailsSpace.getMeasuredHeight();
                 float bound = 200;
-                float pos = Math.max(0, (spaceHeight - scrollY)) - bound;
-                if (pos < 0) {
-                    binding.movieDetailsAppBar.getBackground().setAlpha((int) (Math.abs(pos) * (255 / bound)));
-                    binding.movieDetailsToolbar.setElevation((Math.abs(pos) * (10 / bound)));
-                }
-                if (pos > 0) {
-                    binding.movieDetailsAppBar.getBackground().setAlpha(0);
-                    binding.movieDetailsToolbar.setElevation(0);
+                float newPos = (spaceHeight - scrollY) - bound;
+                float oldPos = (spaceHeight - oldScrollY) - bound;
+
+                if (oldPos > 0 && newPos < 0) {
+                    Animation animation = AnimationUtils.loadAnimation(parent.getContext(), R.anim.fade_out);
+                    binding.movieDetailsToolbar.startAnimation(animation);
+                } else if (oldPos < 0 && newPos > 0) {
+                    Animation animation = AnimationUtils.loadAnimation(parent.getContext(), R.anim.fade_in);
+                    binding.movieDetailsToolbar.startAnimation(animation);
                 }
             }
         });
