@@ -3,6 +3,7 @@ package me.exerosis.nanodegree.movies.implementation.controller.details.containe
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import me.exerosis.nanodegree.movies.implementation.controller.details.MovieDetailsFragment;
 import me.exerosis.nanodegree.movies.implementation.model.Movie;
@@ -20,5 +21,12 @@ public class MovieDetailsContainerActivity extends AppCompatActivity implements 
         getSupportFragmentManager().beginTransaction().replace(view.getContainerID(),
                 MovieDetailsFragment.newInstance((Movie) getIntent().getParcelableExtra(ARG_MOVIE))).
                 disallowAddToBackStack().commit();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home)
+            finish();
+        return super.onOptionsItemSelected(item);
     }
 }

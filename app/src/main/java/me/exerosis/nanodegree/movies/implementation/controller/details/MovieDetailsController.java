@@ -1,4 +1,8 @@
 package me.exerosis.nanodegree.movies.implementation.controller.details;
 
-public interface MovieDetailsController {
+import android.support.v4.app.LoaderManager;
+
+import me.exerosis.nanodegree.movies.implementation.model.Details;
+
+public interface MovieDetailsController extends LoaderManager.LoaderCallbacks<Details> {
 }

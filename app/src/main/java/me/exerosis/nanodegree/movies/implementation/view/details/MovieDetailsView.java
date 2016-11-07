@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.AnimRes;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,9 +27,15 @@ public class MovieDetailsView implements MovieDetails {
     private final MovieDetailsViewBinding binding;
     private final Animation fadeInAnimation;
     private final Animation fadeOutAnimation;
+    private final AppCompatActivity activity;
 
-    public MovieDetailsView(LayoutInflater inflater, final ViewGroup parent) {
+    public MovieDetailsView(AppCompatActivity activity, LayoutInflater inflater, final ViewGroup parent) {
+        this.activity = activity;
         binding = DataBindingUtil.inflate(inflater, R.layout.movie_details_view, parent, false);
+
+        activity.setSupportActionBar(binding.movieDetailsToolbar);
+        activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         fadeInAnimation = getFadeAnimation(R.anim.fade_in);
         fadeOutAnimation = getFadeAnimation(R.anim.fade_out);
@@ -73,6 +80,7 @@ public class MovieDetailsView implements MovieDetails {
                     public void onGenerated(Palette palette) {
                         Palette.Swatch swatch = palette.getVibrantSwatch();
                         if (swatch != null) {
+                            activity.getWindow().setStatusBarColor(swatch.getRgb());
                             binding.movieDetailsFab.setBackgroundTintList(ColorStateList.valueOf(swatch.getRgb()));
                             binding.movieDetailsQuickLookBar.setBackgroundColor(swatch.getRgb());
                             binding.movieDetailsAppBar.setBackgroundColor(swatch.getRgb());
@@ -102,6 +110,12 @@ public class MovieDetailsView implements MovieDetails {
         });
     }
 
+    private Animation getFadeAnimation(@AnimRes int anim) {
+        Animation animation = AnimationUtils.loadAnimation(getRootView().getContext(), anim);
+        animation.setFillAfter(true);
+        return animation;
+    }
+
     @Override
     public View getRootView() {
         return binding.getRoot();
@@ -110,11 +124,5 @@ public class MovieDetailsView implements MovieDetails {
     @Override
     public Bundle getViewState() {
         return null;
-    }
-
-    private Animation getFadeAnimation(@AnimRes int anim) {
-        Animation animation = AnimationUtils.loadAnimation(getRootView().getContext(), anim);
-        animation.setFillAfter(true);
-        return animation;
     }
 }
