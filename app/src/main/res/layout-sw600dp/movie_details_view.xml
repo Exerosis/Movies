@@ -68,13 +68,13 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:elevation="5dp"
+                            android:text="@string/movie_details_runtime"
                             android:textColor="?android:attr/textColorSecondary"
                             android:textSize="18sp"
                             app:layout_constraintHorizontal_bias="0.15"
                             app:layout_constraintLeft_toLeftOf="@+id/poster_end_guide"
                             app:layout_constraintRight_toRightOf="@+id/movie_details_content_card"
-                            app:layout_constraintTop_toTopOf="@+id/quick_look_top_guide"
-                            android:text="@string/movie_details_runtime" />
+                            app:layout_constraintTop_toTopOf="@+id/quick_look_top_guide" />
 
                         <TextView
                             android:id="@+id/movie_details_runtime"
