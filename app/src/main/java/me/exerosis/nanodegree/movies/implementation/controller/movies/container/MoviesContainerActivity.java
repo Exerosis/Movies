@@ -3,9 +3,12 @@ package me.exerosis.nanodegree.movies.implementation.controller.movies.container
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
+import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.implementation.controller.details.container.MovieDetailsContainerActivity;
 import me.exerosis.nanodegree.movies.implementation.controller.movies.MoviesFragment;
+import me.exerosis.nanodegree.movies.implementation.model.JsonUtilities;
 import me.exerosis.nanodegree.movies.implementation.model.Movie;
 import me.exerosis.nanodegree.movies.implementation.view.movies.container.MoviesContainerView;
 
@@ -35,6 +38,9 @@ public class MoviesContainerActivity extends AppCompatActivity implements Movies
 
     @Override
     public void onClick(Movie movie) {
-        startActivity(new Intent(this, MovieDetailsContainerActivity.class).putExtra(MovieDetailsContainerActivity.ARG_MOVIE, movie));
+        if (JsonUtilities.isOnline(this))
+            startActivity(new Intent(this, MovieDetailsContainerActivity.class).putExtra(MovieDetailsContainerActivity.ARG_MOVIE, movie));
+        else
+            Toast.makeText(this, R.string.movie_details_error, Toast.LENGTH_SHORT).show();
     }
 }

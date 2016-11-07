@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Movies</string>
-    <string name="cover_error">Movie Failed To Load</string>
-    <string name="load_failed">Failed to Load</string>
+    <string name="movie_details_error">Movie Failed To Load</string>
+    <string name="movie_grid_error">Failed to Load</string>
 
     <string name="tab_top_rated">Top Rated</string>
     <string name="tab_popular">Popular</string>

@@ -54,7 +54,7 @@ public class MovieGridLoader extends AsyncTaskLoader<List<Movie>> {
         if (data != null)
             movies = data;
         else
-            Toast.makeText(getContext(), R.string.load_failed, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.movie_grid_error, Toast.LENGTH_SHORT).show();
         if (isStarted())
             super.deliverResult(Collections.unmodifiableList(movies));
     }

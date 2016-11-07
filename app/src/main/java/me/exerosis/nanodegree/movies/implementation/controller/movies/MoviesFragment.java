@@ -20,14 +20,12 @@ public class MoviesFragment extends Fragment implements MoviesController {
     private MoviesView view;
     private MovieHolderListener listener;
 
-    public MoviesFragment() {
-        fragments.add(MovieGridFragment.newInstance("http://api.themoviedb.org/3/movie/popular?api_key=" + getString(R.string.api_key)));
-        fragments.add(MovieGridFragment.newInstance("http://api.themoviedb.org/3/movie/top_rated?api_key=" + getString(R.string.api_key)));
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = new MoviesView(inflater, container);
+
+        fragments.add(MovieGridFragment.newInstance("http://api.themoviedb.org/3/movie/popular?api_key=" + getResources().getString(R.string.api_key)));
+        fragments.add(MovieGridFragment.newInstance("http://api.themoviedb.org/3/movie/top_rated?api_key=" + getResources().getString(R.string.api_key)));
 
         view.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
@@ -40,6 +38,9 @@ public class MoviesFragment extends Fragment implements MoviesController {
                 return fragments.size();
             }
         });
+
+        for (MovieGridFragment fragment : fragments)
+            fragment.setListener(listener);
 
         return view.getRootView();
     }

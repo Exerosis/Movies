@@ -1,1 +1,1 @@
-API Key is under res/strings/api_key.
+API Key is under res/values/strings/api_key.
