@@ -12,7 +12,8 @@ import android.view.ViewGroup;
 
 import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.databinding.MovieGridViewBinding;
-import me.exerosis.nanodegree.movies.implementation.view.holder.MovieHolderView;
+import me.exerosis.nanodegree.movies.implementation.view.movies.holder.MovieHolderView;
+import me.exerosis.nanodegree.movies.utilities.ItemOffsetDecoration;
 
 
 public class MovieGridView implements MovieGrid {

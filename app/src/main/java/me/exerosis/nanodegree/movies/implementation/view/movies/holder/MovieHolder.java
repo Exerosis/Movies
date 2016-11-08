@@ -1,4 +1,4 @@
-package me.exerosis.nanodegree.movies.implementation.view.holder;
+package me.exerosis.nanodegree.movies.implementation.view.movies.holder;
 
 import android.support.annotation.NonNull;
 import android.view.View;

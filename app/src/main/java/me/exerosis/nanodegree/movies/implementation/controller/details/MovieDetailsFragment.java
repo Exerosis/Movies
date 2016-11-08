@@ -5,20 +5,26 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import me.exerosis.nanodegree.movies.implementation.model.Details;
 import me.exerosis.nanodegree.movies.implementation.model.Movie;
 import me.exerosis.nanodegree.movies.implementation.model.MovieDetailsLoader;
 import me.exerosis.nanodegree.movies.implementation.view.details.MovieDetails;
 import me.exerosis.nanodegree.movies.implementation.view.details.MovieDetailsView;
+import me.exerosis.nanodegree.movies.implementation.view.details.holder.TrailerHolderView;
 
 public class MovieDetailsFragment extends Fragment implements MovieDetailsController {
     public static final String ARG_MOVIE = "MOVIE";
     public static final int LOADER_ID = 0;
     private MovieDetails view;
+    private final List<String> trailers = new ArrayList<>();
 
     public static MovieDetailsFragment newInstance(Movie movie) {
         Bundle args = new Bundle();
@@ -39,6 +45,23 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContro
         view = new MovieDetailsView((AppCompatActivity) getActivity(), inflater, container);
         if (!getLoaderManager().hasRunningLoaders())
             getLoaderManager().initLoader(LOADER_ID, getArguments(), this).forceLoad();
+
+        view.setAdapter(new RecyclerView.Adapter<TrailerHolderView>() {
+            @Override
+            public TrailerHolderView onCreateViewHolder(ViewGroup parent, int viewType) {
+                return new TrailerHolderView(parent);
+            }
+
+            @Override
+            public void onBindViewHolder(TrailerHolderView holder, int position) {
+                holder.setTrailer(trailers.get(position));
+            }
+
+            @Override
+            public int getItemCount() {
+                return trailers.size();
+            }
+        });
         return view.getRootView();
     }
 

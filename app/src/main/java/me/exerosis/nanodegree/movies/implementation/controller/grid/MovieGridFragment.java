@@ -15,8 +15,8 @@ import java.util.List;
 import me.exerosis.nanodegree.movies.implementation.model.Movie;
 import me.exerosis.nanodegree.movies.implementation.model.MovieGridLoader;
 import me.exerosis.nanodegree.movies.implementation.view.grid.MovieGridView;
-import me.exerosis.nanodegree.movies.implementation.view.holder.MovieHolderListener;
-import me.exerosis.nanodegree.movies.implementation.view.holder.MovieHolderView;
+import me.exerosis.nanodegree.movies.implementation.view.movies.holder.MovieHolderListener;
+import me.exerosis.nanodegree.movies.implementation.view.movies.holder.MovieHolderView;
 
 
 public class MovieGridFragment extends Fragment implements MovieGridController {
