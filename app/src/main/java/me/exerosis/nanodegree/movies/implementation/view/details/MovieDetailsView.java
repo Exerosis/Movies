@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.graphics.ColorUtils;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
@@ -16,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewPropertyAnimator;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -42,6 +44,9 @@ public class MovieDetailsView implements MovieDetails {
         activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
+        int color = binding.movieDetailsQuickLookBar.getCardBackgroundColor().getDefaultColor();
+        activity.getWindow().setStatusBarColor(ColorUtils.setAlphaComponent(color, 0));
+
         activity.setSupportActionBar(binding.movieDetailsToolbar);
         activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -57,22 +62,27 @@ public class MovieDetailsView implements MovieDetails {
                 float newPos = spaceHeight - (scrollY + FADE_BOUND);
                 float oldPos = spaceHeight - (oldScrollY + FADE_BOUND);
 
-                if (oldPos > 0 && newPos <= 0)
-                    binding.movieDetailsAppBar.animate().alpha(1f).setDuration(500).setUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                if (oldPos > 0 && newPos <= 0) {
+                    ValueAnimator animator = ValueAnimator.ofFloat(binding.movieDetailsAppBar.getAlpha(), 1f).setDuration(500);
+                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         @Override
                         public void onAnimationUpdate(ValueAnimator animation) {
-                            Window window = activity.getWindow();
-                            window.setStatusBarColor(ColorUtilities.getStatusBarColor(window.getStatusBarColor(), 1));
+                            binding.movieDetailsAppBar.setAlpha((Float) animation.getAnimatedValue());
+                            activity.getWindow().setStatusBarColor(ColorUtils.setAlphaComponent(activity.getWindow().getStatusBarColor(), (int) ((float) animation.getAnimatedValue() * 255f)));
                         }
                     });
-                else if (oldPos <= 0 && newPos > 0)
-                    binding.movieDetailsAppBar.animate().alpha(0f).setDuration(500).setUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    animator.start();
+                } else if (oldPos <= 0 && newPos > 0) {
+                    ValueAnimator animator = ValueAnimator.ofFloat(binding.movieDetailsAppBar.getAlpha(), 0f).setDuration(500);
+                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         @Override
                         public void onAnimationUpdate(ValueAnimator animation) {
-                            Window window = activity.getWindow();
-                            window.setStatusBarColor(ColorUtilities.getStatusBarColor(window.getStatusBarColor(), (Float) animation.getAnimatedValue()));
+                            binding.movieDetailsAppBar.setAlpha((Float) animation.getAnimatedValue());
+                            activity.getWindow().setStatusBarColor(ColorUtils.setAlphaComponent(activity.getWindow().getStatusBarColor(), (int) ((float) animation.getAnimatedValue() * 255f)));
                         }
                     });
+                    animator.start();
+                }
             }
         });
 
@@ -109,7 +119,7 @@ public class MovieDetailsView implements MovieDetails {
                             return;
 
                         int backgroundColor = binding.movieDetailsQuickLookBar.getCardBackgroundColor().getDefaultColor();
-                        ValueAnimator backgroundAnimator = ValueAnimator.ofArgb(backgroundColor, swatch.getRgb()).setDuration(500);
+                        ValueAnimator backgroundAnimator = ValueAnimator.ofArgb(backgroundColor, swatch.getRgb()).setDuration(1500);
                         backgroundAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                             @Override
                             public void onAnimationUpdate(ValueAnimator animation) {
@@ -117,7 +127,9 @@ public class MovieDetailsView implements MovieDetails {
                                 binding.movieDetailsQuickLookBar.setBackgroundColor(color);
                                 binding.movieDetailsAppBar.setBackgroundColor(color);
                                 binding.movieDetailsFab.setBackgroundTintList(ColorStateList.valueOf(color));
-                                activity.getWindow().setStatusBarColor(color);
+
+                                int alpha = Color.alpha(activity.getWindow().getStatusBarColor());
+                                activity.getWindow().setStatusBarColor(ColorUtilities.getStatusBarColor(color, alpha));
                             }
                         });
                         backgroundAnimator.start();

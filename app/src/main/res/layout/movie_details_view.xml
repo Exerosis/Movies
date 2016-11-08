@@ -21,7 +21,6 @@
                 android:layout_height="match_parent"
                 android:contentDescription="@string/movie_backdrop_content_description"
                 android:elevation="0dip"
-                android:fitsSystemWindows="true"
                 android:scaleType="centerCrop" />
 
 
@@ -30,7 +29,6 @@
                 android:id="@+id/movie_details_app_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fitsSystemWindows="true"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
                 <android.support.v7.widget.Toolbar
