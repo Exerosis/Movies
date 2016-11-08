@@ -21,6 +21,7 @@
                 android:layout_height="match_parent"
                 android:contentDescription="@string/movie_backdrop_content_description"
                 android:elevation="0dip"
+                android:fitsSystemWindows="true"
                 android:scaleType="centerCrop" />
 
 
