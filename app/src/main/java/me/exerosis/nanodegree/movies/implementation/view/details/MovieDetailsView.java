@@ -1,6 +1,5 @@
 package me.exerosis.nanodegree.movies.implementation.view.details;
 
-import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.res.ColorStateList;
 import android.databinding.DataBindingUtil;
@@ -8,23 +7,18 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.AnimRes;
 import android.support.annotation.NonNull;
-import android.support.v4.animation.ValueAnimatorCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.Window;
+import android.view.WindowManager;
 
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -33,6 +27,7 @@ import me.exerosis.nanodegree.movies.databinding.MovieDetailsViewBinding;
 import me.exerosis.nanodegree.movies.implementation.model.Details;
 import me.exerosis.nanodegree.movies.implementation.view.details.holder.TrailerHolderView;
 import me.exerosis.nanodegree.movies.utilities.AnimationUtilities;
+import me.exerosis.nanodegree.movies.utilities.ColorUtilities;
 import me.exerosis.nanodegree.movies.utilities.ItemOffsetDecoration;
 
 public class MovieDetailsView implements MovieDetails {
@@ -44,11 +39,16 @@ public class MovieDetailsView implements MovieDetails {
         this.activity = activity;
         binding = DataBindingUtil.inflate(inflater, R.layout.movie_details_view, parent, false);
 
+        activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
         activity.setSupportActionBar(binding.movieDetailsToolbar);
         activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         binding.movieDetailsAppBar.setAlpha(0f);
+        binding.movieDetailsPoster.setAlpha(0f);
+        binding.movieDetailsBackdrop.setAlpha(0f);
 
         binding.movieDetailsScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
@@ -57,24 +57,27 @@ public class MovieDetailsView implements MovieDetails {
                 float newPos = spaceHeight - (scrollY + FADE_BOUND);
                 float oldPos = spaceHeight - (oldScrollY + FADE_BOUND);
 
-                if (oldPos > 0 && newPos <= 0) {
+                if (oldPos > 0 && newPos <= 0)
                     binding.movieDetailsAppBar.animate().alpha(1f).setDuration(500).setUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         @Override
                         public void onAnimationUpdate(ValueAnimator animation) {
-                            activity.getWindow().setStatusBarColor(Color.);
+                            Window window = activity.getWindow();
+                            window.setStatusBarColor(ColorUtilities.getStatusBarColor(window.getStatusBarColor(), 1));
                         }
                     });
-                    ValueAnimator.ofInt(0, 1).setDuration(500).set
-
-                }
                 else if (oldPos <= 0 && newPos > 0)
-                    binding.movieDetailsAppBar.animate().alpha(0f).setDuration(500);
+                    binding.movieDetailsAppBar.animate().alpha(0f).setDuration(500).setUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            Window window = activity.getWindow();
+                            window.setStatusBarColor(ColorUtilities.getStatusBarColor(window.getStatusBarColor(), (Float) animation.getAnimatedValue()));
+                        }
+                    });
             }
         });
 
         binding.movieDetailsTrailers.setLayoutManager(new LinearLayoutManager(parent.getContext(), LinearLayoutManager.HORIZONTAL, false));
         binding.movieDetailsTrailers.addItemDecoration(new ItemOffsetDecoration(parent.getContext(), R.dimen.movie_list_item_offset));
-
     }
 
     @Override
@@ -89,6 +92,7 @@ public class MovieDetailsView implements MovieDetails {
         binding.movieDetailsVoteAverage.setText(details.getVoteAverage());
         binding.movieDetailsPopularity.setText(details.getPopularity());
 
+
         AnimationUtilities.fadeAfterLoad(binding.movieDetailsBackdrop, details.getBackdropURL(), 500, R.string.movie_details_error);
 
         Picasso.with(getRootView().getContext()).load(details.getMovie().getPosterURL()).into(new Target() {
@@ -101,23 +105,48 @@ public class MovieDetailsView implements MovieDetails {
                     @Override
                     public void onGenerated(Palette palette) {
                         Palette.Swatch swatch = palette.getVibrantSwatch();
-                        if (swatch != null) {
-                            activity.getWindow().setStatusBarColor(swatch.getRgb());
-                            binding.movieDetailsFab.setBackgroundTintList(ColorStateList.valueOf(swatch.getRgb()));
-                            binding.movieDetailsQuickLookBar.setBackgroundColor(swatch.getRgb());
-                            binding.movieDetailsAppBar.setBackgroundColor(swatch.getRgb());
+                        if (swatch == null)
+                            return;
 
-                            binding.movieDetailsPopularity.setTextColor(swatch.getTitleTextColor());
-                            binding.movieDetailsVoteAverage.setTextColor(swatch.getTitleTextColor());
-                            binding.movieDetailsRuntime.setTextColor(swatch.getTitleTextColor());
+                        int backgroundColor = binding.movieDetailsQuickLookBar.getCardBackgroundColor().getDefaultColor();
+                        ValueAnimator backgroundAnimator = ValueAnimator.ofArgb(backgroundColor, swatch.getRgb()).setDuration(500);
+                        backgroundAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                            @Override
+                            public void onAnimationUpdate(ValueAnimator animation) {
+                                int color = (int) animation.getAnimatedValue();
+                                binding.movieDetailsQuickLookBar.setBackgroundColor(color);
+                                binding.movieDetailsAppBar.setBackgroundColor(color);
+                                binding.movieDetailsFab.setBackgroundTintList(ColorStateList.valueOf(color));
+                                activity.getWindow().setStatusBarColor(color);
+                            }
+                        });
+                        backgroundAnimator.start();
 
-                            binding.movieDetailsRuntimeTitle.setTextColor(swatch.getBodyTextColor());
-                            binding.movieDetailsPopularityTitle.setTextColor(swatch.getBodyTextColor());
-                            binding.movieDetailsVoteAverageTitle.setTextColor(swatch.getBodyTextColor());
-                        }
+                        int bodyTextColor = binding.movieDetailsRuntimeTitle.getCurrentTextColor();
+                        ValueAnimator bodyTextAnimator = ValueAnimator.ofArgb(bodyTextColor, swatch.getBodyTextColor()).setDuration(500);
+                        bodyTextAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                            @Override
+                            public void onAnimationUpdate(ValueAnimator animation) {
+                                int color = (int) animation.getAnimatedValue();
+                                binding.movieDetailsPopularity.setTextColor(color);
+                                binding.movieDetailsVoteAverage.setTextColor(color);
+                                binding.movieDetailsRuntime.setTextColor(color);
+                            }
+                        });
+                        bodyTextAnimator.start();
 
-                        binding.movieDetailsLayout.setVisibility(View.VISIBLE);
-                        binding.movieDetailsSplashScreen.setVisibility(View.GONE);
+                        int titleTextColor = binding.movieDetailsRuntimeTitle.getCurrentTextColor();
+                        ValueAnimator titleTextAnimator = ValueAnimator.ofArgb(titleTextColor, swatch.getTitleTextColor()).setDuration(500);
+                        titleTextAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                            @Override
+                            public void onAnimationUpdate(ValueAnimator animation) {
+                                int color = (int) animation.getAnimatedValue();
+                                binding.movieDetailsRuntimeTitle.setTextColor(color);
+                                binding.movieDetailsPopularityTitle.setTextColor(color);
+                                binding.movieDetailsVoteAverageTitle.setTextColor(color);
+                            }
+                        });
+                        titleTextAnimator.start();
                     }
                 });
             }
@@ -130,6 +159,9 @@ public class MovieDetailsView implements MovieDetails {
             public void onPrepareLoad(Drawable placeHolderDrawable) {
             }
         });
+
+        binding.movieDetailsLayout.setVisibility(View.VISIBLE);
+        binding.movieDetailsSplashScreen.setVisibility(View.GONE);
     }
 
     @Override
