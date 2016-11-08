@@ -5,7 +5,7 @@ import android.support.v4.app.LoaderManager;
 
 import java.util.List;
 
-import me.exerosis.nanodegree.movies.implementation.model.Movie;
+import me.exerosis.nanodegree.movies.implementation.model.data.Movie;
 import me.exerosis.nanodegree.movies.implementation.view.grid.MovieGridListener;
 import me.exerosis.nanodegree.movies.implementation.view.movies.holder.MovieHolderListener;
 import me.exerosis.nanodegree.movies.mvc.Listenable;

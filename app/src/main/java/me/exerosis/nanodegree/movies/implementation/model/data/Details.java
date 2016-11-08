@@ -1,21 +1,12 @@
-package me.exerosis.nanodegree.movies.implementation.model;
+package me.exerosis.nanodegree.movies.implementation.model.data;
 
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Details implements Parcelable {
-    public static final Creator<Details> CREATOR = new Creator<Details>() {
-        @Override
-        public Details createFromParcel(Parcel source) {
-            return new Details(source);
-        }
+import java.util.List;
 
-        @Override
-        public Details[] newArray(int size) {
-            return new Details[size];
-        }
-    };
+public class Details implements Parcelable {
     private final Movie movie;
     private final String tagline;
     private final String description;
@@ -24,10 +15,12 @@ public class Details implements Parcelable {
     private final String backdropURL;
     private final String popularity;
     private final String runtime;
+    private List<String> trailerIDs;
     private final String voteAverage;
 
-    public Details(Movie movie, String voteAverage, String tagline, String popularity, String runtime, String description, String genres, String date, String backdropURL) {
+    public Details(Movie movie, List<String> trailerIDs, String voteAverage, String tagline, String popularity, String runtime, String description, String genres, String date, String backdropURL) {
         this.movie = movie;
+        this.trailerIDs = trailerIDs;
         this.voteAverage = voteAverage;
         this.tagline = tagline;
         this.popularity = popularity;
@@ -38,16 +31,9 @@ public class Details implements Parcelable {
         this.backdropURL = backdropURL;
     }
 
-    protected Details(Parcel in) {
-        this.movie = in.readParcelable(Movie.class.getClassLoader());
-        this.tagline = in.readString();
-        this.description = in.readString();
-        this.genres = in.readString();
-        this.date = in.readString();
-        this.backdropURL = in.readString();
-        this.popularity = in.readString();
-        this.runtime = in.readString();
-        this.voteAverage = in.readString();
+
+    public List<String> getTrailerIDs() {
+        return trailerIDs;
     }
 
     public String getVoteAverage() {
@@ -101,6 +87,32 @@ public class Details implements Parcelable {
         dest.writeString(this.backdropURL);
         dest.writeString(this.popularity);
         dest.writeString(this.runtime);
+        dest.writeStringList(this.trailerIDs);
         dest.writeString(this.voteAverage);
     }
+
+    protected Details(Parcel in) {
+        this.movie = in.readParcelable(Movie.class.getClassLoader());
+        this.tagline = in.readString();
+        this.description = in.readString();
+        this.genres = in.readString();
+        this.date = in.readString();
+        this.backdropURL = in.readString();
+        this.popularity = in.readString();
+        this.runtime = in.readString();
+        this.trailerIDs = in.createStringArrayList();
+        this.voteAverage = in.readString();
+    }
+
+    public static final Creator<Details> CREATOR = new Creator<Details>() {
+        @Override
+        public Details createFromParcel(Parcel source) {
+            return new Details(source);
+        }
+
+        @Override
+        public Details[] newArray(int size) {
+            return new Details[size];
+        }
+    };
 }

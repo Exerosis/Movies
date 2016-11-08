@@ -8,8 +8,8 @@ import android.widget.Toast;
 import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.implementation.controller.details.container.MovieDetailsContainerActivity;
 import me.exerosis.nanodegree.movies.implementation.controller.movies.MoviesFragment;
-import me.exerosis.nanodegree.movies.implementation.model.JsonUtilities;
-import me.exerosis.nanodegree.movies.implementation.model.Movie;
+import me.exerosis.nanodegree.movies.utilities.JsonUtilities;
+import me.exerosis.nanodegree.movies.implementation.model.data.Movie;
 import me.exerosis.nanodegree.movies.implementation.view.movies.container.MoviesContainerView;
 
 public class MoviesContainerActivity extends AppCompatActivity implements MoviesContainerController {

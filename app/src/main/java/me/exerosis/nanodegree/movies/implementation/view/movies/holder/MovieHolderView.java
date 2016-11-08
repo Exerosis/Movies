@@ -13,7 +13,7 @@ import com.squareup.picasso.Picasso;
 
 import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.databinding.MovieHolderViewBinding;
-import me.exerosis.nanodegree.movies.implementation.model.Movie;
+import me.exerosis.nanodegree.movies.implementation.model.data.Movie;
 
 
 public class MovieHolderView extends RecyclerView.ViewHolder implements MovieHolder {

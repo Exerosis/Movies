@@ -13,18 +13,18 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.exerosis.nanodegree.movies.implementation.model.Details;
-import me.exerosis.nanodegree.movies.implementation.model.Movie;
-import me.exerosis.nanodegree.movies.implementation.model.MovieDetailsLoader;
+import me.exerosis.nanodegree.movies.implementation.model.data.Details;
+import me.exerosis.nanodegree.movies.implementation.model.data.Movie;
+import me.exerosis.nanodegree.movies.implementation.model.loader.MovieDetailsLoader;
 import me.exerosis.nanodegree.movies.implementation.view.details.MovieDetails;
 import me.exerosis.nanodegree.movies.implementation.view.details.MovieDetailsView;
-import me.exerosis.nanodegree.movies.implementation.view.details.holder.TrailerHolderView;
+import me.exerosis.nanodegree.movies.implementation.view.trailers.holder.TrailerHolderView;
 
 public class MovieDetailsFragment extends Fragment implements MovieDetailsController {
     public static final String ARG_MOVIE = "MOVIE";
     public static final int LOADER_ID = 0;
     private MovieDetails view;
-    private final List<String> trailers = new ArrayList<>();
+    private List<String> trailers = new ArrayList<>();
 
     public static MovieDetailsFragment newInstance(Movie movie) {
         Bundle args = new Bundle();
@@ -62,6 +62,7 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContro
                 return trailers.size();
             }
         });
+
         return view.getRootView();
     }
 
@@ -72,12 +73,14 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContro
 
     @Override
     public void onLoadFinished(Loader<Details> loader, final Details data) {
-        if (data != null && view != null)
-            view.setDetails(data);
+        if (data == null || view == null)
+            return;
+        trailers = data.getTrailerIDs();
+        view.getAdapter().notifyDataSetChanged();
+        view.setDetails(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Details> loader) {
-
     }
 }

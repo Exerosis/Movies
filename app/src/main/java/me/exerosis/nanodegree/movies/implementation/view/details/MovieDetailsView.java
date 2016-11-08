@@ -17,8 +17,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewPropertyAnimator;
-import android.view.Window;
 import android.view.WindowManager;
 
 import com.squareup.picasso.Picasso;
@@ -26,8 +24,8 @@ import com.squareup.picasso.Target;
 
 import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.databinding.MovieDetailsViewBinding;
-import me.exerosis.nanodegree.movies.implementation.model.Details;
-import me.exerosis.nanodegree.movies.implementation.view.details.holder.TrailerHolderView;
+import me.exerosis.nanodegree.movies.implementation.model.data.Details;
+import me.exerosis.nanodegree.movies.implementation.view.trailers.holder.TrailerHolderView;
 import me.exerosis.nanodegree.movies.utilities.AnimationUtilities;
 import me.exerosis.nanodegree.movies.utilities.ColorUtilities;
 import me.exerosis.nanodegree.movies.utilities.ItemOffsetDecoration;
@@ -67,7 +65,7 @@ public class MovieDetailsView implements MovieDetails {
                     animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         @Override
                         public void onAnimationUpdate(ValueAnimator animation) {
-                            binding.movieDetailsAppBar.setAlpha((Float) animation.getAnimatedValue());
+                            binding.movieDetailsAppBar.setAlpha((float) animation.getAnimatedValue());
                             activity.getWindow().setStatusBarColor(ColorUtils.setAlphaComponent(activity.getWindow().getStatusBarColor(), (int) ((float) animation.getAnimatedValue() * 255f)));
                         }
                     });
@@ -77,7 +75,7 @@ public class MovieDetailsView implements MovieDetails {
                     animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         @Override
                         public void onAnimationUpdate(ValueAnimator animation) {
-                            binding.movieDetailsAppBar.setAlpha((Float) animation.getAnimatedValue());
+                            binding.movieDetailsAppBar.setAlpha((float) animation.getAnimatedValue());
                             activity.getWindow().setStatusBarColor(ColorUtils.setAlphaComponent(activity.getWindow().getStatusBarColor(), (int) ((float) animation.getAnimatedValue() * 255f)));
                         }
                     });

@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.exerosis.nanodegree.movies.implementation.model.Movie;
-import me.exerosis.nanodegree.movies.implementation.model.MovieGridLoader;
+import me.exerosis.nanodegree.movies.implementation.model.data.Movie;
+import me.exerosis.nanodegree.movies.implementation.model.loader.MovieGridLoader;
 import me.exerosis.nanodegree.movies.implementation.view.grid.MovieGridView;
 import me.exerosis.nanodegree.movies.implementation.view.movies.holder.MovieHolderListener;
 import me.exerosis.nanodegree.movies.implementation.view.movies.holder.MovieHolderView;
