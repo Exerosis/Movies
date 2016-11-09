@@ -4,8 +4,6 @@ package me.exerosis.nanodegree.movies.implementation.model.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.List;
-
 public class Details implements Parcelable {
     private final Movie movie;
     private final String tagline;
@@ -15,12 +13,10 @@ public class Details implements Parcelable {
     private final String backdropURL;
     private final String popularity;
     private final String runtime;
-    private List<String> trailerIDs;
     private final String voteAverage;
 
-    public Details(Movie movie, List<String> trailerIDs, String voteAverage, String tagline, String popularity, String runtime, String description, String genres, String date, String backdropURL) {
+    public Details(Movie movie, String voteAverage, String tagline, String popularity, String runtime, String description, String genres, String date, String backdropURL) {
         this.movie = movie;
-        this.trailerIDs = trailerIDs;
         this.voteAverage = voteAverage;
         this.tagline = tagline;
         this.popularity = popularity;
@@ -31,10 +27,6 @@ public class Details implements Parcelable {
         this.backdropURL = backdropURL;
     }
 
-
-    public List<String> getTrailerIDs() {
-        return trailerIDs;
-    }
 
     public String getVoteAverage() {
         return voteAverage;
@@ -87,7 +79,6 @@ public class Details implements Parcelable {
         dest.writeString(this.backdropURL);
         dest.writeString(this.popularity);
         dest.writeString(this.runtime);
-        dest.writeStringList(this.trailerIDs);
         dest.writeString(this.voteAverage);
     }
 
@@ -100,7 +91,6 @@ public class Details implements Parcelable {
         this.backdropURL = in.readString();
         this.popularity = in.readString();
         this.runtime = in.readString();
-        this.trailerIDs = in.createStringArrayList();
         this.voteAverage = in.readString();
     }
 

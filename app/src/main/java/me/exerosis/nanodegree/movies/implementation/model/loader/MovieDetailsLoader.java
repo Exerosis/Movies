@@ -42,7 +42,7 @@ public class MovieDetailsLoader extends AsyncTaskLoader<Details> {
 
         try {
             URL detailsURL = new URL("https://api.themoviedb.org/3/movie/" + movie.getID() + "?api_key=" + Config.KEY_THE_MOVIE_DB);
-            URL trailersURL = new URL("https://api.themoviedb.org/3/movie/" + movie.getID() + "/videos?api_key=" + Config.KEY_THE_MOVIE_DB);
+
             JsonObject results = JsonUtilities.fromURL(detailsURL);
 
             String tagline = JsonUtilities.getStringAt(results, "tagline");
@@ -64,11 +64,7 @@ public class MovieDetailsLoader extends AsyncTaskLoader<Details> {
                 genres += ", " + JsonUtilities.getStringAt(genreElement, "name");
             genres = genres.substring(1, genres.length());
 
-            List<String> trailerIDs = new ArrayList<>();
-            for (JsonElement trailerElement : JsonUtilities.getArrayAt(JsonUtilities.fromURL(trailersURL), "results"))
-                trailerIDs.add(JsonUtilities.getStringAt(trailerElement, "id"));
-
-            return new Details(movie, trailerIDs, voteAverage, tagline, popularity, runtime, description, genres, date, backdropURL);
+            return new Details(movie, voteAverage, tagline, popularity, runtime, description, genres, date, backdropURL);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
