@@ -3,7 +3,8 @@
 
     <FrameLayout
         android:layout_width="100dp"
-        android:layout_height="150dp">
+        android:layout_height="150dp"
+        android:background="@color/cardview_dark_background">
 
         <com.google.android.youtube.player.YouTubeThumbnailView
             android:id="@+id/trailer_holder_thumbnail"

@@ -18,7 +18,7 @@ import me.exerosis.nanodegree.movies.implementation.view.reviews.holder.ReviewHo
 
 public class MovieReviewsFragment extends Fragment implements MovieReviewsController {
     private static final String ARG_MOVIE = "MOVIE";
-    private static final int LOADER_ID = 0;
+    private static final int LOADER_ID = 1;
     private MovieReviewsView view;
     private List<Review> reviews = new ArrayList<>();
 
@@ -69,6 +69,7 @@ public class MovieReviewsFragment extends Fragment implements MovieReviewsContro
     public void onLoadFinished(Loader<List<Review>> loader, List<Review> data) {
         if (data == null || data.isEmpty())
             return;
+        System.out.println("Reviews: " + data.size());
         reviews = data;
         if (view != null)
             view.getAdapter().notifyDataSetChanged();

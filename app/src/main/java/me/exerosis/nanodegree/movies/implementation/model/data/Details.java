@@ -5,6 +5,17 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Details implements Parcelable {
+    public static final Creator<Details> CREATOR = new Creator<Details>() {
+        @Override
+        public Details createFromParcel(Parcel source) {
+            return new Details(source);
+        }
+
+        @Override
+        public Details[] newArray(int size) {
+            return new Details[size];
+        }
+    };
     private final Movie movie;
     private final String tagline;
     private final String description;
@@ -14,6 +25,7 @@ public class Details implements Parcelable {
     private final String popularity;
     private final String runtime;
     private final String voteAverage;
+
 
     public Details(Movie movie, String voteAverage, String tagline, String popularity, String runtime, String description, String genres, String date, String backdropURL) {
         this.movie = movie;
@@ -27,6 +39,17 @@ public class Details implements Parcelable {
         this.backdropURL = backdropURL;
     }
 
+    protected Details(Parcel in) {
+        this.movie = in.readParcelable(Movie.class.getClassLoader());
+        this.tagline = in.readString();
+        this.description = in.readString();
+        this.genres = in.readString();
+        this.date = in.readString();
+        this.backdropURL = in.readString();
+        this.popularity = in.readString();
+        this.runtime = in.readString();
+        this.voteAverage = in.readString();
+    }
 
     public String getVoteAverage() {
         return voteAverage;
@@ -81,28 +104,4 @@ public class Details implements Parcelable {
         dest.writeString(this.runtime);
         dest.writeString(this.voteAverage);
     }
-
-    protected Details(Parcel in) {
-        this.movie = in.readParcelable(Movie.class.getClassLoader());
-        this.tagline = in.readString();
-        this.description = in.readString();
-        this.genres = in.readString();
-        this.date = in.readString();
-        this.backdropURL = in.readString();
-        this.popularity = in.readString();
-        this.runtime = in.readString();
-        this.voteAverage = in.readString();
-    }
-
-    public static final Creator<Details> CREATOR = new Creator<Details>() {
-        @Override
-        public Details createFromParcel(Parcel source) {
-            return new Details(source);
-        }
-
-        @Override
-        public Details[] newArray(int size) {
-            return new Details[size];
-        }
-    };
 }
