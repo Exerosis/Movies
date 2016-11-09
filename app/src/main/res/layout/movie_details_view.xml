@@ -10,8 +10,7 @@
         <android.support.design.widget.CoordinatorLayout
             android:id="@+id/movie_details_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="invisible">
+            android:layout_height="match_parent">
 
 
             <!-- Layer 0 -->
@@ -62,6 +61,24 @@
                     <android.support.constraint.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="900dp">
+
+                        <FrameLayout
+                            android:id="@+id/movie_details_reviews"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_marginTop="24dp"
+                            app:layout_constraintLeft_toLeftOf="@+id/movie_details_content_card"
+                            app:layout_constraintRight_toLeftOf="@+id/fab_guide"
+                            app:layout_constraintTop_toBottomOf="@+id/movie_details_description" />
+
+                        <FrameLayout
+                            android:id="@+id/movie_details_trailers"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_marginTop="24dp"
+                            app:layout_constraintLeft_toLeftOf="@+id/movie_details_content_card"
+                            app:layout_constraintRight_toLeftOf="@+id/fab_guide"
+                            app:layout_constraintTop_toBottomOf="@+id/movie_details_reviews" />
 
                         <TextView
                             android:id="@+id/movie_details_runtime_title"
@@ -150,7 +167,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             app:layout_constraintGuide_end="128dp"
-                            tools:layout_editor_absoluteX="-127dp"
+                            tools:layout_editor_absoluteX="0dp"
                             tools:layout_editor_absoluteY="0dp" />
 
                         <TextView
@@ -232,7 +249,7 @@
                             android:orientation="horizontal"
                             app:layout_constraintGuide_begin="32dp"
                             tools:layout_editor_absoluteX="0dp"
-                            tools:layout_editor_absoluteY="32dp" />
+                            tools:layout_editor_absoluteY="0dp" />
 
                         <android.support.constraint.Guideline
                             android:id="@+id/poster_start_guide"
@@ -240,7 +257,7 @@
                             android:layout_height="0dp"
                             android:orientation="vertical"
                             app:layout_constraintGuide_begin="17dp"
-                            tools:layout_editor_absoluteX="17dp"
+                            tools:layout_editor_absoluteX="0dp"
                             tools:layout_editor_absoluteY="0dp" />
 
                         <android.support.constraint.Guideline
@@ -249,7 +266,7 @@
                             android:layout_height="0dp"
                             android:orientation="vertical"
                             app:layout_constraintGuide_begin="121dp"
-                            tools:layout_editor_absoluteX="121dp"
+                            tools:layout_editor_absoluteX="0dp"
                             tools:layout_editor_absoluteY="0dp" />
 
                         <android.support.constraint.Guideline
@@ -259,7 +276,7 @@
                             android:orientation="horizontal"
                             app:layout_constraintGuide_begin="154dp"
                             tools:layout_editor_absoluteX="0dp"
-                            tools:layout_editor_absoluteY="154dp" />
+                            tools:layout_editor_absoluteY="0dp" />
 
                         <android.support.constraint.Guideline
                             android:id="@+id/quick_look_bottom_guide"
@@ -268,7 +285,7 @@
                             android:orientation="horizontal"
                             app:layout_constraintGuide_begin="239dp"
                             tools:layout_editor_absoluteX="0dp"
-                            tools:layout_editor_absoluteY="239dp" />
+                            tools:layout_editor_absoluteY="0dp" />
 
                         <android.support.constraint.Guideline
                             android:id="@+id/quick_look_top_guide"
@@ -277,7 +294,7 @@
                             android:orientation="horizontal"
                             app:layout_constraintGuide_begin="188dp"
                             tools:layout_editor_absoluteX="0dp"
-                            tools:layout_editor_absoluteY="188dp" />
+                            tools:layout_editor_absoluteY="0dp" />
 
                         <android.support.constraint.Guideline
                             android:id="@+id/fab_guide"
@@ -285,7 +302,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             app:layout_constraintGuide_end="11dp"
-                            tools:layout_editor_absoluteX="-10dp"
+                            tools:layout_editor_absoluteX="0dp"
                             tools:layout_editor_absoluteY="0dp" />
 
                         <ImageView
@@ -321,7 +338,7 @@
                             android:orientation="horizontal"
                             app:layout_constraintGuide_begin="67dp"
                             tools:layout_editor_absoluteX="0dp"
-                            tools:layout_editor_absoluteY="67dp" />
+                            tools:layout_editor_absoluteY="0dp" />
 
                         <android.support.constraint.Guideline
                             android:id="@+id/text_start_guide"
@@ -329,7 +346,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             app:layout_constraintGuide_begin="137dp"
-                            tools:layout_editor_absoluteX="137dp"
+                            tools:layout_editor_absoluteX="0dp"
                             tools:layout_editor_absoluteY="0dp" />
 
                         <android.support.v7.widget.CardView
@@ -347,16 +364,6 @@
 
                     </android.support.constraint.ConstraintLayout>
 
-                    <FrameLayout
-                        android:id="@+id/movie_details_reviews"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                    <FrameLayout
-                        android:id="@+id/movie_details_trailers"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
                 </LinearLayout>
 
 
@@ -367,16 +374,7 @@
 
         </android.support.design.widget.CoordinatorLayout>
 
-        <RelativeLayout
-            android:id="@+id/movie_details_splash_screen"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true" />
-        </RelativeLayout>
     </FrameLayout>
 
 
