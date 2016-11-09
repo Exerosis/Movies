@@ -11,26 +11,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.exerosis.nanodegree.movies.implementation.Config;
-import me.exerosis.nanodegree.movies.implementation.model.data.Movie;
 import me.exerosis.nanodegree.movies.implementation.model.data.Review;
 import me.exerosis.nanodegree.movies.utilities.JsonUtilities;
 
 public class MovieReviewsLoader extends AsyncTaskLoader<List<Review>> {
-    private Movie movie;
+    private int movie;
     private List<Review> reviews = new ArrayList<>();
 
-    public MovieReviewsLoader(Context context, Movie movie) {
+    public MovieReviewsLoader(Context context, int movie) {
         super(context);
         this.movie = movie;
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public List<Review> loadInBackground() {
         if (!JsonUtilities.isOnline(getContext()))
             return null;
 
         try {
-            URL url = new URL("https://api.themoviedb.org/3/movie/" + movie.getID() + "/reviews?api_key=" + Config.KEY_THE_MOVIE_DB);
+            URL url = new URL("https://api.themoviedb.org/3/movie/" + movie + "/reviews?api_key=" + Config.KEY_THE_MOVIE_DB);
             List<Review> trailers = new ArrayList<>();
             for (JsonElement reviewElements : JsonUtilities.getArrayAt(JsonUtilities.fromURL(url), "results")) {
                 String author = JsonUtilities.getStringAt(reviewElements, "author");

@@ -18,16 +18,16 @@ import me.exerosis.nanodegree.movies.implementation.view.trailers.MovieTrailers;
 import me.exerosis.nanodegree.movies.implementation.view.trailers.MovieTrailersView;
 import me.exerosis.nanodegree.movies.implementation.view.trailers.holder.TrailerHolderView;
 
-public class MovieTrailerFragment extends Fragment implements MovieTrailerController {
-    private static final String ARG_MOVIE = "MOVIE";
+public class MovieTrailersFragment extends Fragment implements MovieTrailersController {
+    private static final String ARG_MOVIE_ID = "MOVIE_ID";
     private static final int LOADER_ID = 0;
     private MovieTrailers view;
     private List<Trailer> trailers = new ArrayList<>();
 
-    public static MovieTrailerFragment newInstance(Movie movie) {
+    public static MovieTrailersFragment newInstance(int movie) {
         Bundle args = new Bundle();
-        args.putParcelable(ARG_MOVIE, movie);
-        MovieTrailerFragment fragment = new MovieTrailerFragment();
+        args.getInt(ARG_MOVIE_ID, movie);
+        MovieTrailersFragment fragment = new MovieTrailersFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -64,7 +64,7 @@ public class MovieTrailerFragment extends Fragment implements MovieTrailerContro
 
     @Override
     public Loader<List<Trailer>> onCreateLoader(int id, Bundle args) {
-        return new MovieTrailersLoader(getContext(), (Movie) args.getParcelable(ARG_MOVIE));
+        return new MovieTrailersLoader(getContext(), args.getInt(ARG_MOVIE_ID));
     }
 
     @Override

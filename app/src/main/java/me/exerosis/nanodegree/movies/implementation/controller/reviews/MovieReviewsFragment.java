@@ -11,11 +11,10 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.exerosis.nanodegree.movies.implementation.model.data.Movie;
-import me.exerosis.nanodegree.movies.implementation.model.loader.MovieReviewsLoader;
 import me.exerosis.nanodegree.movies.implementation.model.data.Review;
-import me.exerosis.nanodegree.movies.implementation.view.reviews.holder.ReviewHolderView;
+import me.exerosis.nanodegree.movies.implementation.model.loader.MovieReviewsLoader;
 import me.exerosis.nanodegree.movies.implementation.view.reviews.MovieReviewsView;
+import me.exerosis.nanodegree.movies.implementation.view.reviews.holder.ReviewHolderView;
 
 public class MovieReviewsFragment extends Fragment implements MovieReviewsController {
     private static final String ARG_MOVIE = "MOVIE";
@@ -23,9 +22,9 @@ public class MovieReviewsFragment extends Fragment implements MovieReviewsContro
     private MovieReviewsView view;
     private List<Review> reviews = new ArrayList<>();
 
-    public static MovieReviewsFragment newInstance(Movie movie) {
+    public static MovieReviewsFragment newInstance(int movie) {
         Bundle args = new Bundle();
-        args.putParcelable(ARG_MOVIE, movie);
+        args.getInt(ARG_MOVIE, movie);
         MovieReviewsFragment fragment = new MovieReviewsFragment();
         fragment.setArguments(args);
         return fragment;
@@ -63,7 +62,7 @@ public class MovieReviewsFragment extends Fragment implements MovieReviewsContro
 
     @Override
     public Loader<List<Review>> onCreateLoader(int id, Bundle args) {
-        return new MovieReviewsLoader(getContext(), (Movie) args.getParcelable(ARG_MOVIE));
+        return new MovieReviewsLoader(getContext(), args.getInt(ARG_MOVIE));
     }
 
     @Override

@@ -5,21 +5,18 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.content.AsyncTaskLoader;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import me.exerosis.nanodegree.movies.implementation.Config;
 import me.exerosis.nanodegree.movies.implementation.model.data.Details;
-import me.exerosis.nanodegree.movies.utilities.JsonUtilities;
 import me.exerosis.nanodegree.movies.implementation.model.data.Movie;
+import me.exerosis.nanodegree.movies.utilities.JsonUtilities;
 
 @SuppressLint("SimpleDateFormat")
 public class MovieDetailsLoader extends AsyncTaskLoader<Details> {
@@ -30,11 +27,12 @@ public class MovieDetailsLoader extends AsyncTaskLoader<Details> {
     private final Movie movie;
     private Details details;
 
-    public MovieDetailsLoader(Context context, @NonNull Movie movie) {
+    public MovieDetailsLoader(@NonNull Context context, Movie movie) {
         super(context);
         this.movie = movie;
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public Details loadInBackground() {
         if (!JsonUtilities.isOnline(getContext()))

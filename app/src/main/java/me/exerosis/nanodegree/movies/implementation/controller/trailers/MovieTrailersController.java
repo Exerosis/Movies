@@ -6,5 +6,5 @@ import java.util.List;
 
 import me.exerosis.nanodegree.movies.implementation.model.data.Trailer;
 
-public interface MovieTrailerController extends LoaderManager.LoaderCallbacks<List<Trailer>> {
+public interface MovieTrailersController extends LoaderManager.LoaderCallbacks<List<Trailer>> {
 }

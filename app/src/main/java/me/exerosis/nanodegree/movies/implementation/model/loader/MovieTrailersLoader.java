@@ -12,26 +12,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.exerosis.nanodegree.movies.implementation.Config;
-import me.exerosis.nanodegree.movies.implementation.model.data.Movie;
 import me.exerosis.nanodegree.movies.implementation.model.data.Trailer;
 import me.exerosis.nanodegree.movies.utilities.JsonUtilities;
 
 public class MovieTrailersLoader extends AsyncTaskLoader<List<Trailer>> {
-    private final Movie movie;
+    private final int movie;
     private List<Trailer> trailers = new ArrayList<>();
 
-    public MovieTrailersLoader(@NonNull Context context, @NonNull Movie movie) {
+    public MovieTrailersLoader(@NonNull Context context, int movie) {
         super(context);
         this.movie = movie;
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public List<Trailer> loadInBackground() {
         if (!JsonUtilities.isOnline(getContext()))
             return null;
 
         try {
-            URL url = new URL("https://api.themoviedb.org/3/movie/" + movie.getID() + "/videos?api_key=" + Config.KEY_THE_MOVIE_DB);
+            URL url = new URL("https://api.themoviedb.org/3/movie/" + movie + "/videos?api_key=" + Config.KEY_THE_MOVIE_DB);
             List<Trailer> trailers = new ArrayList<>();
             for (JsonElement trailerElement : JsonUtilities.getArrayAt(JsonUtilities.fromURL(url), "results"))
                 trailers.add(new Trailer(JsonUtilities.getStringAt(trailerElement, "id")));
