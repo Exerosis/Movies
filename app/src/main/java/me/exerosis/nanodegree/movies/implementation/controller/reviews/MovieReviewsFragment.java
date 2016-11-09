@@ -17,14 +17,14 @@ import me.exerosis.nanodegree.movies.implementation.view.reviews.MovieReviewsVie
 import me.exerosis.nanodegree.movies.implementation.view.reviews.holder.ReviewHolderView;
 
 public class MovieReviewsFragment extends Fragment implements MovieReviewsController {
-    private static final String ARG_MOVIE = "MOVIE";
+    private static final String ARG_MOVIE_ID = "MOVIE_ID";
     private static final int LOADER_ID = 1;
     private MovieReviewsView view;
     private List<Review> reviews = new ArrayList<>();
 
     public static MovieReviewsFragment newInstance(int movie) {
         Bundle args = new Bundle();
-        args.getInt(ARG_MOVIE, movie);
+        args.putInt(ARG_MOVIE_ID, movie);
         MovieReviewsFragment fragment = new MovieReviewsFragment();
         fragment.setArguments(args);
         return fragment;
@@ -57,12 +57,15 @@ public class MovieReviewsFragment extends Fragment implements MovieReviewsContro
             }
         });
 
+        if (!getLoaderManager().hasRunningLoaders())
+            getLoaderManager().initLoader(LOADER_ID, getArguments(), this).forceLoad();
+
         return view.getRootView();
     }
 
     @Override
     public Loader<List<Review>> onCreateLoader(int id, Bundle args) {
-        return new MovieReviewsLoader(getContext(), args.getInt(ARG_MOVIE));
+        return new MovieReviewsLoader(getContext(), args.getInt(ARG_MOVIE_ID));
     }
 
     @Override

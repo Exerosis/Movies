@@ -18,7 +18,8 @@ public class ReviewHolderView extends RecyclerView.ViewHolder implements ReviewH
     }
 
     @Override
-    public void setReview(Review comment) {
-
+    public void setReview(Review review) {
+        binding.reviewAuthor.setText(review.getAuthor());
+        binding.reviewContent.setText(review.getContent());
     }
 }

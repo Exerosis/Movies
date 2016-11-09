@@ -1,7 +1,6 @@
 package me.exerosis.nanodegree.movies.implementation.controller.details;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.Loader;
@@ -43,6 +42,13 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContro
         if (!getLoaderManager().hasRunningLoaders())
             getLoaderManager().initLoader(LOADER_ID, getArguments(), this).forceLoad();
 
+        int id = ((Movie) getArguments().getParcelable(ARG_MOVIE)).getID();
+        getFragmentManager().beginTransaction().replace(view.getReviewsContainer(),
+                MovieReviewsFragment.newInstance(id)).disallowAddToBackStack().commit();
+
+        getFragmentManager().beginTransaction().replace(view.getTrailersContainer(),
+                MovieTrailersFragment.newInstance(id)).disallowAddToBackStack().commit();
+
         return view.getRootView();
     }
 
@@ -56,17 +62,6 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContro
         if (data == null || view == null)
             return;
         view.setDetails(data);
-
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                getFragmentManager().beginTransaction().replace(view.getReviewsContainer(),
-                        MovieReviewsFragment.newInstance(data.getMovie().getID())).disallowAddToBackStack().commit();
-
-                getFragmentManager().beginTransaction().replace(view.getTrailersContainer(),
-                        MovieTrailersFragment.newInstance(data.getMovie().getID())).disallowAddToBackStack().commit();
-            }
-        });
     }
 
     @Override

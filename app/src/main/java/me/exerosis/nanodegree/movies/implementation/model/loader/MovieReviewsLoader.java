@@ -31,14 +31,14 @@ public class MovieReviewsLoader extends AsyncTaskLoader<List<Review>> {
 
         try {
             URL url = new URL("https://api.themoviedb.org/3/movie/" + movie + "/reviews?api_key=" + Config.KEY_THE_MOVIE_DB);
-            List<Review> trailers = new ArrayList<>();
+            List<Review> reviews = new ArrayList<>();
             for (JsonElement reviewElements : JsonUtilities.getArrayAt(JsonUtilities.fromURL(url), "results")) {
                 String author = JsonUtilities.getStringAt(reviewElements, "author");
                 String content = JsonUtilities.getStringAt(reviewElements, "content");
                 if (author != null && content != null)
                     reviews.add(new Review(author, content));
             }
-            return trailers;
+            return reviews;
         } catch (IOException e) {
             e.printStackTrace();
         }
