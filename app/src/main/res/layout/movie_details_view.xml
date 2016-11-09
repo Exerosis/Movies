@@ -59,14 +59,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="150dp" />
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/movie_details_trailers"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:clipToPadding="false"
-                        android:padding="@dimen/movie_list_item_offset" />
-
-s                    <android.support.constraint.ConstraintLayout
+                    <android.support.constraint.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="900dp">
 
@@ -93,7 +86,6 @@ s                    <android.support.constraint.ConstraintLayout
                             app:layout_constraintLeft_toLeftOf="@+id/movie_details_content_card"
                             app:layout_constraintRight_toLeftOf="@+id/runtime_guide"
                             app:layout_constraintTop_toBottomOf="@+id/movie_details_runtime_title" />
-
 
                         <TextView
                             android:id="@+id/movie_details_vote_average_title"
@@ -355,6 +347,20 @@ s                    <android.support.constraint.ConstraintLayout
 
                     </android.support.constraint.ConstraintLayout>
 
+                    <FrameLayout
+                        android:id="@+id/movie_details_details"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <FrameLayout
+                        android:id="@+id/movie_details_reviews"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <FrameLayout
+                        android:id="@+id/movie_details_trailers"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
 

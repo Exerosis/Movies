@@ -7,13 +7,10 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,19 +22,17 @@ import com.squareup.picasso.Target;
 import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.databinding.MovieDetailsViewBinding;
 import me.exerosis.nanodegree.movies.implementation.model.data.Details;
-import me.exerosis.nanodegree.movies.implementation.view.trailers.holder.TrailerHolderView;
 import me.exerosis.nanodegree.movies.utilities.AnimationUtilities;
 import me.exerosis.nanodegree.movies.utilities.ColorUtilities;
-import me.exerosis.nanodegree.movies.utilities.ItemOffsetDecoration;
 
 public class MovieDetailsView implements MovieDetails {
     private final static float FADE_BOUND = 50;
     private final MovieDetailsViewBinding binding;
     private final AppCompatActivity activity;
 
-    public MovieDetailsView(final AppCompatActivity activity, LayoutInflater inflater, final ViewGroup parent) {
+    public MovieDetailsView(final AppCompatActivity activity, LayoutInflater inflater, final ViewGroup container) {
         this.activity = activity;
-        binding = DataBindingUtil.inflate(inflater, R.layout.movie_details_view, parent, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.movie_details_view, container, false);
 
         activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -83,9 +78,6 @@ public class MovieDetailsView implements MovieDetails {
                 }
             }
         });
-
-        binding.movieDetailsTrailers.setLayoutManager(new LinearLayoutManager(parent.getContext(), LinearLayoutManager.HORIZONTAL, false));
-        binding.movieDetailsTrailers.addItemDecoration(new ItemOffsetDecoration(parent.getContext(), R.dimen.movie_list_item_offset));
     }
 
     @Override
@@ -175,6 +167,16 @@ public class MovieDetailsView implements MovieDetails {
     }
 
     @Override
+    public int getTrailersContainer() {
+        return binding.movieDetailsTrailers.getId();
+    }
+
+    @Override
+    public int getReviewsContainer() {
+        return binding.movieDetailsReviews.getId();
+    }
+
+    @Override
     public View getRootView() {
         return binding.getRoot();
     }
@@ -184,14 +186,4 @@ public class MovieDetailsView implements MovieDetails {
         return null;
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public RecyclerView.Adapter<TrailerHolderView> getAdapter() {
-        return binding.movieDetailsTrailers.getAdapter();
-    }
-
-    @Override
-    public void setAdapter(@NonNull RecyclerView.Adapter<TrailerHolderView> adapter) {
-        binding.movieDetailsTrailers.setAdapter(adapter);
-    }
 }

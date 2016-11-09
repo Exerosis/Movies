@@ -4,21 +4,25 @@ package me.exerosis.nanodegree.movies.implementation.view.trailers;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import me.exerosis.nanodegree.movies.R;
-import me.exerosis.nanodegree.movies.databinding.MovieReviewsViewBinding;
 import me.exerosis.nanodegree.movies.databinding.MovieTrailersViewBinding;
 import me.exerosis.nanodegree.movies.implementation.view.trailers.holder.TrailerHolderView;
+import me.exerosis.nanodegree.movies.utilities.ItemOffsetDecoration;
 
 public class MovieTrailersView implements MovieTrailers {
     private final MovieTrailersViewBinding binding;
 
     public MovieTrailersView(LayoutInflater inflater, ViewGroup container) {
         binding = DataBindingUtil.inflate(inflater, R.layout.movie_trailers_view, container, false);
+
+        binding.movieTrailerRecyclerView.setLayoutManager(new LinearLayoutManager(container.getContext(), LinearLayoutManager.HORIZONTAL, false));
+        binding.movieTrailerRecyclerView.addItemDecoration(new ItemOffsetDecoration(container.getContext(), R.dimen.movie_list_item_offset));
     }
 
     @Override
