@@ -26,7 +26,9 @@ import me.exerosis.nanodegree.movies.utilities.AnimationUtilities;
 import me.exerosis.nanodegree.movies.utilities.ColorUtilities;
 
 public class MovieDetailsView implements MovieDetails {
-    private final static float FADE_BOUND = 50;
+    private final static float TOOLBAR_FADE_BOUND = 50;
+    private final static float CONTENT_CARD_FADE_BOUND = 150;
+
     private final MovieDetailsViewBinding binding;
     private final AppCompatActivity activity;
 
@@ -52,10 +54,13 @@ public class MovieDetailsView implements MovieDetails {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 float spaceHeight = binding.movieDetailsSpace.getMeasuredHeight();
-                float newPos = spaceHeight - (scrollY + FADE_BOUND);
-                float oldPos = spaceHeight - (oldScrollY + FADE_BOUND);
+                float toolbarNew = (spaceHeight - scrollY) - TOOLBAR_FADE_BOUND;
+                float toolbarOld = (spaceHeight - oldScrollY) - TOOLBAR_FADE_BOUND;
 
-                if (oldPos > 0 && newPos <= 0) {
+                float contentNew = (spaceHeight - scrollY) - CONTENT_CARD_FADE_BOUND;
+                float contentOld = (spaceHeight - oldScrollY) - CONTENT_CARD_FADE_BOUND;
+
+                if (toolbarOld > 0 && toolbarNew <= 0) {
                     ValueAnimator animator = ValueAnimator.ofFloat(binding.movieDetailsAppBar.getAlpha(), 1f).setDuration(500);
                     animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         @Override
@@ -65,7 +70,7 @@ public class MovieDetailsView implements MovieDetails {
                         }
                     });
                     animator.start();
-                } else if (oldPos <= 0 && newPos > 0) {
+                } else if (toolbarOld <= 0 && toolbarNew > 0) {
                     ValueAnimator animator = ValueAnimator.ofFloat(binding.movieDetailsAppBar.getAlpha(), 0f).setDuration(500);
                     animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         @Override
@@ -76,6 +81,11 @@ public class MovieDetailsView implements MovieDetails {
                     });
                     animator.start();
                 }
+
+                if (contentOld > 0 && contentNew <= 0)
+                    binding.movieDetailsContentCard.animate().alpha(1f).setDuration(500).start();
+                else if (contentOld <= 0 && contentNew > 0)
+                    binding.movieDetailsContentCard.animate().alpha(0.7f).setDuration(500).start();
             }
         });
     }
