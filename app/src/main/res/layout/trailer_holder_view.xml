@@ -2,14 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <FrameLayout
+        android:layout_margin="5dp"
         android:layout_width="100dp"
         android:layout_height="150dp"
-        android:background="@color/cardview_dark_background">
+        android:background="?attr/colorBackgroundFloating">
 
-        <com.google.android.youtube.player.YouTubeThumbnailView
-            android:id="@+id/trailer_holder_thumbnail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
     </FrameLayout>
 
 </layout>

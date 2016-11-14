@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.exerosis.nanodegree.movies.implementation.model.data.Trailer;
-import me.exerosis.nanodegree.movies.implementation.model.loader.MovieTrailersLoader;
 import me.exerosis.nanodegree.movies.implementation.view.trailers.MovieTrailers;
 import me.exerosis.nanodegree.movies.implementation.view.trailers.MovieTrailersView;
 import me.exerosis.nanodegree.movies.implementation.view.trailers.holder.TrailerHolderView;

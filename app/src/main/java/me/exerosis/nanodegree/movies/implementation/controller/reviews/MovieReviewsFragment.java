@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.exerosis.nanodegree.movies.implementation.model.data.Review;
-import me.exerosis.nanodegree.movies.implementation.model.loader.MovieReviewsLoader;
 import me.exerosis.nanodegree.movies.implementation.view.reviews.MovieReviewsView;
 import me.exerosis.nanodegree.movies.implementation.view.reviews.holder.ReviewHolderView;
 
