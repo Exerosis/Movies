@@ -10,8 +10,7 @@
         <android.support.design.widget.CoordinatorLayout
             android:id="@+id/movie_details_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="invisible">
+            android:layout_height="match_parent">
 
 
             <!-- Layer 0 -->
@@ -264,7 +263,7 @@
 
                         <android.support.constraint.Guideline
                             android:id="@+id/content_card_guide"
-                            android:layout_width="600dp"
+                            android:layout_width="1024dp"
                             android:layout_height="0dp"
                             android:orientation="horizontal"
                             app:layout_constraintGuide_begin="66dp"
@@ -291,7 +290,7 @@
 
                         <android.support.constraint.Guideline
                             android:id="@+id/poster_bottom_guide"
-                            android:layout_width="600dp"
+                            android:layout_width="1024dp"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             app:layout_constraintGuide_begin="394dp"
@@ -304,12 +303,12 @@
                             android:layout_height="900dp"
                             android:orientation="vertical"
                             app:layout_constraintGuide_end="30dp"
-                            tools:layout_editor_absoluteX="570dp"
+                            tools:layout_editor_absoluteX="994dp"
                             tools:layout_editor_absoluteY="0dp" />
 
                         <android.support.constraint.Guideline
                             android:id="@+id/quick_look_top_guide"
-                            android:layout_width="600dp"
+                            android:layout_width="1024dp"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             app:layout_constraintGuide_begin="245dp"
@@ -318,7 +317,7 @@
 
                         <android.support.constraint.Guideline
                             android:id="@+id/quick_look_bottom_guide"
-                            android:layout_width="600dp"
+                            android:layout_width="1024dp"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             app:layout_constraintGuide_begin="308dp"
@@ -344,16 +343,6 @@
 
         </android.support.design.widget.CoordinatorLayout>
 
-        <RelativeLayout
-            android:id="@+id/movie_details_splash_screen"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true" />
-        </RelativeLayout>
 
     </FrameLayout>
 
