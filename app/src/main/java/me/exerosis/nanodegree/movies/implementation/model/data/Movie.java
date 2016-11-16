@@ -1,20 +1,9 @@
-package me.exerosis.nanodegree.movies.implementation.model;
+package me.exerosis.nanodegree.movies.implementation.model.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Movie implements Parcelable {
-    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
-        @Override
-        public Movie createFromParcel(Parcel source) {
-            return new Movie(source);
-        }
-
-        @Override
-        public Movie[] newArray(int size) {
-            return new Movie[size];
-        }
-    };
     private String title;
     private int id;
     private String posterURL;
@@ -25,15 +14,14 @@ public class Movie implements Parcelable {
         this.posterURL = posterURL;
     }
 
-    protected Movie(Parcel in) {
-        this.title = in.readString();
-        this.id = in.readInt();
-        this.posterURL = in.readString();
-    }
-
     @Override
     public boolean equals(Object obj) {
         return obj instanceof Movie && title.equals(((Movie) obj).title);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(id);
     }
 
     public String getTitle() {
@@ -48,6 +36,13 @@ public class Movie implements Parcelable {
         return posterURL;
     }
 
+
+    protected Movie(Parcel in) {
+        this.title = in.readString();
+        this.id = in.readInt();
+        this.posterURL = in.readString();
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -59,4 +54,16 @@ public class Movie implements Parcelable {
         dest.writeInt(this.id);
         dest.writeString(this.posterURL);
     }
+
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel source) {
+            return new Movie(source);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 }

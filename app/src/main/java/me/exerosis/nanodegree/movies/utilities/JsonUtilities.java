@@ -1,4 +1,4 @@
-package me.exerosis.nanodegree.movies.implementation.model;
+package me.exerosis.nanodegree.movies.utilities;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -32,6 +32,12 @@ public final class JsonUtilities {
     public static int getIntegerAt(JsonElement element, String key) {
         JsonElement result = element.getAsJsonObject().get(key);
         return result == null || result.isJsonNull() ? null : result.getAsInt();
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    public static boolean getBooleanAt(JsonElement element, String key) {
+        JsonElement result = element.getAsJsonObject().get(key);
+        return result == null || result.isJsonNull() ? null : result.getAsBoolean();
     }
 
     public static String getStringAt(JsonElement element, String key) {

@@ -1,4 +1,4 @@
-package me.exerosis.nanodegree.movies.implementation.model;
+package me.exerosis.nanodegree.movies.implementation.model.loader;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -10,10 +10,17 @@ import com.google.gson.JsonObject;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
-import me.exerosis.nanodegree.movies.R;
+import me.exerosis.nanodegree.movies.implementation.Config;
+import me.exerosis.nanodegree.movies.implementation.model.data.Details;
+import me.exerosis.nanodegree.movies.implementation.model.data.Movie;
+import me.exerosis.nanodegree.movies.implementation.model.data.Review;
+import me.exerosis.nanodegree.movies.implementation.model.data.Trailer;
+import me.exerosis.nanodegree.movies.utilities.JsonUtilities;
 
 @SuppressLint("SimpleDateFormat")
 public class MovieDetailsLoader extends AsyncTaskLoader<Details> {
@@ -24,20 +31,21 @@ public class MovieDetailsLoader extends AsyncTaskLoader<Details> {
     private final Movie movie;
     private Details details;
 
-    public MovieDetailsLoader(Context context, @NonNull Movie movie) {
+    public MovieDetailsLoader(@NonNull Context context, Movie movie) {
         super(context);
         this.movie = movie;
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public Details loadInBackground() {
         if (!JsonUtilities.isOnline(getContext()))
             return null;
 
         try {
-            URL url = new URL("https://api.themoviedb.org/3/movie/" + movie.getID() + "?api_key=" + getContext().getString(R.string.api_key));
-            JsonObject results = JsonUtilities.fromURL(url);
+            URL detailsURL = new URL("https://api.themoviedb.org/3/movie/" + movie + "?api_key=" + Config.KEY_THE_MOVIE_DB);
 
+            JsonObject results = JsonUtilities.fromURL(detailsURL);
 
             String tagline = JsonUtilities.getStringAt(results, "tagline");
             String popularity = JsonUtilities.getStringAt(results, "popularity");
@@ -58,7 +66,21 @@ public class MovieDetailsLoader extends AsyncTaskLoader<Details> {
                 genres += ", " + JsonUtilities.getStringAt(genreElement, "name");
             genres = genres.substring(1, genres.length());
 
-            return new Details(movie, voteAverage, tagline, popularity, runtime, description, genres, date, backdropURL);
+            URL reviewsURL = new URL("https://api.themoviedb.org/3/movie/" + movie+ "/reviews?api_key=" + Config.KEY_THE_MOVIE_DB);
+            List<Review> reviews = new ArrayList<>();
+            for (JsonElement reviewElements : JsonUtilities.getArrayAt(JsonUtilities.fromURL(reviewsURL), "results")) {
+                String author = JsonUtilities.getStringAt(reviewElements, "author");
+                String content = JsonUtilities.getStringAt(reviewElements, "content");
+                if (author != null && content != null)
+                    reviews.add(new Review(author, content));
+            }
+
+            URL trailersURL = new URL("https://api.themoviedb.org/3/movie/" + movie + "/videos?api_key=" + Config.KEY_THE_MOVIE_DB);
+            List<Trailer> trailers = new ArrayList<>();
+            for (JsonElement trailerElement : JsonUtilities.getArrayAt(JsonUtilities.fromURL(trailersURL), "results"))
+                trailers.add(new Trailer(JsonUtilities.getStringAt(trailerElement, "id")));
+
+            return new Details(movie, reviews, trailers, voteAverage, tagline, popularity, runtime, description, genres, date, backdropURL);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

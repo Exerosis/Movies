@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import me.exerosis.nanodegree.movies.implementation.controller.details.MovieDetailsFragment;
-import me.exerosis.nanodegree.movies.implementation.model.Movie;
+import me.exerosis.nanodegree.movies.implementation.model.data.Movie;
 import me.exerosis.nanodegree.movies.implementation.view.details.container.MovieDetailsContainerView;
 
 public class MovieDetailsContainerActivity extends AppCompatActivity implements MovieDetailsContainerController {
