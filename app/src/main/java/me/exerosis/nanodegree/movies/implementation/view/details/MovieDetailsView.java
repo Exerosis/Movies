@@ -1,20 +1,23 @@
 package me.exerosis.nanodegree.movies.implementation.view.details;
 
+import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.res.ColorStateList;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -31,16 +34,49 @@ public class MovieDetailsView implements MovieDetails {
 
     private final MovieDetailsViewBinding binding;
     private final AppCompatActivity activity;
+    private final StatusBar statusBar;
+
+    private void setStatusBarColor(int argb) {
+        int alpha = Color.alpha(activity.getWindow().getStatusBarColor());
+        activity.getWindow().setStatusBarColor(ColorUtils.setAlphaComponent(argb, alpha));
+    }
+
+    private void setStatusBarAlpha(int alpha) {
+        int color = activity.getWindow().getStatusBarColor();
+        activity.getWindow().setStatusBarColor(ColorUtils.setAlphaComponent(color, alpha));
+    }
+
+    private void setAccentColor(int color, boolean animation, int duration) {
+        if (animation) {
+            statusBar.animateTint(color).setDuration(duration).start();
+            AnimationUtilities.fadeBackgroundColor(binding.movieDetailsQuickLookBar, color, duration);
+            AnimationUtilities.fadeBackgroundColor(binding.movieDetailsAppBar, color, duration);
+//            AnimationUtilities.fadeBackgroundColor(binding.movieDetailsFab, color, duration);
+        }
+        ValueAnimator backgroundAnimator = ValueAnimator.ofArgb(binding.movieDetailsQuickLookBar.getSolidColor(), color).setDuration(1500);
+        backgroundAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int color = (int) animation.getAnimatedValue();
+                binding.movieDetailsQuickLookBar.setBackgroundColor(color);
+                binding.movieDetailsAppBar.setBackgroundColor(color);
+                binding.movieDetailsFab.setBackgroundTintList(ColorStateList.valueOf(color));
+
+                int alpha = Color.alpha(window.getStatusBarColor());
+                window.setStatusBarColor(ColorUtilities.getStatusBarColor(color, alpha));
+            }
+        });
+        backgroundAnimator.start();
+    }
 
     public MovieDetailsView(final AppCompatActivity activity, LayoutInflater inflater, final ViewGroup container) {
         this.activity = activity;
         binding = DataBindingUtil.inflate(inflater, R.layout.movie_details_view, container, false);
+        statusBar = new StatusBar(activity.getWindow());
 
-        activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
-        int color = binding.movieDetailsQuickLookBar.getCardBackgroundColor().getDefaultColor();
-        activity.getWindow().setStatusBarColor(ColorUtils.setAlphaComponent(color, 0));
+        int color = binding.movieDetailsQuickLookBar.getSolidColor();
+        activity.getWindow().setStatusBarColor(ColorUtilities.getStatusBarColor(color, 0));
 
         activity.setSupportActionBar(binding.movieDetailsToolbar);
         activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -48,12 +84,13 @@ public class MovieDetailsView implements MovieDetails {
 
         binding.movieDetailsAppBar.setAlpha(0f);
         binding.movieDetailsPoster.setAlpha(0f);
-        binding.movieDetailsBackdrop.setAlpha(0f);
+        //binding.movieDetailsBackdrop.setAlpha(0f);
 
         binding.movieDetailsScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                float spaceHeight = binding.movieDetailsSpace.getMeasuredHeight();
+                float spaceHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getRootView().getResources().getDisplayMetrics());
+
                 float toolbarNew = (spaceHeight - scrollY) - TOOLBAR_FADE_BOUND;
                 float toolbarOld = (spaceHeight - oldScrollY) - TOOLBAR_FADE_BOUND;
 
@@ -103,7 +140,30 @@ public class MovieDetailsView implements MovieDetails {
         binding.movieDetailsPopularity.setText(details.getPopularity());
 
 
-        AnimationUtilities.fadeAfterLoad(binding.movieDetailsBackdrop, details.getBackdropURL(), 500, R.string.movie_details_error);
+//        AnimationUtilities.fadeAfterLoad(binding.movieDetailsBackdrop, details.getBackdropURL(), 500, R.string.movie_details_error);
+
+        activity.getWindow().setTransitionBackgroundFadeDuration(500);
+        Toast.makeText(activity, details.getBackdropURL(), Toast.LENGTH_LONG).show();
+
+        Picasso.with(activity).load("http://puu.sh/s1PV7/a800bcbbc5.jpg").into(new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                Drawable drawable = new ColorDrawable(Color.YELLOW);
+                activity.getWindow().setBackgroundDrawable(drawable);
+                ObjectAnimator.ofInt(drawable, "alpha", 0, 255).setDuration(500).start();
+            }
+
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        });
+
 
         Picasso.with(getRootView().getContext()).load(details.getMovie().getPosterURL()).into(new Target() {
             @Override
@@ -118,21 +178,6 @@ public class MovieDetailsView implements MovieDetails {
                         if (swatch == null)
                             return;
 
-                        int backgroundColor = binding.movieDetailsQuickLookBar.getCardBackgroundColor().getDefaultColor();
-                        ValueAnimator backgroundAnimator = ValueAnimator.ofArgb(backgroundColor, swatch.getRgb()).setDuration(1500);
-                        backgroundAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                            @Override
-                            public void onAnimationUpdate(ValueAnimator animation) {
-                                int color = (int) animation.getAnimatedValue();
-                                binding.movieDetailsQuickLookBar.setBackgroundColor(color);
-                                binding.movieDetailsAppBar.setBackgroundColor(color);
-                                binding.movieDetailsFab.setBackgroundTintList(ColorStateList.valueOf(color));
-
-                                int alpha = Color.alpha(activity.getWindow().getStatusBarColor());
-                                activity.getWindow().setStatusBarColor(ColorUtilities.getStatusBarColor(color, alpha));
-                            }
-                        });
-                        backgroundAnimator.start();
 
                         int bodyTextColor = binding.movieDetailsRuntimeTitle.getCurrentTextColor();
                         ValueAnimator bodyTextAnimator = ValueAnimator.ofArgb(bodyTextColor, swatch.getBodyTextColor()).setDuration(500);
@@ -171,9 +216,6 @@ public class MovieDetailsView implements MovieDetails {
             public void onPrepareLoad(Drawable placeHolderDrawable) {
             }
         });
-
-        binding.movieDetailsLayout.setVisibility(View.VISIBLE);
-        binding.movieDetailsSplashScreen.setVisibility(View.GONE);
     }
 
     @Override

@@ -43,7 +43,7 @@ public class MovieDetailsLoader extends AsyncTaskLoader<Details> {
             return null;
 
         try {
-            URL detailsURL = new URL("https://api.themoviedb.org/3/movie/" + movie.getID() + "?api_key=" + Config.KEY_THE_MOVIE_DB);
+            URL detailsURL = new URL("https://api.themoviedb.org/3/movie/" + movie + "?api_key=" + Config.KEY_THE_MOVIE_DB);
 
             JsonObject results = JsonUtilities.fromURL(detailsURL);
 
@@ -66,7 +66,7 @@ public class MovieDetailsLoader extends AsyncTaskLoader<Details> {
                 genres += ", " + JsonUtilities.getStringAt(genreElement, "name");
             genres = genres.substring(1, genres.length());
 
-            URL reviewsURL = new URL("https://api.themoviedb.org/3/movie/" + movie.getID() + "/reviews?api_key=" + Config.KEY_THE_MOVIE_DB);
+            URL reviewsURL = new URL("https://api.themoviedb.org/3/movie/" + movie+ "/reviews?api_key=" + Config.KEY_THE_MOVIE_DB);
             List<Review> reviews = new ArrayList<>();
             for (JsonElement reviewElements : JsonUtilities.getArrayAt(JsonUtilities.fromURL(reviewsURL), "results")) {
                 String author = JsonUtilities.getStringAt(reviewElements, "author");

@@ -1,5 +1,6 @@
 package me.exerosis.nanodegree.movies.utilities;
 
+import android.animation.ObjectAnimator;
 import android.support.annotation.StringRes;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,8 +11,12 @@ import com.squareup.picasso.Picasso;
 
 public final class AnimationUtilities {
 
-    public static void fade(View view, float to, int duration) {
-        view.animate().alpha(to).setDuration(duration);
+    public static void fadeBackgroundColor(View view, int to, int duration) {
+        ObjectAnimator.ofArgb(view, "backgroundColor", view.getSolidColor(), to).setDuration(duration).start();
+    }
+
+    public static void fade(View view, float alpha, int duration) {
+        view.animate().alpha(alpha).setDuration(duration);
     }
 
     public static void fadeAfterLoad(final ImageView view, String url, final int duration) {

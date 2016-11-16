@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import me.exerosis.nanodegree.movies.implementation.controller.reviews.MovieReviewsFragment;
-import me.exerosis.nanodegree.movies.implementation.controller.trailers.MovieTrailersFragment;
 import me.exerosis.nanodegree.movies.implementation.model.data.Details;
 import me.exerosis.nanodegree.movies.implementation.model.data.Movie;
 import me.exerosis.nanodegree.movies.implementation.model.loader.MovieDetailsLoader;
@@ -41,14 +39,6 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContro
         view = new MovieDetailsView((AppCompatActivity) getActivity(), inflater, container);
         if (!getLoaderManager().hasRunningLoaders())
             getLoaderManager().initLoader(LOADER_ID, getArguments(), this).forceLoad();
-
-        int id = ((Movie) getArguments().getParcelable(ARG_MOVIE)).getID();
-        getFragmentManager().beginTransaction().replace(view.getReviewsContainer(),
-                MovieReviewsFragment.newInstance(id)).disallowAddToBackStack().commit();
-
-        getFragmentManager().beginTransaction().replace(view.getTrailersContainer(),
-                MovieTrailersFragment.newInstance(id)).disallowAddToBackStack().commit();
-
         return view.getRootView();
     }
 
