@@ -1,13 +1,12 @@
 package me.exerosis.nanodegree.movies.utilities;
 
 import android.graphics.Color;
-import android.support.v4.graphics.ColorUtils;
 
 public final class ColorUtilities {
 
-    public static int getStatusBarColor(int color, int alpha) {
+    public static int getStatusBarColor(int color) {
         float[] hsv = new float[3];
-        Color.colorToHSV(ColorUtils.setAlphaComponent(color, alpha), hsv);
+        Color.colorToHSV(color, hsv);
         hsv[2] *= 0.8f;
         return Color.HSVToColor(hsv);
     }

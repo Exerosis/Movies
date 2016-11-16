@@ -1,23 +1,21 @@
 package me.exerosis.nanodegree.movies.implementation.view.details;
 
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.res.ColorStateList;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.graphics.ColorUtils;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -25,110 +23,110 @@ import com.squareup.picasso.Target;
 import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.databinding.MovieDetailsViewBinding;
 import me.exerosis.nanodegree.movies.implementation.model.data.Details;
+import me.exerosis.nanodegree.movies.implementation.view.details.holder.ReviewHolderView;
+import me.exerosis.nanodegree.movies.implementation.view.details.holder.TrailerHolderView;
 import me.exerosis.nanodegree.movies.utilities.AnimationUtilities;
+import me.exerosis.nanodegree.movies.utilities.CenterCropBitmapDrawable;
 import me.exerosis.nanodegree.movies.utilities.ColorUtilities;
+import me.exerosis.nanodegree.movies.utilities.StatusBar;
 
+//TODO Make everything constant based.
 public class MovieDetailsView implements MovieDetails {
-    private final static float TOOLBAR_FADE_BOUND = 50;
-    private final static float CONTENT_CARD_FADE_BOUND = 150;
+    public static final float TOOLBAR_FADE_START = 50;
+    public static final float CONTENT_CARD_FADE_START = 150;
+    public static final float CONTENT_CARD_ALPHA = 0.7f;
+    public static final int TOOLBAR_FADE_DURATION = 500;
+    public static final int CONTENT_CARD_FADE_DURATION = 700;
+    public static final int BACKDROP_FADE_DURATION = 500;
+    public static final int BODY_TEXT_FADE_DURATION = 500;
+    public static final int TITLE_TEXT_FADE_DURATION = 500;
+    public static final int ACCENT_COLOR_FADE_DURATION = 500;
+    public static final int POSTER_FADE_DURATION = 500;
 
     private final MovieDetailsViewBinding binding;
     private final AppCompatActivity activity;
     private final StatusBar statusBar;
 
-    private void setStatusBarColor(int argb) {
-        int alpha = Color.alpha(activity.getWindow().getStatusBarColor());
-        activity.getWindow().setStatusBarColor(ColorUtils.setAlphaComponent(argb, alpha));
+    private void setToolbarAlpha(int alpha) {
+        binding.movieDetailsAppBar.setAlpha(alpha / 255);
+        statusBar.setAlpha(alpha);
     }
 
-    private void setStatusBarAlpha(int alpha) {
-        int color = activity.getWindow().getStatusBarColor();
-        activity.getWindow().setStatusBarColor(ColorUtils.setAlphaComponent(color, alpha));
+    private void setAccentColor(int color) {
+        statusBar.setTint(color);
+        binding.movieDetailsQuickLookBar.setBackgroundColor(color);
+        binding.movieDetailsAppBar.setBackgroundColor(color);
+        binding.movieDetailsFab.setBackgroundTintList(ColorStateList.valueOf(color));
     }
 
-    private void setAccentColor(int color, boolean animation, int duration) {
-        if (animation) {
-            statusBar.animateTint(color).setDuration(duration).start();
-            AnimationUtilities.fadeBackgroundColor(binding.movieDetailsQuickLookBar, color, duration);
-            AnimationUtilities.fadeBackgroundColor(binding.movieDetailsAppBar, color, duration);
-//            AnimationUtilities.fadeBackgroundColor(binding.movieDetailsFab, color, duration);
-        }
-        ValueAnimator backgroundAnimator = ValueAnimator.ofArgb(binding.movieDetailsQuickLookBar.getSolidColor(), color).setDuration(1500);
-        backgroundAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                int color = (int) animation.getAnimatedValue();
-                binding.movieDetailsQuickLookBar.setBackgroundColor(color);
-                binding.movieDetailsAppBar.setBackgroundColor(color);
-                binding.movieDetailsFab.setBackgroundTintList(ColorStateList.valueOf(color));
-
-                int alpha = Color.alpha(window.getStatusBarColor());
-                window.setStatusBarColor(ColorUtilities.getStatusBarColor(color, alpha));
-            }
-        });
-        backgroundAnimator.start();
+    private void animateToolbarAlpha(int alpha) {
+        binding.movieDetailsAppBar.animate().alpha(alpha / 255).setDuration(TOOLBAR_FADE_DURATION).start();
+        statusBar.animateAlpha(alpha).setDuration(TOOLBAR_FADE_DURATION).start();
     }
 
+    private void animateAccentColor(int color) {
+        int duration = ACCENT_COLOR_FADE_DURATION;
+        statusBar.animateTint(ColorUtilities.getStatusBarColor(color)).setDuration(duration).start();
+        AnimationUtilities.fadeBackgroundColor(binding.movieDetailsQuickLookBar, color, duration);
+        AnimationUtilities.fadeBackgroundColor(binding.movieDetailsAppBar, color, duration);
+        AnimationUtilities.fadeBackgroundTintList(binding.movieDetailsFab, color, duration);
+    }
+
+    private void animateBodyTextColor(int color) {
+        AnimationUtilities.fadeTextColor(binding.movieDetailsPopularity, color, BODY_TEXT_FADE_DURATION);
+        AnimationUtilities.fadeTextColor(binding.movieDetailsVoteAverage, color, BODY_TEXT_FADE_DURATION);
+        AnimationUtilities.fadeTextColor(binding.movieDetailsRuntime, color, BODY_TEXT_FADE_DURATION);
+    }
+
+    private void animateTitleTextColor(int color) {
+        AnimationUtilities.fadeTextColor(binding.movieDetailsPopularityTitle, color, TITLE_TEXT_FADE_DURATION);
+        AnimationUtilities.fadeTextColor(binding.movieDetailsVoteAverageTitle, color, TITLE_TEXT_FADE_DURATION);
+        AnimationUtilities.fadeTextColor(binding.movieDetailsRuntimeTitle, color, TITLE_TEXT_FADE_DURATION);
+    }
+
+
+    @SuppressWarnings("ConstantConditions")
     public MovieDetailsView(final AppCompatActivity activity, LayoutInflater inflater, final ViewGroup container) {
         this.activity = activity;
         binding = DataBindingUtil.inflate(inflater, R.layout.movie_details_view, container, false);
         statusBar = new StatusBar(activity.getWindow());
 
-
-        int color = binding.movieDetailsQuickLookBar.getSolidColor();
-        activity.getWindow().setStatusBarColor(ColorUtilities.getStatusBarColor(color, 0));
-
         activity.setSupportActionBar(binding.movieDetailsToolbar);
         activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        binding.movieDetailsAppBar.setAlpha(0f);
+        binding.movieDetailsContentCard.setAlpha(CONTENT_CARD_ALPHA);
+        setToolbarAlpha(0);
         binding.movieDetailsPoster.setAlpha(0f);
-        //binding.movieDetailsBackdrop.setAlpha(0f);
+
+        //TODO Make this get share a dimen!
+        final float spaceHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getRootView().getResources().getDisplayMetrics());
 
         binding.movieDetailsScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                float spaceHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getRootView().getResources().getDisplayMetrics());
+                float toolbarNew = (spaceHeight - scrollY) - TOOLBAR_FADE_START;
+                float toolbarOld = (spaceHeight - oldScrollY) - TOOLBAR_FADE_START;
 
-                float toolbarNew = (spaceHeight - scrollY) - TOOLBAR_FADE_BOUND;
-                float toolbarOld = (spaceHeight - oldScrollY) - TOOLBAR_FADE_BOUND;
+                float contentNew = (spaceHeight - scrollY) - CONTENT_CARD_FADE_START;
+                float contentOld = (spaceHeight - oldScrollY) - CONTENT_CARD_FADE_START;
 
-                float contentNew = (spaceHeight - scrollY) - CONTENT_CARD_FADE_BOUND;
-                float contentOld = (spaceHeight - oldScrollY) - CONTENT_CARD_FADE_BOUND;
-
-                if (toolbarOld > 0 && toolbarNew <= 0) {
-                    ValueAnimator animator = ValueAnimator.ofFloat(binding.movieDetailsAppBar.getAlpha(), 1f).setDuration(500);
-                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator animation) {
-                            binding.movieDetailsAppBar.setAlpha((float) animation.getAnimatedValue());
-                            activity.getWindow().setStatusBarColor(ColorUtils.setAlphaComponent(activity.getWindow().getStatusBarColor(), (int) ((float) animation.getAnimatedValue() * 255f)));
-                        }
-                    });
-                    animator.start();
-                } else if (toolbarOld <= 0 && toolbarNew > 0) {
-                    ValueAnimator animator = ValueAnimator.ofFloat(binding.movieDetailsAppBar.getAlpha(), 0f).setDuration(500);
-                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator animation) {
-                            binding.movieDetailsAppBar.setAlpha((float) animation.getAnimatedValue());
-                            activity.getWindow().setStatusBarColor(ColorUtils.setAlphaComponent(activity.getWindow().getStatusBarColor(), (int) ((float) animation.getAnimatedValue() * 255f)));
-                        }
-                    });
-                    animator.start();
-                }
+                if (toolbarOld > 0 && toolbarNew <= 0)
+                    animateToolbarAlpha(255);
+                else if (toolbarOld <= 0 && toolbarNew > 0)
+                    animateToolbarAlpha(0);
 
                 if (contentOld > 0 && contentNew <= 0)
-                    binding.movieDetailsContentCard.animate().alpha(1f).setDuration(500).start();
+                    AnimationUtilities.fade(binding.movieDetailsContentCard, 1f, CONTENT_CARD_FADE_DURATION);
                 else if (contentOld <= 0 && contentNew > 0)
-                    binding.movieDetailsContentCard.animate().alpha(0.7f).setDuration(500).start();
+                    AnimationUtilities.fade(binding.movieDetailsContentCard, CONTENT_CARD_ALPHA, CONTENT_CARD_FADE_DURATION);
             }
         });
+
     }
 
     @Override
-    public void setDetails(Details details) {
+    public void setDetails(final Details details) {
         binding.movieDetailsTitle.setText(details.getMovie().getTitle());
         binding.movieDetailsTagline.setText(details.getTagline());
         binding.movieDetailsDescription.setText(details.getDescription());
@@ -139,18 +137,15 @@ public class MovieDetailsView implements MovieDetails {
         binding.movieDetailsVoteAverage.setText(details.getVoteAverage());
         binding.movieDetailsPopularity.setText(details.getPopularity());
 
-
-//        AnimationUtilities.fadeAfterLoad(binding.movieDetailsBackdrop, details.getBackdropURL(), 500, R.string.movie_details_error);
-
-        activity.getWindow().setTransitionBackgroundFadeDuration(500);
-        Toast.makeText(activity, details.getBackdropURL(), Toast.LENGTH_LONG).show();
-
-        Picasso.with(activity).load("http://puu.sh/s1PV7/a800bcbbc5.jpg").into(new Target() {
+        Picasso.with(getRootView().getContext()).load(details.getBackdropURL()).into(new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                Drawable drawable = new ColorDrawable(Color.YELLOW);
+                Point size = new Point();
+                activity.getWindowManager().getDefaultDisplay().getSize(size);
+
+                BitmapDrawable drawable = new CenterCropBitmapDrawable(activity.getResources(), bitmap, size.x, size.y);
                 activity.getWindow().setBackgroundDrawable(drawable);
-                ObjectAnimator.ofInt(drawable, "alpha", 0, 255).setDuration(500).start();
+                ObjectAnimator.ofInt(drawable, "alpha", 0, 255).setDuration(BACKDROP_FADE_DURATION).start();
             }
 
             @Override
@@ -169,7 +164,7 @@ public class MovieDetailsView implements MovieDetails {
             @Override
             public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
                 binding.movieDetailsPoster.setImageBitmap(bitmap);
-                AnimationUtilities.fade(binding.movieDetailsPoster, 1f, 500);
+                AnimationUtilities.fade(binding.movieDetailsPoster, 1f, POSTER_FADE_DURATION);
 
                 Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
                     @Override
@@ -178,32 +173,9 @@ public class MovieDetailsView implements MovieDetails {
                         if (swatch == null)
                             return;
 
-
-                        int bodyTextColor = binding.movieDetailsRuntimeTitle.getCurrentTextColor();
-                        ValueAnimator bodyTextAnimator = ValueAnimator.ofArgb(bodyTextColor, swatch.getBodyTextColor()).setDuration(500);
-                        bodyTextAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                            @Override
-                            public void onAnimationUpdate(ValueAnimator animation) {
-                                int color = (int) animation.getAnimatedValue();
-                                binding.movieDetailsPopularity.setTextColor(color);
-                                binding.movieDetailsVoteAverage.setTextColor(color);
-                                binding.movieDetailsRuntime.setTextColor(color);
-                            }
-                        });
-                        bodyTextAnimator.start();
-
-                        int titleTextColor = binding.movieDetailsRuntimeTitle.getCurrentTextColor();
-                        ValueAnimator titleTextAnimator = ValueAnimator.ofArgb(titleTextColor, swatch.getTitleTextColor()).setDuration(500);
-                        titleTextAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                            @Override
-                            public void onAnimationUpdate(ValueAnimator animation) {
-                                int color = (int) animation.getAnimatedValue();
-                                binding.movieDetailsRuntimeTitle.setTextColor(color);
-                                binding.movieDetailsPopularityTitle.setTextColor(color);
-                                binding.movieDetailsVoteAverageTitle.setTextColor(color);
-                            }
-                        });
-                        titleTextAnimator.start();
+                        animateBodyTextColor(swatch.getBodyTextColor());
+                        animateTitleTextColor(swatch.getTitleTextColor());
+                        animateAccentColor(swatch.getRgb());
                     }
                 });
             }
@@ -216,16 +188,40 @@ public class MovieDetailsView implements MovieDetails {
             public void onPrepareLoad(Drawable placeHolderDrawable) {
             }
         });
-    }
 
-    @Override
-    public int getTrailersContainer() {
-        return binding.movieDetailsTrailers.getId();
-    }
+        binding.movieDetailsTrailers.setAdapter(new RecyclerView.Adapter<TrailerHolderView>() {
+            @Override
+            public TrailerHolderView onCreateViewHolder(ViewGroup parent, int viewType) {
+                return new TrailerHolderView(parent);
+            }
 
-    @Override
-    public int getReviewsContainer() {
-        return binding.movieDetailsReviews.getId();
+            @Override
+            public void onBindViewHolder(TrailerHolderView holder, int position) {
+                holder.setTrailer(details.getTrailers().get(position));
+            }
+
+            @Override
+            public int getItemCount() {
+                return details.getTrailers().size();
+            }
+        });
+
+        binding.movieDetailsReviews.setAdapter(new RecyclerView.Adapter<ReviewHolderView>() {
+            @Override
+            public ReviewHolderView onCreateViewHolder(ViewGroup parent, int viewType) {
+                return new ReviewHolderView(parent);
+            }
+
+            @Override
+            public void onBindViewHolder(ReviewHolderView holder, int position) {
+                holder.setReview(details.getReviews().get(position));
+            }
+
+            @Override
+            public int getItemCount() {
+                return details.getReviews().size();
+            }
+        });
     }
 
     @Override
@@ -237,5 +233,4 @@ public class MovieDetailsView implements MovieDetails {
     public Bundle getViewState() {
         return null;
     }
-
 }

@@ -1,16 +1,14 @@
 <resources>
-    <string name="app_name">Movies</string>
-    <string name="movie_details_error">Movie Failed To Load</string>
-    <string name="movie_grid_error">Failed to Load</string>
+    <string name="app_name" translatable="false">Movies</string>
+    <string name="movie_details_error">Movie failed to load!</string>
+    <string name="movie_grid_error">Movies failed to load!</string>
 
-    <string name="tab_top_rated">Top Rated</string>
-    <string name="tab_popular">Popular</string>
-    <string name="movie_poster_content_description">Movie Poster</string>
-    <string name="movie_backdrop_content_description">Movie Backdrop</string>
-    <string name="movie_details_popular">Popular</string>
-    <string name="movie_details_vote_average">Vote Average</string>
-    <string name="movie_details_runtime">Runtime</string>
-    <string name="api_key">80de3dcb516f2d18d76b0d4f3d7b2f05</string>
-    <string name="movie_details_trailers">Trailers</string>
-    <string name="movie_details_reviews">Reviews</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="poster_content_description">Movie Poster</string>
+    <string name="backdrop_content_description">Movie Backdrop</string>
+    <string name="popular">Popular</string>
+    <string name="vote_average">Vote Average</string>
+    <string name="runtime">Runtime</string>
+    <string name="trailers">Trailers</string>
+    <string name="reviews">Reviews</string>
 </resources>

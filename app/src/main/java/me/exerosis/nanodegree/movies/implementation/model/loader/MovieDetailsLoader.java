@@ -59,7 +59,7 @@ public class MovieDetailsLoader extends AsyncTaskLoader<Details> {
             String date = FORMAT_DATE.format(rawDate);
 
 
-            String backdropURL = "http://image.tmdb.org/t/p/w780" + JsonUtilities.getStringAt(results, "backdrop_path");
+            String backdropURL = "http://image.tmdb.org/t/p/w1280" + JsonUtilities.getStringAt(results, "backdrop_path");
 
             String genres = "";
             for (JsonElement genreElement : JsonUtilities.getArrayAt(results, "genres"))

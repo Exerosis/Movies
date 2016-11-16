@@ -1,6 +1,7 @@
 package me.exerosis.nanodegree.movies.utilities;
 
 import android.animation.ObjectAnimator;
+import android.content.res.ColorStateList;
 import android.support.annotation.StringRes;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,8 +12,20 @@ import com.squareup.picasso.Picasso;
 
 public final class AnimationUtilities {
 
+    public static void fadeTextColor(View view, int to, int duration) {
+        ObjectAnimator.ofArgb(view, "textColor", view.getSolidColor(), to).setDuration(duration).start();
+    }
+
     public static void fadeBackgroundColor(View view, int to, int duration) {
         ObjectAnimator.ofArgb(view, "backgroundColor", view.getSolidColor(), to).setDuration(duration).start();
+    }
+
+    public static void fadeBackgroundTintList(final View view, int to, int duration) {
+        ObjectAnimator.ofArgb(new Object() {
+            public void setColor(int color) {
+                view.setBackgroundTintList(ColorStateList.valueOf(color));
+            }
+        }, "color", view.getBackgroundTintList().getDefaultColor(), to).setDuration(duration).start();
     }
 
     public static void fade(View view, float alpha, int duration) {

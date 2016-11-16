@@ -1,4 +1,4 @@
-package me.exerosis.nanodegree.movies.implementation.view.details;
+package me.exerosis.nanodegree.movies.utilities;
 
 import android.animation.ObjectAnimator;
 import android.graphics.Color;
