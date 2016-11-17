@@ -1,12 +1,14 @@
 package me.exerosis.nanodegree.movies.implementation.view.details;
 
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
@@ -23,14 +25,16 @@ import com.squareup.picasso.Target;
 import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.databinding.MovieDetailsViewBinding;
 import me.exerosis.nanodegree.movies.implementation.model.data.Details;
+import me.exerosis.nanodegree.movies.implementation.model.data.Trailer;
 import me.exerosis.nanodegree.movies.implementation.view.details.holder.ReviewHolderView;
+import me.exerosis.nanodegree.movies.implementation.view.details.holder.TrailerHolderListener;
 import me.exerosis.nanodegree.movies.implementation.view.details.holder.TrailerHolderView;
 import me.exerosis.nanodegree.movies.utilities.AnimationUtilities;
 import me.exerosis.nanodegree.movies.utilities.ColorUtilities;
 import me.exerosis.nanodegree.movies.utilities.StatusBar;
 
 //TODO Make everything constant based.
-public class MovieDetailsView implements MovieDetails {
+public class MovieDetailsView implements MovieDetails, TrailerHolderListener {
     public static final float TOOLBAR_FADE_START = 50;
     public static final float CONTENT_CARD_FADE_START = 150;
     public static final float CONTENT_CARD_ALPHA = 0.7f;
@@ -191,7 +195,9 @@ public class MovieDetailsView implements MovieDetails {
         binding.movieDetailsTrailers.setAdapter(new RecyclerView.Adapter<TrailerHolderView>() {
             @Override
             public TrailerHolderView onCreateViewHolder(ViewGroup parent, int viewType) {
-                return new TrailerHolderView(parent);
+                TrailerHolderView view = new TrailerHolderView(parent);
+                view.setListener(MovieDetailsView.this);
+                return view;
             }
 
             @Override
@@ -231,5 +237,10 @@ public class MovieDetailsView implements MovieDetails {
     @Override
     public Bundle getViewState() {
         return null;
+    }
+
+    @Override
+    public void onClick(Trailer trailer) {
+        getRoot().getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(trailer.getVideo())));
     }
 }

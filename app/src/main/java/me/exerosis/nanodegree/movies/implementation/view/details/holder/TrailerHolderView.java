@@ -25,11 +25,10 @@ public class TrailerHolderView extends RecyclerView.ViewHolder implements Traile
         binding = DataBindingUtil.getBinding(itemView);
         binding.trailerHolderThumbnail.setAlpha(0f);
         binding.trailerHolderIcon.setAlpha(0f);
-        getRoot().setOnClickListener(listener);
     }
 
     @Override
-    public void setTrailer(Trailer trailer) {
+    public void setTrailer(final Trailer trailer) {
         Picasso.with(binding.trailerHolderThumbnail.getContext()).load(trailer.getThumbnail()).into(binding.trailerHolderThumbnail, new Callback() {
             @Override
             public void onSuccess() {
@@ -40,6 +39,14 @@ public class TrailerHolderView extends RecyclerView.ViewHolder implements Traile
 
             @Override
             public void onError() {
+            }
+        });
+
+        binding.trailerHolderIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null)
+                    listener.onClick(trailer);
             }
         });
     }

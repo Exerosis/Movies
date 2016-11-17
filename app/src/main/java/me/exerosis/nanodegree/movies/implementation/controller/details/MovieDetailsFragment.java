@@ -67,6 +67,7 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContro
 
     @Override
     public void onClick(Trailer trailer) {
+        System.out.println("CLICKED");
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(trailer.getVideo())));
     }
 }
