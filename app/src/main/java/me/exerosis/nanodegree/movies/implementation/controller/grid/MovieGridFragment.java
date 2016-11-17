@@ -63,7 +63,7 @@ public class MovieGridFragment extends Fragment implements MovieGridController {
             }
         });
 
-        return view.getRootView();
+        return view.getRoot();
     }
 
     @Override

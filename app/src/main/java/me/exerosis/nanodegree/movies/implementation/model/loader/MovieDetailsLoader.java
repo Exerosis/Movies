@@ -28,6 +28,10 @@ public class MovieDetailsLoader extends AsyncTaskLoader<Details> {
     public static final SimpleDateFormat FORMAT_RAW_TIME = new SimpleDateFormat("mmm", Locale.US);
     public static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("MMMM yyyy", Locale.US);
     public static final SimpleDateFormat FORMAT_TIME = new SimpleDateFormat("H'hrs 'm'mins'", Locale.US);
+
+    public static final String FORMAT_DETAILS = "https://api.themoviedb.org/3/movie/%s%s?api_key=" + Config.KEY_THE_MOVIE_DB;
+    public static final String FORMAT_BACKDROP = "http://image.tmdb.org/t/p/w1280%s";
+
     private final Movie movie;
     private Details details;
 
@@ -43,7 +47,7 @@ public class MovieDetailsLoader extends AsyncTaskLoader<Details> {
             return null;
 
         try {
-            URL detailsURL = new URL("https://api.themoviedb.org/3/movie/" + movie + "?api_key=" + Config.KEY_THE_MOVIE_DB);
+            URL detailsURL = new URL(String.format(FORMAT_DETAILS, movie, ""));
 
             JsonObject results = JsonUtilities.fromURL(detailsURL);
 
@@ -59,14 +63,15 @@ public class MovieDetailsLoader extends AsyncTaskLoader<Details> {
             String date = FORMAT_DATE.format(rawDate);
 
 
-            String backdropURL = "http://image.tmdb.org/t/p/w1280" + JsonUtilities.getStringAt(results, "backdrop_path");
+            String backdropURL = String.format(FORMAT_BACKDROP, JsonUtilities.getStringAt(results, "backdrop_path"));
 
             String genres = "";
             for (JsonElement genreElement : JsonUtilities.getArrayAt(results, "genres"))
                 genres += ", " + JsonUtilities.getStringAt(genreElement, "name");
             genres = genres.substring(1, genres.length());
 
-            URL reviewsURL = new URL("https://api.themoviedb.org/3/movie/" + movie+ "/reviews?api_key=" + Config.KEY_THE_MOVIE_DB);
+
+            URL reviewsURL = new URL(String.format(FORMAT_DETAILS, movie, "/reviews"));
             List<Review> reviews = new ArrayList<>();
             for (JsonElement reviewElements : JsonUtilities.getArrayAt(JsonUtilities.fromURL(reviewsURL), "results")) {
                 String author = JsonUtilities.getStringAt(reviewElements, "author");
@@ -75,10 +80,10 @@ public class MovieDetailsLoader extends AsyncTaskLoader<Details> {
                     reviews.add(new Review(author, content));
             }
 
-            URL trailersURL = new URL("https://api.themoviedb.org/3/movie/" + movie + "/videos?api_key=" + Config.KEY_THE_MOVIE_DB);
+            URL trailersURL = new URL(String.format(FORMAT_DETAILS, movie, "/videos"));
             List<Trailer> trailers = new ArrayList<>();
             for (JsonElement trailerElement : JsonUtilities.getArrayAt(JsonUtilities.fromURL(trailersURL), "results"))
-                trailers.add(new Trailer(JsonUtilities.getStringAt(trailerElement, "id")));
+                trailers.add(new Trailer(JsonUtilities.getStringAt(trailerElement, "key")));
 
             return new Details(movie, reviews, trailers, voteAverage, tagline, popularity, runtime, description, genres, date, backdropURL);
         } catch (Exception e) {

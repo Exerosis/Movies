@@ -2,11 +2,28 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:layout_width="100dp"
-        android:layout_height="150dp"
         android:background="?attr/colorBackgroundFloating">
 
+        <ImageView
+            android:id="@+id/trailer_holder_thumbnail"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY" />
+
+        <ImageView
+            android:id="@+id/trailer_holder_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@android:drawable/ic_media_play" />
+
     </FrameLayout>
+
 
 </layout>

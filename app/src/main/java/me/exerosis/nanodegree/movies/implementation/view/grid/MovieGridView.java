@@ -63,7 +63,7 @@ public class MovieGridView implements MovieGrid {
     }
 
     @Override
-    public View getRootView() {
+    public View getRoot() {
         return binding.getRoot();
     }
 

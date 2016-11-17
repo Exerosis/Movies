@@ -23,7 +23,7 @@ public class MovieDetailsContainerView implements Container {
     }
 
     @Override
-    public View getRootView() {
+    public View getRoot() {
         return binding.getRoot();
     }
 

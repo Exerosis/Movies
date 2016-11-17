@@ -48,7 +48,7 @@ public class MoviesView implements Movies {
     }
 
     @Override
-    public View getRootView() {
+    public View getRoot() {
         return binding.getRoot();
     }
 
@@ -66,7 +66,7 @@ public class MoviesView implements Movies {
         TabLayout.Tab tab = binding.moviesTabLayout.newTab();
         binding.moviesTabLayout.addTab(tab, selected);
 
-        int widthMode = getRootView().getResources().getInteger(R.integer.width_mode);
+        int widthMode = getRoot().getResources().getInteger(R.integer.width_mode);
 
         if (widthMode < 2)
             tab.setIcon(drawable);

@@ -41,7 +41,7 @@ public class MovieHolderView extends RecyclerView.ViewHolder implements MovieHol
 
 
     @Override
-    public View getRootView() {
+    public View getRoot() {
         return itemView;
     }
 

@@ -12,6 +12,10 @@ import com.squareup.picasso.Picasso;
 
 public final class AnimationUtilities {
 
+    public static void fadeImage(ImageView view, int to, int duration) {
+        ObjectAnimator.ofInt(view, "imageAlpha", view.getImageAlpha(), to).setDuration(duration).start();
+    }
+
     public static void fadeTextColor(View view, int to, int duration) {
         ObjectAnimator.ofArgb(view, "textColor", view.getSolidColor(), to).setDuration(duration).start();
     }

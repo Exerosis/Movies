@@ -1,22 +1,22 @@
 package me.exerosis.nanodegree.movies.implementation.controller.details;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import me.exerosis.nanodegree.movies.implementation.model.data.Details;
 import me.exerosis.nanodegree.movies.implementation.model.data.Movie;
+import me.exerosis.nanodegree.movies.implementation.model.data.Trailer;
 import me.exerosis.nanodegree.movies.implementation.model.loader.MovieDetailsLoader;
 import me.exerosis.nanodegree.movies.implementation.view.details.MovieDetails;
 import me.exerosis.nanodegree.movies.implementation.view.details.MovieDetailsView;
-import me.exerosis.nanodegree.movies.implementation.view.details.holder.ReviewHolderView;
-import me.exerosis.nanodegree.movies.implementation.view.details.holder.TrailerHolderView;
 
 public class MovieDetailsFragment extends Fragment implements MovieDetailsController {
     public static final String ARG_MOVIE = "MOVIE";
@@ -44,7 +44,7 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContro
 
         if (!getLoaderManager().hasRunningLoaders())
             getLoaderManager().initLoader(LOADER_ID, getArguments(), this).forceLoad();
-        return view.getRootView();
+        return view.getRoot();
     }
 
     @Override
@@ -63,5 +63,10 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContro
 
     @Override
     public void onLoaderReset(Loader<Details> loader) {
+    }
+
+    @Override
+    public void onClick(Trailer trailer) {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(trailer.getVideo())));
     }
 }

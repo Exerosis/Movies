@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 public interface ViewBase {
-    View getRootView();
+    View getRoot();
 
     Bundle getViewState();
 }

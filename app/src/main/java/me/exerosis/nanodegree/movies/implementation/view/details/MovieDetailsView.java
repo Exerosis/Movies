@@ -26,7 +26,6 @@ import me.exerosis.nanodegree.movies.implementation.model.data.Details;
 import me.exerosis.nanodegree.movies.implementation.view.details.holder.ReviewHolderView;
 import me.exerosis.nanodegree.movies.implementation.view.details.holder.TrailerHolderView;
 import me.exerosis.nanodegree.movies.utilities.AnimationUtilities;
-import me.exerosis.nanodegree.movies.utilities.CenterCropBitmapDrawable;
 import me.exerosis.nanodegree.movies.utilities.ColorUtilities;
 import me.exerosis.nanodegree.movies.utilities.StatusBar;
 
@@ -96,11 +95,11 @@ public class MovieDetailsView implements MovieDetails {
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         binding.movieDetailsContentCard.setAlpha(CONTENT_CARD_ALPHA);
+        binding.movieDetailsPoster.setImageAlpha(0);
         setToolbarAlpha(0);
-        binding.movieDetailsPoster.setAlpha(0f);
 
         //TODO Make this get share a dimen!
-        final float spaceHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getRootView().getResources().getDisplayMetrics());
+        final float spaceHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getRoot().getResources().getDisplayMetrics());
 
         binding.movieDetailsScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
@@ -137,13 +136,13 @@ public class MovieDetailsView implements MovieDetails {
         binding.movieDetailsVoteAverage.setText(details.getVoteAverage());
         binding.movieDetailsPopularity.setText(details.getPopularity());
 
-        Picasso.with(getRootView().getContext()).load(details.getBackdropURL()).into(new Target() {
+        Point size = new Point();
+        activity.getWindowManager().getDefaultDisplay().getSize(size);
+
+        Picasso.with(getRoot().getContext()).load(details.getBackdropURL()).centerCrop().resize(size.x, size.y).into(new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                Point size = new Point();
-                activity.getWindowManager().getDefaultDisplay().getSize(size);
-
-                BitmapDrawable drawable = new CenterCropBitmapDrawable(activity.getResources(), bitmap, size.x, size.y);
+                BitmapDrawable drawable = new BitmapDrawable(activity.getResources(), bitmap);
                 activity.getWindow().setBackgroundDrawable(drawable);
                 ObjectAnimator.ofInt(drawable, "alpha", 0, 255).setDuration(BACKDROP_FADE_DURATION).start();
             }
@@ -160,11 +159,11 @@ public class MovieDetailsView implements MovieDetails {
         });
 
 
-        Picasso.with(getRootView().getContext()).load(details.getMovie().getPosterURL()).into(new Target() {
+        Picasso.with(getRoot().getContext()).load(details.getMovie().getPosterURL()).into(new Target() {
             @Override
             public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
                 binding.movieDetailsPoster.setImageBitmap(bitmap);
-                AnimationUtilities.fade(binding.movieDetailsPoster, 1f, POSTER_FADE_DURATION);
+                AnimationUtilities.fadeImage(binding.movieDetailsPoster, 255, POSTER_FADE_DURATION);
 
                 Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
                     @Override
@@ -225,7 +224,7 @@ public class MovieDetailsView implements MovieDetails {
     }
 
     @Override
-    public View getRootView() {
+    public View getRoot() {
         return binding.getRoot();
     }
 

@@ -13,7 +13,7 @@ public class ReviewHolderView extends RecyclerView.ViewHolder implements ReviewH
     private final ReviewHolderViewBinding binding;
 
     public ReviewHolderView(ViewGroup parent) {
-        super(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.movie_holder_view, parent, false).getRoot());
+        super(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.review_holder_view, parent, false).getRoot());
         binding = DataBindingUtil.getBinding(itemView);
     }
 
