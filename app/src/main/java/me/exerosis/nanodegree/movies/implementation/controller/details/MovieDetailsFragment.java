@@ -41,6 +41,7 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContro
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = new MovieDetailsView((AppCompatActivity) getActivity(), inflater, container);
+        view.setListener(this);
 
         if (!getLoaderManager().hasRunningLoaders())
             getLoaderManager().initLoader(LOADER_ID, getArguments(), this).forceLoad();
@@ -67,7 +68,6 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContro
 
     @Override
     public void onClick(Trailer trailer) {
-        System.out.println("CLICKED");
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(trailer.getVideo())));
     }
 }

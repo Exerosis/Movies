@@ -1,14 +1,12 @@
 package me.exerosis.nanodegree.movies.implementation.view.details;
 
 import android.animation.ObjectAnimator;
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
@@ -49,6 +47,7 @@ public class MovieDetailsView implements MovieDetails, TrailerHolderListener {
     private final MovieDetailsViewBinding binding;
     private final AppCompatActivity activity;
     private final StatusBar statusBar;
+    private TrailerHolderListener listener;
 
     private void setToolbarAlpha(int alpha) {
         binding.movieDetailsAppBar.setAlpha(alpha / 255);
@@ -240,7 +239,17 @@ public class MovieDetailsView implements MovieDetails, TrailerHolderListener {
     }
 
     @Override
+    public TrailerHolderListener getListener() {
+        return listener;
+    }
+
+    @Override
+    public void setListener(TrailerHolderListener listener) {
+        this.listener = listener;
+    }
+
+    @Override
     public void onClick(Trailer trailer) {
-        getRoot().getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(trailer.getVideo())));
+        listener.onClick(trailer);
     }
 }
