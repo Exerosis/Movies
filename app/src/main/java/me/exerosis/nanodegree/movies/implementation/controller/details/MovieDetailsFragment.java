@@ -11,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import me.exerosis.nanodegree.movies.implementation.controller.review.FullReviewActivity;
 import me.exerosis.nanodegree.movies.implementation.model.data.Details;
 import me.exerosis.nanodegree.movies.implementation.model.data.Movie;
+import me.exerosis.nanodegree.movies.implementation.model.data.Review;
 import me.exerosis.nanodegree.movies.implementation.model.data.Trailer;
 import me.exerosis.nanodegree.movies.implementation.model.loader.MovieDetailsLoader;
 import me.exerosis.nanodegree.movies.implementation.view.details.MovieDetails;
@@ -69,5 +71,11 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContro
     @Override
     public void onClick(Trailer trailer) {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(trailer.getVideo())));
+    }
+
+    @Override
+    public void onClick(Review review) {
+        Intent intent = new Intent(getContext(), FullReviewActivity.class);
+        startActivity(intent.putExtra(FullReviewActivity.ARG_REVIEW, review));
     }
 }

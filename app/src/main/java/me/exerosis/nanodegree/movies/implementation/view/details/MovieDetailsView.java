@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -23,7 +24,10 @@ import com.squareup.picasso.Target;
 import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.databinding.MovieDetailsViewBinding;
 import me.exerosis.nanodegree.movies.implementation.model.data.Details;
+import me.exerosis.nanodegree.movies.implementation.model.data.Review;
 import me.exerosis.nanodegree.movies.implementation.model.data.Trailer;
+import me.exerosis.nanodegree.movies.implementation.view.details.holder.DetailsListener;
+import me.exerosis.nanodegree.movies.implementation.view.details.holder.ReviewHolderListener;
 import me.exerosis.nanodegree.movies.implementation.view.details.holder.ReviewHolderView;
 import me.exerosis.nanodegree.movies.implementation.view.details.holder.TrailerHolderListener;
 import me.exerosis.nanodegree.movies.implementation.view.details.holder.TrailerHolderView;
@@ -32,7 +36,7 @@ import me.exerosis.nanodegree.movies.utilities.ColorUtilities;
 import me.exerosis.nanodegree.movies.utilities.StatusBar;
 
 //TODO Make everything constant based.
-public class MovieDetailsView implements MovieDetails, TrailerHolderListener {
+public class MovieDetailsView implements MovieDetails {
     public static final float TOOLBAR_FADE_START = 50;
     public static final float CONTENT_CARD_FADE_START = 150;
     public static final float CONTENT_CARD_ALPHA = 0.7f;
@@ -47,7 +51,7 @@ public class MovieDetailsView implements MovieDetails, TrailerHolderListener {
     private final MovieDetailsViewBinding binding;
     private final AppCompatActivity activity;
     private final StatusBar statusBar;
-    private TrailerHolderListener listener;
+    private DetailsListener listener;
 
     private void setToolbarAlpha(int alpha) {
         binding.movieDetailsAppBar.setAlpha(alpha / 255);
@@ -195,7 +199,12 @@ public class MovieDetailsView implements MovieDetails, TrailerHolderListener {
             @Override
             public TrailerHolderView onCreateViewHolder(ViewGroup parent, int viewType) {
                 TrailerHolderView view = new TrailerHolderView(parent);
-                view.setListener(MovieDetailsView.this);
+                view.setListener(new TrailerHolderListener() {
+                    @Override
+                    public void onClick(Trailer trailer) {
+                        listener.onClick(trailer);
+                    }
+                });
                 return view;
             }
 
@@ -210,10 +219,20 @@ public class MovieDetailsView implements MovieDetails, TrailerHolderListener {
             }
         });
 
+        binding.movieDetailsReviews.addItemDecoration(new DividerItemDecoration(getRoot().getContext(), 0));
+
         binding.movieDetailsReviews.setAdapter(new RecyclerView.Adapter<ReviewHolderView>() {
             @Override
             public ReviewHolderView onCreateViewHolder(ViewGroup parent, int viewType) {
-                return new ReviewHolderView(parent);
+                ReviewHolderView view = new ReviewHolderView(parent);
+                view.setListener(new ReviewHolderListener() {
+                    @Override
+                    public void onClick(Review review) {
+                        if (listener != null)
+                            listener.onClick(review);
+                    }
+                });
+                return view;
             }
 
             @Override
@@ -239,17 +258,12 @@ public class MovieDetailsView implements MovieDetails, TrailerHolderListener {
     }
 
     @Override
-    public TrailerHolderListener getListener() {
+    public DetailsListener getListener() {
         return listener;
     }
 
     @Override
-    public void setListener(TrailerHolderListener listener) {
+    public void setListener(DetailsListener listener) {
         this.listener = listener;
-    }
-
-    @Override
-    public void onClick(Trailer trailer) {
-        listener.onClick(trailer);
     }
 }

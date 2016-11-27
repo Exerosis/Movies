@@ -44,7 +44,7 @@ public class TrailerHolderView extends RecyclerView.ViewHolder implements Traile
 
         binding.trailerHolderIcon.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 if (listener != null)
                     listener.onClick(trailer);
             }

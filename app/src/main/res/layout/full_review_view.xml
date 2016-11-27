@@ -6,8 +6,8 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/review_card"
-        android:layout_width="300dp"
-        android:layout_height="500dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_margin="5dp">
 
         <LinearLayout
