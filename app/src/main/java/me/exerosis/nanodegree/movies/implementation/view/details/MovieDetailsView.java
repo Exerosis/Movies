@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -218,8 +217,6 @@ public class MovieDetailsView implements MovieDetails {
                 return details.getTrailers().size();
             }
         });
-
-        binding.movieDetailsReviews.addItemDecoration(new DividerItemDecoration(getRoot().getContext(), 0));
 
         binding.movieDetailsReviews.setAdapter(new RecyclerView.Adapter<ReviewHolderView>() {
             @Override

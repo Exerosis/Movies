@@ -22,6 +22,9 @@
         <activity android:name=".implementation.controller.details.container.MovieDetailsContainerActivity">
 
         </activity>
+        <activity android:name=".implementation.controller.review.FullReviewActivity">
+            
+        </activity>
     </application>
 
 </manifest>

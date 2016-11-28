@@ -15,8 +15,12 @@ public class FullReviewView implements FullReview {
     public FullReviewView(AppCompatActivity activity, Review review) {
         binding = DataBindingUtil.setContentView(activity, R.layout.full_review_view);
 
-        binding.reviewAuthor.setText(review.getAuthor());
-        binding.reviewContent.setText(review.getContent());
+        activity.setSupportActionBar(binding.fullReviewToolbar);
+        activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        binding.fullReviewAuthor.setText(review.getAuthor());
+        binding.fullReviewContent.setText(review.getContent());
     }
 
     @Override
