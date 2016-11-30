@@ -164,6 +164,10 @@ public class MovieDetailsView implements MovieDetails {
             }
         });
 
+        if (details.getTrailers().size() < 1)
+            binding.movieDetailsTrailersTitle.setVisibility(View.INVISIBLE);
+        if (details.getReviews().size() < 1)
+            binding.movieDetailsReviewsTitle.setVisibility(View.INVISIBLE);
 
         Picasso.with(getRoot().getContext()).load(details.getMovie().getPosterURL()).into(new Target() {
             @Override

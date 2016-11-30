@@ -3,9 +3,12 @@ package me.exerosis.nanodegree.movies.implementation.model.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Movie implements Parcelable {
     private String title;
     private int id;
+    @SerializedName("poster_url")
     private String posterURL;
 
     public Movie(String title, int id, String posterURL) {

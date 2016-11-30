@@ -1,23 +1,18 @@
 package me.exerosis.nanodegree.movies.implementation.model.data;
 
-import android.support.annotation.NonNull;
-
 public class Trailer {
     public static final String FORMAT_THUMBNAIL = "https://img.youtube.com/vi/%s/hqdefault.jpg";
-    private static final String FORMAT_VIDEO = "vnd.youtube://%s";
-    private final String thumbnail;
-    private final String video;
+    public static final String FORMAT_VIDEO = "vnd.youtube://%s";
+    private String key;
 
-    public Trailer(@NonNull String id) {
-        thumbnail = String.format(FORMAT_THUMBNAIL, id);
-        video = String.format(FORMAT_VIDEO, id);
+    public Trailer(String id) {
     }
 
     public String getVideo() {
-        return video;
+        return String.format(FORMAT_VIDEO, key);
     }
 
     public String getThumbnail() {
-        return thumbnail;
+        return String.format(FORMAT_THUMBNAIL, key);
     }
 }
