@@ -28,7 +28,6 @@ public class GsonGetRequest<T> extends Request<T> {
     public GsonGetRequest(String url, Gson gson, Response.Listener<T> listener, Response.ErrorListener errorListener) {
         super(Method.GET, url, errorListener);
 
-        System.out.println(Types.getListenerType(listener));
         this.gson = gson;
         this.listener = listener;
     }
@@ -56,7 +55,7 @@ public class GsonGetRequest<T> extends Request<T> {
     protected Response<T> parseNetworkResponse(NetworkResponse response) {
         try {
             String json = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-            return (Response<T>) Response.success(gson.fromJson(json, Types.getListenerType(listener)), HttpHeaderParser.parseCacheHeaders(response));
+            return (Response<T>) Response.success(gson.fromJson(json, Types.getInterfaceGeneric(listener.getClass())), HttpHeaderParser.parseCacheHeaders(response));
         } catch (Exception e) {
             return Response.error(new ParseError(e));
         }

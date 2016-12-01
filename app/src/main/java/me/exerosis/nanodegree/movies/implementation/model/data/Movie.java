@@ -6,25 +6,21 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 public class Movie implements Parcelable {
+    public static String FORMAT_POSTER = "http://image.tmdb.org/t/p/w500%s";
     private String title;
     private int id;
     @SerializedName("poster_url")
-    private String posterURL;
+    private String poster;
 
-    public Movie(String title, int id, String posterURL) {
+    public Movie(String title, int id, String poster) {
         this.title = title;
         this.id = id;
-        this.posterURL = posterURL;
+        this.poster = poster;
     }
 
     @Override
     public boolean equals(Object obj) {
         return obj instanceof Movie && title.equals(((Movie) obj).title);
-    }
-
-    @Override
-    public String toString() {
-        return String.valueOf(id);
     }
 
     public String getTitle() {
@@ -36,14 +32,19 @@ public class Movie implements Parcelable {
     }
 
     public String getPosterURL() {
-        return posterURL;
+        return String.format(FORMAT_POSTER, poster);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(title);
     }
 
 
     protected Movie(Parcel in) {
         this.title = in.readString();
         this.id = in.readInt();
-        this.posterURL = in.readString();
+        this.poster = in.readString();
     }
 
     @Override
@@ -55,7 +56,7 @@ public class Movie implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.title);
         dest.writeInt(this.id);
-        dest.writeString(this.posterURL);
+        dest.writeString(this.poster);
     }
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {

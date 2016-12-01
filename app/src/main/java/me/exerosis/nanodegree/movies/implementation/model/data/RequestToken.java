@@ -1,4 +1,4 @@
-package me.exerosis.nanodegree.movies.implementation.model.test;
+package me.exerosis.nanodegree.movies.implementation.model.data;
 
 import com.google.gson.annotations.SerializedName;
 
