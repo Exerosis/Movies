@@ -15,13 +15,13 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.exerosis.nanodegree.movies.utilities.LoaderUtilities;
 import me.exerosis.nanodegree.movies.implementation.model.data.Movie;
 import me.exerosis.nanodegree.movies.implementation.model.data.Search;
 import me.exerosis.nanodegree.movies.implementation.view.grid.MovieGridView;
 import me.exerosis.nanodegree.movies.implementation.view.movies.holder.MovieHolderListener;
 import me.exerosis.nanodegree.movies.implementation.view.movies.holder.MovieHolderView;
 import me.exerosis.nanodegree.movies.utilities.GsonGetRequest;
+import me.exerosis.nanodegree.movies.utilities.LoaderUtilities;
 
 
 public class MovieGridFragment extends Fragment implements MovieGridController {
@@ -79,21 +79,26 @@ public class MovieGridFragment extends Fragment implements MovieGridController {
 
             @Override
             public int getItemCount() {
+                System.out.println(movies.size());
                 return movies.size();
             }
         });
+
+        requestData();
+
+        view.getAdapter().notifyDataSetChanged();
 
         return view.getRoot();
     }
 
     @Override
     public void onResponse(Search search) {
-        movies = search.getResults();
+        movies = new ArrayList<>(search.getResults());
 
         if (view == null)
             return;
 
-        System.out.println(movies.get(0).getTitle());
+        System.out.println(movies.size());
         view.getAdapter().notifyDataSetChanged();
         view.setRefreshing(false);
     }
