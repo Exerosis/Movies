@@ -47,7 +47,7 @@ public class MovieDetailsLoader extends AsyncTaskLoader<Details> {
             return null;
 
         try {
-            URL detailsURL = new URL(String.format(FORMAT_DETAILS, movie, ""));
+            URL detailsURL = new URL(String.format(FORMAT_DETAILS, movie.getID(), ""));
 
             JsonObject results = JsonUtilities.fromURL(detailsURL);
 
@@ -71,7 +71,7 @@ public class MovieDetailsLoader extends AsyncTaskLoader<Details> {
             genres = genres.substring(1, genres.length());
 
 
-            URL reviewsURL = new URL(String.format(FORMAT_DETAILS, movie, "/reviews"));
+            URL reviewsURL = new URL(String.format(FORMAT_DETAILS, movie.getID(), "/reviews"));
             List<Review> reviews = new ArrayList<>();
             for (JsonElement reviewElements : JsonUtilities.getArrayAt(JsonUtilities.fromURL(reviewsURL), "results")) {
                 String author = JsonUtilities.getStringAt(reviewElements, "author");
@@ -80,12 +80,14 @@ public class MovieDetailsLoader extends AsyncTaskLoader<Details> {
                     reviews.add(new Review(author, content));
             }
 
-            URL trailersURL = new URL(String.format(FORMAT_DETAILS, movie, "/videos"));
+            URL trailersURL = new URL(String.format(FORMAT_DETAILS, movie.getID(), "/videos"));
             List<Trailer> trailers = new ArrayList<>();
             for (JsonElement trailerElement : JsonUtilities.getArrayAt(JsonUtilities.fromURL(trailersURL), "results"))
                 trailers.add(new Trailer(JsonUtilities.getStringAt(trailerElement, "key")));
 
-            return new Details(movie, reviews, trailers, voteAverage, tagline, popularity, runtime, description, genres, date, backdropURL);
+            boolean favorite = getContext().getSharedPreferences(Config.KEY_PREFERENCES, Context.MODE_PRIVATE).contains(String.valueOf(getId()));
+
+            return new Details(movie, reviews, trailers, voteAverage, tagline, popularity, runtime, description, genres, date, backdropURL, favorite);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

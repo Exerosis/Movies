@@ -7,10 +7,7 @@ import android.os.Bundle;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
-import me.exerosis.nanodegree.movies.implementation.Config;
 import me.exerosis.nanodegree.movies.implementation.model.data.Movie;
 import me.exerosis.nanodegree.movies.utilities.Types;
 
@@ -43,12 +40,11 @@ public class LocalGridFragment extends MovieGridFragment {
 
     @Override
     public void requestData() {
-        SharedPreferences preferences = getContext().getSharedPreferences(Config.KEY_PREFERENCES, Context.MODE_PRIVATE);
-        Set<String> favorites = preferences.getStringSet(getArguments().getString(ARG_KEY), new HashSet<String>());
+        SharedPreferences preferences = getContext().getSharedPreferences(getArguments().getString(ARG_KEY), Context.MODE_PRIVATE);
 
         if (getListener() != null)
-            for (String favorite : favorites)
-                movies.add((Movie) new Gson().fromJson(favorite, Types.getInterfaceGeneric(getListener().getClass())));
+            for (Object favorite : preferences.getAll().values())
+                movies.add((Movie) new Gson().fromJson(((String) favorite), Types.getInterfaceGeneric(getListener().getClass())));
 
         if (getRootView() == null)
             return;

@@ -15,9 +15,6 @@ import android.view.ViewGroup;
 
 import com.google.gson.Gson;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import me.exerosis.nanodegree.movies.implementation.Config;
 import me.exerosis.nanodegree.movies.implementation.controller.review.FullReviewActivity;
 import me.exerosis.nanodegree.movies.implementation.model.data.Details;
@@ -88,14 +85,13 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContro
     }
 
     @Override
-    public void onToggleFavorite(Movie movie) {
+    public void onToggleFavorite() {
         SharedPreferences preferences = getContext().getSharedPreferences(Config.KEY_PREFERENCES, Context.MODE_PRIVATE);
-        Set<String> favorites = preferences.getStringSet(Config.PREFERENCE_FAVORITES, new HashSet<String>());
-        String movieJson = new Gson().toJson(movie);
-        if (!favorites.contains(movieJson))
-            favorites.add(movieJson);
+        String id = String.valueOf(details.getMovie().getID());
+
+        if (preferences.contains(id))
+            preferences.edit().remove(id).apply();
         else
-            favorites.remove(movieJson);
-        preferences.edit().putStringSet(Config.PREFERENCE_FAVORITES, favorites).apply();
+            preferences.edit().putString(id, new Gson().toJson(details.getMovie())).apply();
     }
 }

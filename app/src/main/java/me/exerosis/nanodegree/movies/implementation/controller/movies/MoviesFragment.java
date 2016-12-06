@@ -28,7 +28,7 @@ public class MoviesFragment extends Fragment implements MoviesController {
 
         fragments.add(DiscoveryGridFragment.newInstance("http://api.themoviedb.org/3/movie/popular?api_key=" + Config.KEY_THE_MOVIE_DB));
         fragments.add(DiscoveryGridFragment.newInstance("http://api.themoviedb.org/3/movie/top_rated?api_key=" + Config.KEY_THE_MOVIE_DB));
-        fragments.add(LocalGridFragment.newInstance(Config.PREFERENCE_FAVORITES));
+        fragments.add(LocalGridFragment.newInstance(Config.KEY_PREFERENCES));
 
         view.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override

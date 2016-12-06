@@ -14,13 +14,14 @@ public class Details implements Parcelable {
     private final String genres;
     private final String date;
     private final String backdropURL;
+    private boolean favorite;
     private final String popularity;
     private final String runtime;
     private final String voteAverage;
     private final List<Review> reviews;
     private final List<Trailer> trailers;
 
-    public Details(Movie movie, List<Review> reviews, List<Trailer> trailers, String voteAverage, String tagline, String popularity, String runtime, String description, String genres, String date, String backdropURL) {
+    public Details(Movie movie, List<Review> reviews, List<Trailer> trailers, String voteAverage, String tagline, String popularity, String runtime, String description, String genres, String date, String backdropURL, boolean favorite) {
         this.movie = movie;
         this.reviews = reviews;
         this.trailers = trailers;
@@ -32,6 +33,11 @@ public class Details implements Parcelable {
         this.genres = genres;
         this.date = date;
         this.backdropURL = backdropURL;
+        this.favorite = favorite;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
     }
 
     public String getVoteAverage() {
@@ -91,10 +97,11 @@ public class Details implements Parcelable {
         dest.writeString(this.genres);
         dest.writeString(this.date);
         dest.writeString(this.backdropURL);
+        dest.writeByte(this.favorite ? (byte) 1 : (byte) 0);
         dest.writeString(this.popularity);
         dest.writeString(this.runtime);
         dest.writeString(this.voteAverage);
-        dest.writeList(this.reviews);
+        dest.writeTypedList(this.reviews);
         dest.writeList(this.trailers);
     }
 
@@ -105,11 +112,11 @@ public class Details implements Parcelable {
         this.genres = in.readString();
         this.date = in.readString();
         this.backdropURL = in.readString();
+        this.favorite = in.readByte() != 0;
         this.popularity = in.readString();
         this.runtime = in.readString();
         this.voteAverage = in.readString();
-        this.reviews = new ArrayList<Review>();
-        in.readList(this.reviews, Review.class.getClassLoader());
+        this.reviews = in.createTypedArrayList(Review.CREATOR);
         this.trailers = new ArrayList<Trailer>();
         in.readList(this.trailers, Trailer.class.getClassLoader());
     }
