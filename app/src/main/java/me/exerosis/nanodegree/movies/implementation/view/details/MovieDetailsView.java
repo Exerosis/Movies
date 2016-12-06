@@ -142,6 +142,14 @@ public class MovieDetailsView implements MovieDetails {
         binding.movieDetailsVoteAverage.setText(details.getVoteAverage());
         binding.movieDetailsPopularity.setText(details.getPopularity());
 
+        binding.movieDetailsFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listener != null)
+                    listener.onToggleFavorite(details.getMovie());
+            }
+        });
+
         Point size = new Point();
         activity.getWindowManager().getDefaultDisplay().getSize(size);
 
@@ -264,7 +272,7 @@ public class MovieDetailsView implements MovieDetails {
     }
 
     @Override
-    public void setListener(DetailsListener listener) {
+    public void setListener(final DetailsListener listener) {
         this.listener = listener;
     }
 }

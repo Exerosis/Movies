@@ -33,8 +33,8 @@ public class DiscoveryGridFragment extends MovieGridFragment implements Response
 
     @Override
     public void onCreate(@Nullable Bundle inState) {
-        super.onCreate(inState);
         queue = Volley.newRequestQueue(getContext());
+        super.onCreate(inState);
     }
 
     @Override

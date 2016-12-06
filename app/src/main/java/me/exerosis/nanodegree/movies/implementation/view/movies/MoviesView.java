@@ -21,8 +21,9 @@ public class MoviesView implements Movies {
         binding.moviesViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.moviesTabLayout));
         binding.moviesTabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(binding.moviesViewPager));
 
-        newTab("Popular", R.drawable.favorites_tab_icon, true);
-        newTab("Top Rated", R.drawable.top_rated_tab_selector);
+        newTab("Popular", R.drawable.popular_tab_icon, true);
+        newTab("Top Rated", R.drawable.top_rated_tab_icon);
+        newTab("Favorites", R.drawable.favorites_tab_icon);
 
         setCurrentPage(0);
     }

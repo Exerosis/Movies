@@ -88,10 +88,14 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContro
     }
 
     @Override
-    public void onSetFavorite(Movie movie, boolean favorite) {
+    public void onToggleFavorite(Movie movie) {
         SharedPreferences preferences = getContext().getSharedPreferences(Config.KEY_PREFERENCES, Context.MODE_PRIVATE);
         Set<String> favorites = preferences.getStringSet(Config.PREFERENCE_FAVORITES, new HashSet<String>());
-        favorites.add(new Gson().toJson(movie));
+        String movieJson = new Gson().toJson(movie);
+        if (!favorites.contains(movieJson))
+            favorites.add(movieJson);
+        else
+            favorites.remove(movieJson);
         preferences.edit().putStringSet(Config.PREFERENCE_FAVORITES, favorites).apply();
     }
 }
