@@ -1,6 +1,8 @@
 package me.exerosis.nanodegree.movies.implementation.controller.details;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import me.exerosis.nanodegree.movies.implementation.Config;
 import me.exerosis.nanodegree.movies.implementation.controller.review.FullReviewActivity;
 import me.exerosis.nanodegree.movies.implementation.model.data.Details;
 import me.exerosis.nanodegree.movies.implementation.model.data.Movie;
@@ -77,5 +85,13 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContro
     public void onClick(Review review) {
         Intent intent = new Intent(getContext(), FullReviewActivity.class);
         startActivity(intent.putExtra(FullReviewActivity.ARG_REVIEW, review));
+    }
+
+    @Override
+    public void onSetFavorite(Movie movie, boolean favorite) {
+        SharedPreferences preferences = getContext().getSharedPreferences(Config.KEY_PREFERENCES, Context.MODE_PRIVATE);
+        Set<String> favorites = preferences.getStringSet(Config.PREFERENCE_FAVORITES, new HashSet<String>());
+        favorites.add(new Gson().toJson(movie));
+        preferences.edit().putStringSet(Config.PREFERENCE_FAVORITES, favorites).apply();
     }
 }

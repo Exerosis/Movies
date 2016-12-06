@@ -1,6 +1,8 @@
 package me.exerosis.nanodegree.movies.implementation;
 
 public final class Config {
+    public static final String PREFERENCE_FAVORITES = "favorites";
+    public static final String KEY_PREFERENCES = "me.exerosis.nanodegree.movies";
     public static String KEY_YOUTUBE = "AIzaSyDuE9HbnT0hpEck0uuiuCd1ZPtbzHe6udU";
     public static String KEY_THE_MOVIE_DB = "80de3dcb516f2d18d76b0d4f3d7b2f05";
 }

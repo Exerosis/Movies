@@ -8,56 +8,37 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
-
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
-
 import me.exerosis.nanodegree.movies.implementation.model.data.Movie;
-import me.exerosis.nanodegree.movies.implementation.model.data.Search;
+import me.exerosis.nanodegree.movies.implementation.view.grid.MovieGrid;
 import me.exerosis.nanodegree.movies.implementation.view.grid.MovieGridView;
 import me.exerosis.nanodegree.movies.implementation.view.movies.holder.MovieHolderListener;
 import me.exerosis.nanodegree.movies.implementation.view.movies.holder.MovieHolderView;
-import me.exerosis.nanodegree.movies.utilities.GsonGetRequest;
-import me.exerosis.nanodegree.movies.utilities.LoaderUtilities;
 
 
-public class MovieGridFragment extends Fragment implements MovieGridController {
-    public static final String ARG_URI = "URI";
-    private MovieGridView view;
-    private List<Movie> movies = new ArrayList<>();
+public abstract class MovieGridFragment extends Fragment implements MovieGridController {
+    private static final String STATE_MOVIES = "MOVIES";
     private MovieHolderListener listener;
-    private RequestQueue queue;
-
-    public static MovieGridFragment newInstance(String uri) {
-        Bundle args = new Bundle();
-        args.putString(ARG_URI, uri);
-        MovieGridFragment fragment = new MovieGridFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    public static MovieGridFragment newInstance(URI uri) {
-        return newInstance(uri.toASCIIString());
-    }
-
+    private MovieGridView view;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        queue = Volley.newRequestQueue(getContext());
-        if (savedInstanceState != null)
+    public void onCreate(@Nullable Bundle inState) {
+        super.onCreate(inState);
+
+        if (inState != null)
+            setMovies(inState.<Movie>getParcelableArrayList(STATE_MOVIES));
+        else
             requestData();
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList(STATE_MOVIES, getMovies());
+        super.onSaveInstanceState(outState);
+    }
 
-    private void requestData() {
-        GsonGetRequest<Search> request = LoaderUtilities.getData(getArguments().getString(ARG_URI), this);
-        if (request != null)
-            queue.add(request);
-        queue.start();
+    @Override
+    public void onRefresh() {
+        requestData();
     }
 
     @Override
@@ -74,38 +55,23 @@ public class MovieGridFragment extends Fragment implements MovieGridController {
 
             @Override
             public void onBindViewHolder(MovieHolderView holder, int position) {
-                holder.setMovie(movies.get(position));
+                if (getMovies() != null)
+                    holder.setMovie(getMovies().get(position));
             }
 
             @Override
             public int getItemCount() {
-                System.out.println(movies.size());
-                return movies.size();
+                return getMovies() == null ? 0 : getMovies().size();
             }
         });
-
-        requestData();
-
-        view.getAdapter().notifyDataSetChanged();
 
         return view.getRoot();
     }
 
-    @Override
-    public void onResponse(Search search) {
-        movies = new ArrayList<>(search.getResults());
-
-        if (view == null)
-            return;
-
-        System.out.println(movies.size());
-        view.getAdapter().notifyDataSetChanged();
-        view.setRefreshing(false);
-    }
 
     @Override
-    public void onRefresh() {
-        requestData();
+    public MovieGrid getRootView() {
+        return view;
     }
 
     @Override

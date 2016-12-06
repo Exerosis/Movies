@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.exerosis.nanodegree.movies.implementation.Config;
+import me.exerosis.nanodegree.movies.implementation.controller.grid.DiscoveryGridFragment;
+import me.exerosis.nanodegree.movies.implementation.controller.grid.LocalGridFragment;
 import me.exerosis.nanodegree.movies.implementation.controller.grid.MovieGridFragment;
 import me.exerosis.nanodegree.movies.implementation.view.movies.MoviesView;
 import me.exerosis.nanodegree.movies.implementation.view.movies.holder.MovieHolderListener;
@@ -24,8 +26,9 @@ public class MoviesFragment extends Fragment implements MoviesController {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = new MoviesView(inflater, container);
 
-        fragments.add(MovieGridFragment.newInstance("http://api.themoviedb.org/3/movie/popular?api_key=" + Config.KEY_THE_MOVIE_DB));
-        fragments.add(MovieGridFragment.newInstance("http://api.themoviedb.org/3/movie/top_rated?api_key=" + Config.KEY_THE_MOVIE_DB));
+        fragments.add(DiscoveryGridFragment.newInstance("http://api.themoviedb.org/3/movie/popular?api_key=" + Config.KEY_THE_MOVIE_DB));
+        fragments.add(DiscoveryGridFragment.newInstance("http://api.themoviedb.org/3/movie/top_rated?api_key=" + Config.KEY_THE_MOVIE_DB));
+        fragments.add(LocalGridFragment.newInstance(Config.PREFERENCE_FAVORITES));
 
         view.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
@@ -38,6 +41,8 @@ public class MoviesFragment extends Fragment implements MoviesController {
                 return fragments.size();
             }
         });
+
+        view.getAdapter().notifyDataSetChanged();
 
         for (MovieGridFragment fragment : fragments)
             fragment.setListener(listener);

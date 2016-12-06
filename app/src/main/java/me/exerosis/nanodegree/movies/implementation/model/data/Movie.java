@@ -9,7 +9,7 @@ public class Movie implements Parcelable {
     public static String FORMAT_POSTER = "http://image.tmdb.org/t/p/w500%s";
     private String title;
     private int id;
-    @SerializedName("poster_url")
+    @SerializedName("poster_path")
     private String poster;
 
     public Movie(String title, int id, String poster) {
