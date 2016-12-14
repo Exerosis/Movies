@@ -7,4 +7,5 @@ import me.exerosis.nanodegree.movies.mvc.ViewBase;
 
 public interface MovieDetails extends ViewBase, Listenable<DetailsListener> {
     void setDetails(Details details);
+    void setFavorite(boolean favorite);
 }

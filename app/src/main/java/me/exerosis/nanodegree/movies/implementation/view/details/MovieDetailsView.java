@@ -142,8 +142,6 @@ public class MovieDetailsView implements MovieDetails {
         binding.movieDetailsVoteAverage.setText(details.getVoteAverage());
         binding.movieDetailsPopularity.setText(details.getPopularity());
 
-        binding.movieDetailsFab.setImageResource(details.isFavorite() ? R.drawable.heart_selected : R.drawable.heart_unselected);
-
         binding.movieDetailsFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -165,7 +163,7 @@ public class MovieDetailsView implements MovieDetails {
 
             @Override
             public void onBitmapFailed(Drawable errorDrawable) {
-
+                System.out.println("ERROR");
             }
 
             @Override
@@ -256,6 +254,11 @@ public class MovieDetailsView implements MovieDetails {
                 return details.getReviews().size();
             }
         });
+    }
+
+    @Override
+    public void setFavorite(boolean favorite) {
+        binding.movieDetailsFab.setImageResource(favorite ? R.drawable.heart_selected : R.drawable.heart_unselected);
     }
 
     @Override

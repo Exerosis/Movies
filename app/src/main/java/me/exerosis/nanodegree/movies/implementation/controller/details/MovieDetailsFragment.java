@@ -67,6 +67,10 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContro
         details = data;
 
         view.setDetails(details);
+
+        SharedPreferences preferences = getContext().getSharedPreferences(Config.KEY_PREFERENCES, Context.MODE_PRIVATE);
+        String id = String.valueOf(details.getMovie().getID());
+        view.setFavorite(preferences.contains(id));
     }
 
     @Override
@@ -89,9 +93,13 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContro
         SharedPreferences preferences = getContext().getSharedPreferences(Config.KEY_PREFERENCES, Context.MODE_PRIVATE);
         String id = String.valueOf(details.getMovie().getID());
 
-        if (preferences.contains(id))
+        if (preferences.contains(id)) {
             preferences.edit().remove(id).apply();
-        else
-            preferences.edit().putString(id, new Gson().toJson(details.getMovie())).apply();
+            view.setFavorite(false);
+            return;
+        }
+
+        preferences.edit().putString(id, new Gson().toJson(details.getMovie())).apply();
+        view.setFavorite(true);
     }
 }

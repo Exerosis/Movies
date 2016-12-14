@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 
 import me.exerosis.nanodegree.movies.implementation.model.data.Movie;
-import me.exerosis.nanodegree.movies.utilities.Types;
 
 public class LocalGridFragment extends MovieGridFragment {
     private ArrayList<Movie> movies = new ArrayList<>();
@@ -42,9 +41,9 @@ public class LocalGridFragment extends MovieGridFragment {
     public void requestData() {
         SharedPreferences preferences = getContext().getSharedPreferences(getArguments().getString(ARG_KEY), Context.MODE_PRIVATE);
 
-        if (getListener() != null)
-            for (Object favorite : preferences.getAll().values())
-                movies.add((Movie) new Gson().fromJson(((String) favorite), Types.getInterfaceGeneric(getListener().getClass())));
+        movies.clear();
+        for (Object favorite : preferences.getAll().values())
+            movies.add(new Gson().fromJson(((String) favorite), Movie.class));
 
         if (getRootView() == null)
             return;

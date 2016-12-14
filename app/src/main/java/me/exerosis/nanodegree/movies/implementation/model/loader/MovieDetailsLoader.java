@@ -7,6 +7,7 @@ import android.support.v4.content.AsyncTaskLoader;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.squareup.picasso.Picasso;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -64,6 +65,8 @@ public class MovieDetailsLoader extends AsyncTaskLoader<Details> {
 
 
             String backdropURL = String.format(FORMAT_BACKDROP, JsonUtilities.getStringAt(results, "backdrop_path"));
+
+            Picasso.with(getContext()).load(backdropURL);
 
             String genres = "";
             for (JsonElement genreElement : JsonUtilities.getArrayAt(results, "genres"))
