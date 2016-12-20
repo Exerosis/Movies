@@ -7,7 +7,6 @@ import android.support.v4.content.AsyncTaskLoader;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.squareup.picasso.Picasso;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -66,7 +65,7 @@ public class MovieDetailsLoader extends AsyncTaskLoader<Details> {
 
             String backdropURL = String.format(FORMAT_BACKDROP, JsonUtilities.getStringAt(results, "backdrop_path"));
 
-            Picasso.with(getContext()).load(backdropURL);
+            // Picasso.with(getContext()).load(backdropURL);
 
             String genres = "";
             for (JsonElement genreElement : JsonUtilities.getArrayAt(results, "genres"))
@@ -88,6 +87,9 @@ public class MovieDetailsLoader extends AsyncTaskLoader<Details> {
             for (JsonElement trailerElement : JsonUtilities.getArrayAt(JsonUtilities.fromURL(trailersURL), "results"))
                 trailers.add(new Trailer(JsonUtilities.getStringAt(trailerElement, "key")));
 
+            for (Trailer trailer : trailers) {
+                System.out.println(trailer.getThumbnail());
+            }
             boolean favorite = getContext().getSharedPreferences(Config.KEY_PREFERENCES, Context.MODE_PRIVATE).contains(String.valueOf(getId()));
 
             return new Details(movie, reviews, trailers, voteAverage, tagline, popularity, runtime, description, genres, date, backdropURL, favorite);

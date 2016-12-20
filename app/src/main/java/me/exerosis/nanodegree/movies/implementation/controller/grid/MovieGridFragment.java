@@ -31,6 +31,12 @@ public abstract class MovieGridFragment extends Fragment implements MovieGridCon
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        requestData();
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putParcelableArrayList(STATE_MOVIES, getMovies());
         super.onSaveInstanceState(outState);

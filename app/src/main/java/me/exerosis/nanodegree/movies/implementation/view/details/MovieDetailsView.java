@@ -2,9 +2,12 @@ package me.exerosis.nanodegree.movies.implementation.view.details;
 
 import android.animation.ObjectAnimator;
 import android.content.res.ColorStateList;
+import android.content.res.TypedArray;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -46,10 +49,13 @@ public class MovieDetailsView implements MovieDetails {
     public static final int TITLE_TEXT_FADE_DURATION = 500;
     public static final int ACCENT_COLOR_FADE_DURATION = 500;
     public static final int POSTER_FADE_DURATION = 500;
+    private static final int FAB_FADE_DURATION = 500;
 
     private final MovieDetailsViewBinding binding;
     private final AppCompatActivity activity;
     private final StatusBar statusBar;
+    private int fabFavoriteColor;
+    private int fabColor;
     private DetailsListener listener;
 
     private void setToolbarAlpha(int alpha) {
@@ -81,6 +87,15 @@ public class MovieDetailsView implements MovieDetails {
         AnimationUtilities.fadeTextColor(binding.movieDetailsPopularity, color, BODY_TEXT_FADE_DURATION);
         AnimationUtilities.fadeTextColor(binding.movieDetailsVoteAverage, color, BODY_TEXT_FADE_DURATION);
         AnimationUtilities.fadeTextColor(binding.movieDetailsRuntime, color, BODY_TEXT_FADE_DURATION);
+
+        if (fabColor != Color.WHITE)
+            ObjectAnimator.ofArgb(new Object() {
+                public void setColor(int color) {
+                    binding.movieDetailsFab.getDrawable().mutate().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+                }
+            }, "color", fabColor, color).setDuration(FAB_FADE_DURATION).start();
+
+        fabFavoriteColor = color;
     }
 
     private void animateTitleTextColor(int color) {
@@ -95,6 +110,11 @@ public class MovieDetailsView implements MovieDetails {
         this.activity = activity;
         binding = DataBindingUtil.inflate(inflater, R.layout.movie_details_view, container, false);
         statusBar = new StatusBar(activity.getWindow());
+
+        TypedValue typedValue = new TypedValue();
+        TypedArray a = getRoot().getContext().obtainStyledAttributes(typedValue.data, new int[]{R.attr.colorAccent});
+        fabFavoriteColor = a.getColor(0, 0);
+        a.recycle();
 
         activity.setSupportActionBar(binding.movieDetailsToolbar);
         activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -256,9 +276,11 @@ public class MovieDetailsView implements MovieDetails {
         });
     }
 
+
     @Override
     public void setFavorite(boolean favorite) {
-        binding.movieDetailsFab.setImageResource(favorite ? R.drawable.heart_selected : R.drawable.heart_unselected);
+        fabColor = favorite ? fabFavoriteColor : Color.WHITE;
+        binding.movieDetailsFab.getDrawable().mutate().setColorFilter(fabColor, PorterDuff.Mode.SRC_ATOP);
     }
 
     @Override

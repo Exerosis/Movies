@@ -5,7 +5,8 @@ public class Trailer {
     public static final String FORMAT_VIDEO = "vnd.youtube://%s";
     private String key;
 
-    public Trailer(String id) {
+    public Trailer(String key) {
+        this.key = key;
     }
 
     public String getVideo() {

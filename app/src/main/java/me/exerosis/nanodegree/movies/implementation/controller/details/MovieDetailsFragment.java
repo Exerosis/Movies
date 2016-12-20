@@ -101,5 +101,6 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContro
 
         preferences.edit().putString(id, new Gson().toJson(details.getMovie())).apply();
         view.setFavorite(true);
+
     }
 }
