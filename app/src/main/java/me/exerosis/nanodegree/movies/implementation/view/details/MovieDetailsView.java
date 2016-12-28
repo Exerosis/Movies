@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
@@ -19,9 +18,11 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 
 import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.databinding.MovieDetailsViewBinding;
@@ -91,7 +92,8 @@ public class MovieDetailsView implements MovieDetails {
         if (fabColor != Color.WHITE)
             ObjectAnimator.ofArgb(new Object() {
                 public void setColor(int color) {
-                    binding.movieDetailsFab.getDrawable().mutate().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+                    fabColor = color;
+                    binding.movieDetailsFab.getDrawable().mutate().setColorFilter(fabColor, PorterDuff.Mode.MULTIPLY);
                 }
             }, "color", fabColor, color).setDuration(FAB_FADE_DURATION).start();
 
@@ -173,22 +175,13 @@ public class MovieDetailsView implements MovieDetails {
         Point size = new Point();
         activity.getWindowManager().getDefaultDisplay().getSize(size);
 
-        Picasso.with(getRoot().getContext()).load(details.getBackdropURL()).centerCrop().resize(size.x, size.y).into(new Target() {
+        Glide.with(getRoot().getContext()).load(details.getBackdropURL()).asBitmap().centerCrop().into(new SimpleTarget<Bitmap>(size.x, size.y) {
             @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                BitmapDrawable drawable = new BitmapDrawable(activity.getResources(), bitmap);
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                BitmapDrawable drawable = new BitmapDrawable(activity.getResources(), resource);
                 activity.getWindow().setBackgroundDrawable(drawable);
                 ObjectAnimator.ofInt(drawable, "alpha", 0, 255).setDuration(BACKDROP_FADE_DURATION).start();
-            }
-
-            @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
-                System.out.println("ERROR");
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-
+                Toast.makeText(getRoot().getContext(), "Image Loaded", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -197,13 +190,13 @@ public class MovieDetailsView implements MovieDetails {
         if (details.getReviews().size() < 1)
             binding.movieDetailsReviewsTitle.setVisibility(View.INVISIBLE);
 
-        Picasso.with(getRoot().getContext()).load(details.getMovie().getPosterURL()).into(new Target() {
+        Glide.with(getRoot().getContext()).load(details.getMovie().getPosterURL()).asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
-            public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                binding.movieDetailsPoster.setImageBitmap(bitmap);
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                binding.movieDetailsPoster.setImageBitmap(resource);
                 AnimationUtilities.fadeImage(binding.movieDetailsPoster, 255, POSTER_FADE_DURATION);
 
-                Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+                Palette.from(resource).generate(new Palette.PaletteAsyncListener() {
                     @Override
                     public void onGenerated(Palette palette) {
                         Palette.Swatch swatch = palette.getVibrantSwatch();
@@ -215,14 +208,6 @@ public class MovieDetailsView implements MovieDetails {
                         animateAccentColor(swatch.getRgb());
                     }
                 });
-            }
-
-            @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
             }
         });
 

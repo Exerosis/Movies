@@ -7,8 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +29,6 @@ public class MoviesFragment extends Fragment implements MoviesController {
         fragments.add(DiscoveryGridFragment.newInstance("http://api.themoviedb.org/3/movie/popular?api_key=" + Config.KEY_THE_MOVIE_DB));
         fragments.add(DiscoveryGridFragment.newInstance("http://api.themoviedb.org/3/movie/top_rated?api_key=" + Config.KEY_THE_MOVIE_DB));
         fragments.add(LocalGridFragment.newInstance(Config.KEY_PREFERENCES));
-
-        Picasso.with(getContext()).setLoggingEnabled(true);
 
         view.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override

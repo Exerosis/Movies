@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.databinding.MovieHolderViewBinding;
@@ -17,6 +17,7 @@ import me.exerosis.nanodegree.movies.implementation.model.data.Movie;
 
 
 public class MovieHolderView extends RecyclerView.ViewHolder implements MovieHolder {
+    private static final int DURATION_MOVIE = 500;
     private final MovieHolderViewBinding binding;
     private MovieHolderListener listener;
     private Movie movie;
@@ -36,7 +37,7 @@ public class MovieHolderView extends RecyclerView.ViewHolder implements MovieHol
 
         //Load in the poster image.
         if (movie.getPosterURL() != null)
-            Picasso.with(binding.getRoot().getContext()).load(movie.getPosterURL()).into(binding.poster);
+            Glide.with(binding.getRoot().getContext()).load(movie.getPosterURL()).crossFade(DURATION_MOVIE).into(binding.poster);
     }
 
 

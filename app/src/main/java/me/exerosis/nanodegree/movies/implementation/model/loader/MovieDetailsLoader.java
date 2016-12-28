@@ -30,7 +30,7 @@ public class MovieDetailsLoader extends AsyncTaskLoader<Details> {
     public static final SimpleDateFormat FORMAT_TIME = new SimpleDateFormat("H'hrs 'm'mins'", Locale.US);
 
     public static final String FORMAT_DETAILS = "https://api.themoviedb.org/3/movie/%s%s?api_key=" + Config.KEY_THE_MOVIE_DB;
-    public static final String FORMAT_BACKDROP = "http://image.tmdb.org/t/p/w1280%s";
+    public static final String FORMAT_BACKDROP = "http://image.tmdb.org/t/p/w780%s";
 
     private final Movie movie;
     private Details details;

@@ -5,10 +5,8 @@ import android.content.res.ColorStateList;
 import android.support.annotation.StringRes;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 public final class AnimationUtilities {
 
@@ -45,17 +43,19 @@ public final class AnimationUtilities {
     }
 
     public static void fadeAfterLoad(final ImageView view, String url, final int duration, final String error) {
-        Picasso.with(view.getContext()).load(url).into(view, new Callback() {
+       /* Glide.with(view.getContext()).load(url).listener(new RequestListener<String, GlideDrawable>() {
             @Override
-            public void onSuccess() {
-                view.animate().alpha(1f).setDuration(duration);
+            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                Toast.makeText(view.getContext(), error, Toast.LENGTH_SHORT).show();
+                return true;
             }
 
             @Override
-            public void onError() {
-                if (error != null)
-                    Toast.makeText(view.getContext(), error, Toast.LENGTH_SHORT).show();
+            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                view.animate().alpha(1f).setDuration(duration);
+                return true;
             }
-        });
+        }).into(view);*/
+        Glide.with(view.getContext()).load(url).crossFade(duration).into(view);
     }
 }
