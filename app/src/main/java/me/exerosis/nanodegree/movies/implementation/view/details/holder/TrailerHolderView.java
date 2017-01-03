@@ -39,6 +39,7 @@ public class TrailerHolderView extends RecyclerView.ViewHolder implements Traile
 
             @Override
             public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+//                Toast.makeText(getRoot().getContext(), "Loaded Trailer", Toast.LENGTH_SHORT).show();
                 binding.trailerHolderThumbnail.getOverlay().add(getRoot().getResources().getDrawable(android.R.drawable.ic_media_play));
                 AnimationUtilities.fade(binding.trailerHolderThumbnail, 255, THUMBNAIL_FADE_DURATION);
                 AnimationUtilities.fade(binding.trailerHolderIcon, 255, THUMBNAIL_FADE_DURATION);

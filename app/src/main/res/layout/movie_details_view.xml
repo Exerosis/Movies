@@ -55,7 +55,6 @@
                             android:id="@+id/movie_details_tagline"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Try"
                             android:textSize="19sp"
                             android:textStyle="normal|bold" />
 
@@ -64,7 +63,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="TextView"
                             android:textSize="15sp" />
 
                     </LinearLayout>
@@ -133,7 +131,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
-                        android:text="Interstellar"
                         android:textAppearance="@android:style/TextAppearance.Material.Large"
                         android:textColor="?android:attr/textColorPrimary"
                         android:textSize="26sp"
@@ -144,7 +141,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:text="December 13, 2016"
                         android:textColor="?android:attr/textColorPrimary"
                         android:textSize="17sp" />
 
@@ -152,7 +148,6 @@
                         android:id="@+id/movie_details_genres"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Science Fiction, Action"
                         android:textColor="?android:attr/textColorPrimary"
                         android:textSize="16sp"
                         android:textStyle="normal|italic" />
@@ -191,7 +186,6 @@
                             android:id="@+id/movie_details_runtime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="1hrs 12mins"
                             android:textStyle="normal|bold" />
                     </LinearLayout>
 
@@ -214,7 +208,6 @@
                             android:id="@+id/movie_details_vote_average"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0.7"
                             android:textStyle="normal|bold" />
                     </LinearLayout>
 
@@ -237,7 +230,6 @@
                             android:id="@+id/movie_details_popularity"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="3.99933"
                             android:textStyle="normal|bold" />
                     </LinearLayout>
 

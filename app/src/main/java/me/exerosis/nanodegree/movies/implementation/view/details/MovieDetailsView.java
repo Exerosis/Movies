@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
@@ -24,6 +25,14 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.databinding.MovieDetailsViewBinding;
 import me.exerosis.nanodegree.movies.implementation.model.data.Details;
@@ -40,6 +49,7 @@ import me.exerosis.nanodegree.movies.utilities.StatusBar;
 
 //TODO Make everything constant based.
 public class MovieDetailsView implements MovieDetails {
+    private static final ExecutorService EXECUTOR_SERVICE = Executors.newFixedThreadPool(1);
     public static final float TOOLBAR_FADE_START = 50;
     public static final float CONTENT_CARD_FADE_START = 150;
     public static final float CONTENT_CARD_ALPHA = 0.7f;
@@ -152,6 +162,20 @@ public class MovieDetailsView implements MovieDetails {
 
     }
 
+
+    private static Future<Bitmap> getBitmap(final String src) {
+        return EXECUTOR_SERVICE.submit(new Callable<Bitmap>() {
+            @Override
+            public Bitmap call() throws IOException {
+                URL url = new URL(src);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                return BitmapFactory.decodeStream(connection.getInputStream());
+            }
+        });
+    }
+
     @Override
     public void setDetails(final Details details) {
         binding.movieDetailsTitle.setText(details.getMovie().getTitle());
@@ -175,15 +199,32 @@ public class MovieDetailsView implements MovieDetails {
         Point size = new Point();
         activity.getWindowManager().getDefaultDisplay().getSize(size);
 
-        Glide.with(getRoot().getContext()).load(details.getBackdropURL()).asBitmap().centerCrop().into(new SimpleTarget<Bitmap>(size.x, size.y) {
+        final Future<Bitmap> future = getBitmap(details.getBackdropURL());
+        EXECUTOR_SERVICE.submit(new Runnable() {
             @Override
-            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                BitmapDrawable drawable = new BitmapDrawable(activity.getResources(), resource);
-                activity.getWindow().setBackgroundDrawable(drawable);
-                ObjectAnimator.ofInt(drawable, "alpha", 0, 255).setDuration(BACKDROP_FADE_DURATION).start();
-                Toast.makeText(getRoot().getContext(), "Image Loaded", Toast.LENGTH_SHORT).show();
+            public void run() {
+                try {
+                    while (!future.isDone())
+                        Thread.sleep(1);
+                    BitmapDrawable drawable = new BitmapDrawable(activity.getResources(), future.get());
+                    activity.getWindow().setBackgroundDrawable(drawable);
+                    ObjectAnimator.ofInt(drawable, "alpha", 0, 255).setDuration(BACKDROP_FADE_DURATION).start();
+                    Toast.makeText(getRoot().getContext(), "Image Loaded", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
+   /*     Glide.with(getRoot().getContext()).load(details.getBackdropURL()).asBitmap().centerCrop().override(size.x, size.y)
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        BitmapDrawable drawable = new BitmapDrawable(activity.getResources(), resource);
+                        activity.getWindow().setBackgroundDrawable(drawable);
+                        ObjectAnimator.ofInt(drawable, "alpha", 0, 255).setDuration(BACKDROP_FADE_DURATION).start();
+                        Toast.makeText(getRoot().getContext(), "Image Loaded", Toast.LENGTH_SHORT).show();
+                    }
+                });*/
 
         if (details.getTrailers().size() < 1)
             binding.movieDetailsTrailersTitle.setVisibility(View.INVISIBLE);
