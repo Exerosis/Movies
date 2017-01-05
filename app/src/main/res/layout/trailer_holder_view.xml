@@ -1,29 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <FrameLayout
+    <ImageView
+        android:id="@+id/trailer_holder_thumbnail"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:layout_margin="5dp"
-        android:background="?attr/colorBackgroundFloating">
-
-        <ImageView
-            android:id="@+id/trailer_holder_thumbnail"
-            android:layout_width="wrap_content"
-            android:layout_height="150dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitXY" />
-
-        <ImageView
-            android:id="@+id/trailer_holder_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:layout_gravity="center"
-            android:adjustViewBounds="true"
-            android:scaleType="fitXY"
-            android:src="@android:drawable/ic_media_play" />
-
-    </FrameLayout>
-
+        android:adjustViewBounds="true"
+        android:background="?attr/colorBackgroundFloating"
+        android:scaleType="fitXY" />
 
 </layout>

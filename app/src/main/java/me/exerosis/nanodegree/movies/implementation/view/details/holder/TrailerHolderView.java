@@ -8,14 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 
 import me.exerosis.nanodegree.movies.R;
 import me.exerosis.nanodegree.movies.databinding.TrailerHolderViewBinding;
 import me.exerosis.nanodegree.movies.implementation.model.data.Trailer;
-import me.exerosis.nanodegree.movies.utilities.AnimationUtilities;
 
 public class TrailerHolderView extends RecyclerView.ViewHolder implements TrailerHolder {
     public static final int THUMBNAIL_FADE_DURATION = 500;
@@ -25,29 +21,13 @@ public class TrailerHolderView extends RecyclerView.ViewHolder implements Traile
     public TrailerHolderView(ViewGroup parent) {
         super(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.trailer_holder_view, parent, false).getRoot());
         binding = DataBindingUtil.getBinding(itemView);
-        binding.trailerHolderThumbnail.setAlpha(0f);
-        binding.trailerHolderIcon.setAlpha(0f);
     }
 
     @Override
     public void setTrailer(final Trailer trailer) {
-        Glide.with(binding.trailerHolderThumbnail.getContext()).load(trailer.getThumbnail()).listener(new RequestListener<String, GlideDrawable>() {
-            @Override
-            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                return false;
-            }
+        Glide.with(binding.getRoot().getContext()).load(trailer.getThumbnail()).crossFade(THUMBNAIL_FADE_DURATION).into(binding.trailerHolderThumbnail);
 
-            @Override
-            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-//                Toast.makeText(getRoot().getContext(), "Loaded Trailer", Toast.LENGTH_SHORT).show();
-                binding.trailerHolderThumbnail.getOverlay().add(getRoot().getResources().getDrawable(android.R.drawable.ic_media_play));
-                AnimationUtilities.fade(binding.trailerHolderThumbnail, 255, THUMBNAIL_FADE_DURATION);
-                AnimationUtilities.fade(binding.trailerHolderIcon, 255, THUMBNAIL_FADE_DURATION);
-                return true;
-            }
-        }).into(binding.trailerHolderThumbnail);
-
-        binding.trailerHolderIcon.setOnClickListener(new View.OnClickListener() {
+        binding.trailerHolderThumbnail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (listener != null)

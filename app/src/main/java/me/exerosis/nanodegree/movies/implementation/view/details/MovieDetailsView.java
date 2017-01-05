@@ -198,7 +198,7 @@ public class MovieDetailsView implements MovieDetails {
 
         Point size = new Point();
         activity.getWindowManager().getDefaultDisplay().getSize(size);
-
+/*
         final Future<Bitmap> future = getBitmap(details.getBackdropURL());
         EXECUTOR_SERVICE.submit(new Runnable() {
             @Override
@@ -206,25 +206,43 @@ public class MovieDetailsView implements MovieDetails {
                 try {
                     while (!future.isDone())
                         Thread.sleep(1);
-                    BitmapDrawable drawable = new BitmapDrawable(activity.getResources(), future.get());
-                    activity.getWindow().setBackgroundDrawable(drawable);
-                    ObjectAnimator.ofInt(drawable, "alpha", 0, 255).setDuration(BACKDROP_FADE_DURATION).start();
-                    Toast.makeText(getRoot().getContext(), "Image Loaded", Toast.LENGTH_SHORT).show();
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                BitmapDrawable drawable = new BitmapDrawable(activity.getResources(), future.get());
+                                activity.getWindow().setBackgroundDrawable(drawable);
+                                ObjectAnimator.ofInt(drawable, "alpha", 0, 255).setDuration(BACKDROP_FADE_DURATION).start();
+                                Toast.makeText(getRoot().getContext(), "Image Loaded", Toast.LENGTH_SHORT).show();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        });
-   /*     Glide.with(getRoot().getContext()).load(details.getBackdropURL()).asBitmap().centerCrop().override(size.x, size.y)
+        });*/
+        Glide.with(getRoot().getContext()).load(details.getBackdropURL()).asBitmap().centerCrop().override(size.x, size.y)
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                        BitmapDrawable drawable = new BitmapDrawable(activity.getResources(), resource);
-                        activity.getWindow().setBackgroundDrawable(drawable);
-                        ObjectAnimator.ofInt(drawable, "alpha", 0, 255).setDuration(BACKDROP_FADE_DURATION).start();
-                        Toast.makeText(getRoot().getContext(), "Image Loaded", Toast.LENGTH_SHORT).show();
+                    public void onResourceReady(final Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    BitmapDrawable drawable = new BitmapDrawable(activity.getResources(), resource);
+                                    activity.getWindow().setBackgroundDrawable(drawable);
+                                    ObjectAnimator.ofInt(drawable, "alpha", 0, 255).setDuration(BACKDROP_FADE_DURATION).start();
+                                    Toast.makeText(getRoot().getContext(), "Image Loaded", Toast.LENGTH_SHORT).show();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
                     }
-                });*/
+                });
 
         if (details.getTrailers().size() < 1)
             binding.movieDetailsTrailersTitle.setVisibility(View.INVISIBLE);
