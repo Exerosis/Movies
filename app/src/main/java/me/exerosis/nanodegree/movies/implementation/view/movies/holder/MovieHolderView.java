@@ -37,7 +37,7 @@ public class MovieHolderView extends RecyclerView.ViewHolder implements MovieHol
 
         //Load in the poster image.
         if (movie.getPosterURL() != null)
-            Glide.with(binding.getRoot().getContext()).load(movie.getPosterURL()).crossFade(DURATION_MOVIE).into(binding.poster);
+            Glide.with(binding.getRoot().getContext()).load(movie.getPosterURL()).thumbnail(0.1f).crossFade(DURATION_MOVIE).into(binding.poster);
     }
 
 

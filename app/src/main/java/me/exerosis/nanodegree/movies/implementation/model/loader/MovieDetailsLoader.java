@@ -53,7 +53,7 @@ public class MovieDetailsLoader extends AsyncTaskLoader<Details> {
 
             String tagline = JsonUtilities.getStringAt(results, "tagline");
             String popularity = JsonUtilities.getStringAt(results, "popularity");
-            String voteAverage = JsonUtilities.getStringAt(results, "vote_average");
+            String voteAverage = JsonUtilities.getStringAt(results, "vote_average").substring(0, 3);
             String description = JsonUtilities.getStringAt(results, "overview");
 
             Date rawTime = FORMAT_RAW_TIME.parse(JsonUtilities.getStringAt(results, "runtime"));

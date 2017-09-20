@@ -19,7 +19,6 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -159,7 +158,6 @@ public class MovieDetailsView implements MovieDetails {
                     AnimationUtilities.fade(binding.movieDetailsContentCard, CONTENT_CARD_ALPHA, CONTENT_CARD_FADE_DURATION);
             }
         });
-
     }
 
 
@@ -198,32 +196,7 @@ public class MovieDetailsView implements MovieDetails {
 
         Point size = new Point();
         activity.getWindowManager().getDefaultDisplay().getSize(size);
-/*
-        final Future<Bitmap> future = getBitmap(details.getBackdropURL());
-        EXECUTOR_SERVICE.submit(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while (!future.isDone())
-                        Thread.sleep(1);
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                BitmapDrawable drawable = new BitmapDrawable(activity.getResources(), future.get());
-                                activity.getWindow().setBackgroundDrawable(drawable);
-                                ObjectAnimator.ofInt(drawable, "alpha", 0, 255).setDuration(BACKDROP_FADE_DURATION).start();
-                                Toast.makeText(getRoot().getContext(), "Image Loaded", Toast.LENGTH_SHORT).show();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });*/
+
         Glide.with(getRoot().getContext()).load(details.getBackdropURL()).asBitmap().centerCrop().override(size.x, size.y)
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
@@ -235,7 +208,6 @@ public class MovieDetailsView implements MovieDetails {
                                     BitmapDrawable drawable = new BitmapDrawable(activity.getResources(), resource);
                                     activity.getWindow().setBackgroundDrawable(drawable);
                                     ObjectAnimator.ofInt(drawable, "alpha", 0, 255).setDuration(BACKDROP_FADE_DURATION).start();
-                                    Toast.makeText(getRoot().getContext(), "Image Loaded", Toast.LENGTH_SHORT).show();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
